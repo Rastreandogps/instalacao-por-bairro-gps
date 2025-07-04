@@ -26,7 +26,7 @@
       background-color: #218838;
     }
 
-    #popup, #mensalidadeBox, #beneficiosBox {
+    #popup, #mensalidadeBox {
       display: none;
       margin-top: 20px;
       padding: 20px;
@@ -86,7 +86,7 @@
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
-  <input type="text" id="bairroInput" placeholder="Digite o bairro do RJ" />
+  <input type="text" id="bairroInput" placeholder="Digite o bairro" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
   <select id="tipoRastreador">
     <option value="com">Com bloqueio</option>
@@ -97,7 +97,6 @@
 
   <div id="popup"></div>
   <div id="mensalidadeBox"></div>
-  <div id="beneficiosBox"></div>
 
   <div id="whatsapp">
     <a href="https://wa.me/5521969312625" target="_blank">Gostaria de Agendar Minha Instalação</a>
@@ -114,7 +113,6 @@
       const tipo = document.getElementById("tipoRastreador").value;
       const popup = document.getElementById("popup");
       const mensalidadeBox = document.getElementById("mensalidadeBox");
-      const beneficiosBox = document.getElementById("beneficiosBox");
       const whatsapp = document.getElementById("whatsapp");
       const duvidas = document.getElementById("duvidas");
 
@@ -122,7 +120,7 @@
       const data = await response.json();
 
       const normalizar = str =>
-        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
       const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
 
@@ -130,7 +128,6 @@
       whatsapp.style.display = "block";
       duvidas.style.display = "block";
       mensalidadeBox.style.display = "block";
-      beneficiosBox.style.display = "block";
 
       if (resultado) {
         const valorInstalacao = parseFloat(resultado.valor) * quantidade;
@@ -146,42 +143,20 @@
             Pagando até a data do vencimento, você ganha um desconto:<br>
             <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
-          beneficiosBox.className = "sucesso";
-          beneficiosBox.innerHTML = `
-            ✨ Benefícios que você vai ter com a Rastreando GPS:<br><br>
-            ✅ LOCALIZAÇÃO em tempo real<br>
-            ⚠️ ALERTAS de ignição<br>
-            🔒 BLOQUEIO e DESBLOQUEIO remoto<br>
-            🛣️ HISTÓRICO de rotas e VELOCIDADE<br>
-            📱 ACESSO pelo celular e computador<br>
-            🙋‍♂️ SUPORTE humano rápido e atencioso<br><br>
-            🚘 SEGURANÇA, praticidade e controle em um só lugar!<br><br>
-            Clique no botão abaixo e agende logo sua instalação 👇
-          `;
         } else {
           const valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
-          beneficiosBox.className = "sucesso";
-          beneficiosBox.innerHTML = `
-            ✨ Benefícios que você vai ter com a Rastreando GPS:<br><br>
-            ✅ LOCALIZAÇÃO em tempo real<br>
-            ⚠️ ALERTAS de ignição<br>
-            🛣️ HISTÓRICO de rotas e VELOCIDADE<br>
-            📱 ACESSO pelo celular e computador<br>
-            🙋‍♂️ SUPORTE humano rápido e atencioso<br><br>
-            🚘 SEGURANÇA, praticidade e controle em um só lugar!<br><br>
-            Clique no botão abaixo e agende logo sua instalação 👇
-          `;
         }
 
       } else {
         popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
         mensalidadeBox.style.display = "none";
-        beneficiosBox.style.display = "none";
       }
     }
   </script>
 </body>
 </html>
+
+
