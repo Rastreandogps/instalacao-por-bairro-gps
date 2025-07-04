@@ -11,7 +11,7 @@
       text-align: center;
       background: #f5f5f5;
     }
-    input, button {
+    input, button, select {
       padding: 10px;
       font-size: 16px;
       margin: 5px;
@@ -76,6 +76,10 @@
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" />
+  <select id="tipoRastreador">
+    <option value="com">Com bloqueio</option>
+    <option value="sem">Sem bloqueio</option>
+  </select>
   <br>
   <button onclick="verValor()">Ver valor</button>
 
@@ -88,7 +92,8 @@
   <script>
     async function verValor() {
       const input = document.getElementById("bairroInput").value.trim();
-      const quantidade = parseInt(document.getElementById("quantidadeInput").value.trim(), 10) || 1;
+      const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
+      const tipo = document.getElementById("tipoRastreador").value;
       const popup = document.getElementById("popup");
       const whatsapp = document.getElementById("whatsapp");
 
@@ -96,7 +101,7 @@
       const data = await response.json();
 
       const normalizar = str =>
-        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
       const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
@@ -106,7 +111,7 @@
       if (resultado) {
         const total = (parseFloat(resultado.valor) * quantidade).toFixed(2);
         popup.className = "sucesso";
-        popup.innerHTML = `✅ Sua instalação para ${quantidade} veículo(s) é apenas R$ ${total}`;
+        popup.innerHTML = `✅ ${quantidade} veículo(s) em ${resultado.bairro} (${tipo === "com" ? "com bloqueio" : "sem bloqueio"}) = R$ ${total}`;
       } else {
         popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
