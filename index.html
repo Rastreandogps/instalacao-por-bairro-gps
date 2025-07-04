@@ -4,17 +4,73 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consultar Valor da Instalação</title>
-  <script src="script.js" defer></script>
   <style>
-    body { font-family: sans-serif; padding: 30px; text-align: center; background: #f5f5f5; }
-    input, button { padding: 10px; font-size: 16px; }
-    #popup { display: none; padding: 20px; background: white; border: 1px solid #ccc; margin-top: 20px; }
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+      text-align: center;
+      background: #f5f5f5;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #popup {
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      border: 1px solid #ccc;
+      display: none;
+    }
   </style>
 </head>
 <body>
+
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
   <button onclick="verValor()">Ver valor</button>
   <div id="popup"></div>
+
+  <script>
+    const bairros = [
+      { "bairro": "Duque de Caxias", "valor": "R$ 89,90" },
+      { "bairro": "Niterói", "valor": "R$ 89,90" },
+      { "bairro": "Copacabana", "valor": "R$ 89,90" },
+      { "bairro": "São Gonçalo", "valor": "R$ 89,90" },
+      // adicione todos os outros bairros aqui...
+    ];
+
+    function normalizarTexto(texto) {
+      return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    }
+
+    function verValor() {
+      const input = document.getElementById("bairroInput").value;
+      const bairroDigitado = normalizarTexto(input);
+
+      const resultado = bairros.find(b =>
+        normalizarTexto(b.bairro) === bairroDigitado
+      );
+
+      const popup = document.getElementById("popup");
+      popup.style.display = "block";
+
+      if (resultado) {
+        popup.innerText = `Sua instalação é apenas ${resultado.valor}`;
+      } else {
+        popup.innerText = `🚫 Este bairro não foi encontrado.\nVerifique se você digitou corretamente o nome do bairro. A digitação precisa estar certinha.`;
+      }
+    }
+  </script>
+
 </body>
 </html>
