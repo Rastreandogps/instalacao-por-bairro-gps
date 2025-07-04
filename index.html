@@ -1,78 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Consulta de Instalação</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultar Valor da Instalação</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #f5f5f5;
-      text-align: center;
       padding: 30px;
+      text-align: center;
+      background: #f5f5f5;
     }
     input, button {
       padding: 10px;
-      margin: 10px;
       font-size: 16px;
     }
-    #popup {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-    #whatsapp {
-      margin-top: 20px;
-      display: none;
-      background: #00cc66;
+    button {
+      background-color: #28a745;
       color: white;
       border: none;
-      padding: 10px 20px;
       cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+
+    #popup {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .sucesso {
+      background: #e6f4ea;
+      border: 1px solid #2ecc71;
+      color: #2d7d46;
+    }
+
+    .erro {
+      background: #fdecea;
+      border: 1px solid #e74c3c;
+      color: #c0392b;
+    }
+
+    #whatsapp {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #whatsapp a {
+      background-color: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      text-decoration: none;
       font-weight: bold;
+      display: inline-block;
+    }
+
+    #whatsapp a:hover {
+      background-color: #1ebe5d;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
-  <p>Digite o nome do bairro e a quantidade de veículos:</p>
-
-  <input id="bairroInput" placeholder="Ex: queimados">
-  <input id="qtdInput" type="number" min="1" placeholder="Qtd de veículos">
-
+  <input type="text" id="bairroInput" placeholder="Digite o bairro" />
   <button onclick="verValor()">Ver valor</button>
 
   <div id="popup"></div>
-  <button id="whatsapp" onclick="window.location.href='https://wa.me/5521969312625'">Voltar para o WhatsApp</button>
+
+  <div id="whatsapp">
+    <a href="https://wa.me/5521969312625" target="_blank">Voltar para o WhatsApp</a>
+  </div>
 
   <script>
     async function verValor() {
       const input = document.getElementById("bairroInput").value.trim();
-      const qtd = parseInt(document.getElementById("qtdInput").value.trim());
       const popup = document.getElementById("popup");
       const whatsapp = document.getElementById("whatsapp");
-
-      popup.innerHTML = "";
-      whatsapp.style.display = "none";
-
-      if (!input || !qtd || qtd < 1) {
-        popup.innerHTML = "❗ Preencha o bairro e a quantidade corretamente.";
-        return;
-      }
 
       const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
       const data = await response.json();
 
-      const normalizar = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+      const normalizar = str =>
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
       const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
+      popup.style.display = "block";
+      whatsapp.style.display = "block";
+
       if (resultado) {
-        if (qtd > 4) {
-          popup.innerHTML = `🚨 Para mais de 4 veículos, fale diretamente com nosso time pelo WhatsApp: <br><strong>(21) 96931-2625</strong>`;
-        } else {
-          const total = (parseFloat(resultado.valor.replace(",", ".")) * qtd).toFixed(2).replace(".", ",");
-          popup.innerHTML = `✅ ${qtd} veículo(s) em ${resultado.bairro} = R$ ${total} total`;
-          whatsapp.style.display = "inline-block";
-        }
+        popup.className = "sucesso";
+        popup.innerHTML = `✅ Sua instalação é apenas R$ ${resultado.valor}`;
       } else {
+        popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
       }
     }
