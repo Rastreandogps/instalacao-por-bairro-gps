@@ -75,7 +75,7 @@
 <body>
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
-  <input type="number" id="quantidadeInput" placeholder="Digite aqui a quantidade de veículos" />
+  <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" />
   <br>
   <button onclick="verValor()">Ver valor</button>
 
@@ -88,6 +88,7 @@
   <script>
     async function verValor() {
       const input = document.getElementById("bairroInput").value.trim();
+      const quantidade = parseInt(document.getElementById("quantidadeInput").value.trim(), 10) || 1;
       const popup = document.getElementById("popup");
       const whatsapp = document.getElementById("whatsapp");
 
@@ -95,7 +96,7 @@
       const data = await response.json();
 
       const normalizar = str =>
-        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
       const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
@@ -103,8 +104,9 @@
       whatsapp.style.display = "block";
 
       if (resultado) {
+        const total = (parseFloat(resultado.valor) * quantidade).toFixed(2);
         popup.className = "sucesso";
-        popup.innerHTML = `✅ Sua instalação é apenas R$ ${resultado.valor}`;
+        popup.innerHTML = `✅ Sua instalação para ${quantidade} veículo(s) é apenas R$ ${total}`;
       } else {
         popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
