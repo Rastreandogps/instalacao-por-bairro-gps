@@ -9,7 +9,7 @@ async function verValor() {
   const normalizar = str =>
     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-  const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
+  const resultado = data.find(entry => normalizar(entry.bairro.trim()) === normalizar(input));
 
   popup.style.display = "block";
   whatsapp.style.display = "block";
