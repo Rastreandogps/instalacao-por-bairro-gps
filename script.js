@@ -7,6 +7,8 @@ async function verValor() {
 
   const normalizar = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairro));
+  const resultado = bairros.find(item => item.bairro.trim().toLowerCase() === input);
+
 
   if (resultado) {
     popup.style.display = "block";
