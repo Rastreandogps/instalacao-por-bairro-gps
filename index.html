@@ -14,6 +14,7 @@
     input, button {
       padding: 10px;
       font-size: 16px;
+      margin: 5px;
     }
     button {
       background-color: #28a745;
@@ -24,33 +25,18 @@
     button:hover {
       background-color: #218838;
     }
-
     #popup {
       display: none;
       margin-top: 20px;
       padding: 20px;
+      background: white;
+      border: 1px solid #ccc;
       font-size: 18px;
-      border-radius: 8px;
-      animation: fadeIn 0.4s ease-in-out;
     }
-
-    .sucesso {
-      background: #e6f4ea;
-      border: 1px solid #2ecc71;
-      color: #2d7d46;
-    }
-
-    .erro {
-      background: #fdecea;
-      border: 1px solid #e74c3c;
-      color: #c0392b;
-    }
-
     #whatsapp {
       display: none;
       margin-top: 20px;
     }
-
     #whatsapp a {
       background-color: #25D366;
       color: white;
@@ -60,20 +46,15 @@
       font-weight: bold;
       display: inline-block;
     }
-
     #whatsapp a:hover {
       background-color: #1ebe5d;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to   { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
+  <input type="number" id="quantidadeInput" placeholder="Quantos veículos?" min="1" value="1" />
   <button onclick="verValor()">Ver valor</button>
 
   <div id="popup"></div>
@@ -84,7 +65,8 @@
 
   <script>
     async function verValor() {
-      const input = document.getElementById("bairroInput").value.trim();
+      const bairroInput = document.getElementById("bairroInput").value.trim();
+      const quantidadeInput = parseInt(document.getElementById("quantidadeInput").value);
       const popup = document.getElementById("popup");
       const whatsapp = document.getElementById("whatsapp");
 
@@ -92,18 +74,23 @@
       const data = await response.json();
 
       const normalizar = str =>
-        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
-      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
+      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
 
       popup.style.display = "block";
       whatsapp.style.display = "block";
 
       if (resultado) {
-        popup.className = "sucesso";
-        popup.innerHTML = `✅ Sua instalação é apenas R$ ${resultado.valor}`;
+        const valorUnitario = parseFloat(resultado.valor.replace(',', '.'));
+
+        if (quantidadeInput > 4) {
+          popup.innerHTML = `🚨 Para mais de 4 veículos, fale diretamente com nosso time pelo WhatsApp:<br><strong>(21) 96931-2625</strong>`;
+        } else {
+          const total = (valorUnitario * quantidadeInput).toFixed(2).replace('.', ',');
+          popup.innerHTML = `✅ ${quantidadeInput} veículo(s) em ${resultado.bairro} = <strong>R$ ${total}</strong> total`;
+        }
       } else {
-        popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
       }
     }
