@@ -5,7 +5,8 @@ async function verValor() {
   const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
   const data = await response.json();
 
-  const resultado = data.find(entry => entry.bairro.toLowerCase() === bairro);
+  const normalizar = str => str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairro));
 
   if (resultado) {
     popup.style.display = "block";
