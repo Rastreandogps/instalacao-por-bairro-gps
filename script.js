@@ -2,7 +2,7 @@ async function verValor() {
   const bairro = document.getElementById("bairroInput").value.toLowerCase().trim();
   const popup = document.getElementById("popup");
 
-  const response = await fetch("bairros.json");
+  const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
   const data = await response.json();
 
   const resultado = data.find(entry => entry.bairro.toLowerCase() === bairro);
