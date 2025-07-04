@@ -171,7 +171,7 @@
   {"bairro": "Jardim Olavo Bilac", "valor": "89,90"},
   {"bairro": "Vila Urussaí", "valor": "89,90"},
   {"bairro": "Bar dos Cavaleiros", "valor": "89,90"},
-  {"bairro": "Copacabana", "valor": "89,90"}
+  {"bairro": "Copacabana", "valor": "89,90"},
   {"bairro": "São Bento", "valor": "89,90"},
   {"bairro": "Engenho do Porto", "valor": "89,90"},
   {"bairro": "Vila Meriti (Caxias)", "valor": "89,90"},
@@ -262,7 +262,7 @@
   {"bairro": "Bela Vista", "valor": "89,90"},
   {"bairro": "Santo Elias", "valor": "89,90"},
   {"bairro": "Parque Eldorado", "valor": "89,90"},
-  {"bairro": "Vila Suzana", "valor": "89,90"}
+  {"bairro": "Vila Suzana", "valor": "89,90"},
   {"bairro": "Parque Alvorada", "valor": "R$ 89,90"},
   {"bairro": "Nova Iguaçu", "valor": "R$ 89,90"},
   {"bairro": "NI", "valor": "R$ 89,90"},
@@ -388,7 +388,7 @@
   {"bairro": "Camboinhas", "valor": "R$ 89,90"},
   {"bairro": "Itaipu", "valor": "R$ 89,90"},
   {"bairro": "Maravista", "valor": "R$ 89,90"},
-  {"bairro": "Rio do Ouro", "valor": "R$ 89,90"}
+  {"bairro": "Rio do Ouro", "valor": "R$ 89,90"},
   {"bairro": "Várzea das Moças", "valor": "R$ 89,90"},
   {"bairro": "Vila Progresso", "valor": "R$ 89,90"},
   {"bairro": "Serra Grande", "valor": "R$ 89,90"},
