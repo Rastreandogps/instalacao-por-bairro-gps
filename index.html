@@ -11,64 +11,61 @@
       text-align: center;
       background: #f5f5f5;
     }
-    input, button {
+    input, select, button {
       padding: 10px;
-      font-size: 16px;
       margin: 5px;
-    }
-    button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #218838;
+      font-size: 16px;
     }
     #popup {
-      display: none;
       margin-top: 20px;
-      padding: 20px;
       background: white;
+      padding: 20px;
       border: 1px solid #ccc;
-      font-size: 18px;
+      display: none;
     }
     #whatsapp {
       display: none;
       margin-top: 20px;
-    }
-    #whatsapp a {
-      background-color: #25D366;
+      padding: 15px 30px;
+      background: #16c24a;
       color: white;
-      padding: 12px 20px;
-      border-radius: 5px;
-      text-decoration: none;
       font-weight: bold;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 5px;
       display: inline-block;
-    }
-    #whatsapp a:hover {
-      background-color: #1ebe5d;
     }
   </style>
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
+  <p>Informe o bairro e a quantidade de veículos</p>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
-  <input type="number" id="quantidadeInput" placeholder="Quantos veículos?" min="1" value="1" />
+  <select id="quantidade">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
   <button onclick="verValor()">Ver valor</button>
-
   <div id="popup"></div>
-
-  <div id="whatsapp">
-    <a href="https://wa.me/5521969312625" target="_blank">Voltar para o WhatsApp</a>
-  </div>
+  <a id="whatsapp" href="https://wa.me/5521969312625" target="_blank">Voltar para o WhatsApp</a>
 
   <script>
     async function verValor() {
-      const bairroInput = document.getElementById("bairroInput").value.trim();
-      const quantidadeInput = parseInt(document.getElementById("quantidadeInput").value);
+      const input = document.getElementById("bairroInput").value.trim();
+      const quantidade = parseInt(document.getElementById("quantidade").value);
       const popup = document.getElementById("popup");
       const whatsapp = document.getElementById("whatsapp");
+
+      popup.style.display = "block";
+      whatsapp.style.display = "none";
+
+      if (quantidade > 4) {
+        popup.innerHTML = `🚨 Para mais de 4 veículos, fale diretamente com nosso time pelo WhatsApp:<br><strong>(21) 96931-2625</strong>`;
+        return;
+      }
 
       const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
       const data = await response.json();
@@ -76,20 +73,12 @@
       const normalizar = str =>
         str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
-      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
-
-      popup.style.display = "block";
-      whatsapp.style.display = "block";
+      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
       if (resultado) {
-        const valorUnitario = parseFloat(resultado.valor.replace(',', '.'));
-
-        if (quantidadeInput > 4) {
-          popup.innerHTML = `🚨 Para mais de 4 veículos, fale diretamente com nosso time pelo WhatsApp:<br><strong>(21) 96931-2625</strong>`;
-        } else {
-          const total = (valorUnitario * quantidadeInput).toFixed(2).replace('.', ',');
-          popup.innerHTML = `✅ ${quantidadeInput} veículo(s) em ${resultado.bairro} = <strong>R$ ${total}</strong> total`;
-        }
+        const total = (parseFloat(resultado.valor.replace(",", ".")) * quantidade).toFixed(2).replace(".", ",");
+        popup.innerHTML = `✅ ${quantidade} veículo(s) em ${resultado.bairro} = R$ ${total} total`;
+        whatsapp.style.display = "inline-block";
       } else {
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
       }
