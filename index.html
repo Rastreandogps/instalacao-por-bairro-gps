@@ -14,6 +14,7 @@
     input, button {
       padding: 10px;
       font-size: 16px;
+      margin: 5px;
     }
     button {
       background-color: #28a745;
@@ -74,6 +75,8 @@
 <body>
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite o bairro" />
+  <input type="number" id="quantidadeInput" placeholder="Digite aqui a quantidade de veículos" />
+  <br>
   <button onclick="verValor()">Ver valor</button>
 
   <div id="popup"></div>
@@ -92,7 +95,7 @@
       const data = await response.json();
 
       const normalizar = str =>
-        str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 
       const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
