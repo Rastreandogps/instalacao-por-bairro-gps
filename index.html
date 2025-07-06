@@ -11,20 +11,26 @@
       text-align: center;
       background: #f5f5f5;
     }
+
     input, select, button {
       padding: 10px;
       font-size: 16px;
       margin: 5px;
     }
+
     button {
       background-color: #28a745;
       color: white;
       border: none;
       cursor: pointer;
+      border-radius: 50px;
+      padding: 10px 20px;
     }
+
     button:hover {
       background-color: #218838;
     }
+
     #popup, #mensalidadeBox, #beneficiosBox {
       display: none;
       margin-top: 20px;
@@ -33,11 +39,13 @@
       border-radius: 8px;
       animation: fadeIn 0.4s ease-in-out;
     }
+
     .sucesso {
       background: #e6f4ea;
       border: 1px solid #2ecc71;
       color: #2d7d46;
     }
+
     .erro {
       background: #fdecea;
       border: 1px solid #e74c3c;
@@ -67,6 +75,11 @@
 
     .azulZap {
       background-color: #007BFF;
+      color: white;
+    }
+
+    .vermelhoZap {
+      background-color: #dc3545;
       color: white;
     }
 
@@ -157,7 +170,7 @@
 
   <div id="naoEncontrou" style="display:none;">
     <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." 
-       class="botaoZap azulZap" 
+       class="botaoZap vermelhoZap" 
        target="_blank">
       Não encontrei meu bairro
     </a>
@@ -226,9 +239,14 @@
 
         beneficiosBox.className = "sucesso";
         beneficiosBox.innerHTML = beneficios;
+
       } else {
         popup.className = "erro";
-        popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
+        popup.innerHTML = `
+          ❌ Este bairro não foi encontrado.<br>
+          📌 Verifique se você digitou corretamente o nome do bairro.<br><br>
+          Exemplo: São Cristóvão, Niterói, Duque de Caxias
+        `;
         mensalidadeBox.style.display = "none";
         beneficiosBox.style.display = "none";
       }
