@@ -44,12 +44,7 @@
       color: #c0392b;
     }
 
-    #whatsapp, #duvidas, #naoEncontrou {
-      display: none;
-      margin-top: 15px;
-    }
-
-    #whatsapp a, #duvidas a, #naoEncontrou a {
+    .botaoZap {
       padding: 12px 20px;
       border-radius: 50px;
       text-decoration: none;
@@ -57,21 +52,22 @@
       display: inline-block;
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      margin: 10px auto;
     }
 
-    #whatsapp a {
+    .botaoZap:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .verdeZap {
       background-color: #25D366;
       color: white;
     }
 
-    #duvidas a, #naoEncontrou a {
+    .azulZap {
       background-color: #007BFF;
       color: white;
-    }
-
-    #whatsapp a:hover, #duvidas a:hover, #naoEncontrou a:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
     .pulsando {
@@ -127,6 +123,14 @@
   <div id="mensalidadeBox"></div>
   <div id="beneficiosBox"></div>
 
+  <div id="botaoExtraAcimaVideo" style="display:none;">
+    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." 
+       class="botaoZap verdeZap" 
+       target="_blank">
+      Clique Aqui e Agende já
+    </a>
+  </div>
+
   <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
   <iframe width="100%" height="315"
     src="https://www.youtube.com/embed/nB5CC01cGIo"
@@ -135,20 +139,26 @@
     allowfullscreen>
   </iframe>
 
-  <div id="whatsapp">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." target="_blank">
+  <div id="whatsapp" style="display:none;">
+    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." 
+       class="botaoZap verdeZap" 
+       target="_blank">
       Clique Aqui e Agende já
     </a>
   </div>
 
-  <div id="duvidas">
-    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." target="_blank">
+  <div id="duvidas" style="display:none;">
+    <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." 
+       class="botaoZap azulZap" 
+       target="_blank">
       Ainda tenho dúvidas
     </a>
   </div>
 
-  <div id="naoEncontrou">
-    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." target="_blank">
+  <div id="naoEncontrou" style="display:none;">
+    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." 
+       class="botaoZap azulZap" 
+       target="_blank">
       Não encontrei meu bairro
     </a>
   </div>
@@ -164,6 +174,7 @@
       const whatsapp = document.getElementById("whatsapp");
       const duvidas = document.getElementById("duvidas");
       const naoEncontrou = document.getElementById("naoEncontrou");
+      const botaoExtraAcimaVideo = document.getElementById("botaoExtraAcimaVideo");
 
       const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
       const data = await response.json();
@@ -177,6 +188,7 @@
       whatsapp.style.display = "block";
       duvidas.style.display = "block";
       naoEncontrou.style.display = "block";
+      botaoExtraAcimaVideo.style.display = "block";
       mensalidadeBox.style.display = "block";
       beneficiosBox.style.display = "block";
 
@@ -184,6 +196,18 @@
         const valorInstalacao = parseFloat(resultado.valor) * quantidade;
         popup.className = "sucesso";
         popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2)}`;
+
+        const beneficios = `
+          ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
+          ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
+          ⚠️ <strong>ALERTAS</strong> de ignição<br>
+          🔒 <strong>BLOQUEIO</strong> e <strong>DESBLOQUEIO</strong><br>
+          🛣️ <strong>HISTÓRICO</strong> de rotas e <strong>VELOCIDADE</strong><br>
+          📱 <strong>ANDROID</strong> e <strong>iOS</strong><br>
+          🙋‍♂️ <strong>SUPORTE</strong> humano rápido e atencioso<br><br>
+          🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
+          <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
+        `;
 
         if (tipo === "com") {
           const cheio = 54.90 * quantidade;
@@ -194,34 +218,14 @@
             Pagando até a data do vencimento, você ganha um desconto:<br>
             <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
-          beneficiosBox.className = "sucesso";
-          beneficiosBox.innerHTML = `
-            ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
-            ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
-            ⚠️ <strong>ALERTAS</strong> de ignição<br>
-            🔒 <strong>BLOQUEIO</strong> e <strong>DESBLOQUEIO</strong><br>
-            🛣️ <strong>HISTÓRICO</strong> de rotas e <strong>VELOCIDADE</strong><br>
-            📱 <strong>ANDROID</strong> e <strong>iOS</strong><br>
-            🙋‍♂️ <strong>SUPORTE</strong> humano rápido e atencioso<br><br>
-            🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
-            <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
-          `;
         } else {
           const valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
-          beneficiosBox.className = "sucesso";
-          beneficiosBox.innerHTML = `
-            ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
-            ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
-            ⚠️ <strong>ALERTAS</strong> de ignição<br>
-            🛣️ <strong>HISTÓRICO</strong> de rotas e <strong>VELOCIDADE</strong><br>
-            📱 <strong>ANDROID</strong> e <strong>iOS</strong><br>
-            🙋‍♂️ <strong>SUPORTE</strong> humano rápido e atencioso<br><br>
-            🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
-            <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
-          `;
         }
+
+        beneficiosBox.className = "sucesso";
+        beneficiosBox.innerHTML = beneficios;
       } else {
         popup.className = "erro";
         popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
