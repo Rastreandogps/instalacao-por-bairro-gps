@@ -270,7 +270,6 @@
 {"bairro": "Parque Eldorado", "valor": "89,90"},
 {"bairro": "Vila Suzana", "valor": "89,90"},
 {"bairro": "Parque Alvorada", "valor": "R$ 89,90"},
-{"bairro": "Nova Iguaçu", "valor": "R$ 89,90"},
 {"bairro": "NI", "valor": "R$ 89,90"},
 {"bairro": "Comendador Soares", "valor": "R$ 89,90"},
 {"bairro": "Austin", "valor": "R$ 89,90"},
@@ -496,7 +495,6 @@
 {"bairro": "Coelho (Itaboraí)", "valor": "R$ 89,90"},
 {"bairro": "Anaia (Itaboraí)", "valor": "R$ 89,90"},
 {"bairro": "Monjolos (Itaboraí)", "valor": "R$ 89,90"},
-{"bairro": "Ipiíba (Itaboraí)", "valor": "R$ 89,90"}
 {"bairro": "Nova Iguaçu", "valor": "89,90"},
 {"bairro": "Caxias Centro", "valor": "89,90"},
 {"bairro": "Taquara (Duque de Caxias)", "valor": "89,90"},
@@ -587,5 +585,5 @@
 {"bairro": "Jurujuba", "valor": "89,90"},
 {"bairro": "São Gonçalo", "valor": "89,90"},
 {"bairro": "Itaboraí", "valor": "89,90"},
-{"bairro": "Maricá", "valor": "89,90"},
+{"bairro": "Maricá", "valor": "89,90"}
 ]
