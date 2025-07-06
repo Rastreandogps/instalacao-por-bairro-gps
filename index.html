@@ -11,20 +11,17 @@
       text-align: center;
       background: #f5f5f5;
     }
-
     input, select, button {
       padding: 10px;
       font-size: 16px;
       margin: 5px;
     }
-
     button {
       background-color: #28a745;
       color: white;
       border: none;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #218838;
     }
@@ -81,26 +78,32 @@
       background-color: #0056b3;
     }
 
-    #beneficiosBox {
-      text-align: left;
-    }
-
-    .pulsando {
-      animation: pulsar 1.5s infinite;
-      font-weight: bold;
-      color: #2d7d46;
-      display: inline-block;
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to   { opacity: 1; transform: scale(1); }
     }
 
+    .pulsando {
+      animation: pulsar 1.5s infinite;
+      font-weight: bold;
+      color: #1456c0;
+      display: inline-block;
+    }
+
     @keyframes pulsar {
-      0%   { transform: scale(1); }
-      50%  { transform: scale(1.12); }
-      100% { transform: scale(1); }
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.75; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #beneficiosBox {
+      text-align: left;
+      background-color: #e8f4fd;
+      border: 1px solid #2e86de;
+      color: #0d3c61;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
   </style>
 </head>
@@ -166,7 +169,6 @@
             Pagando até a data do vencimento, você ganha um desconto:<br>
             <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
-          beneficiosBox.className = "sucesso";
           beneficiosBox.innerHTML = `
             ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
             ✅ LOCALIZAÇÃO em tempo real<br>
@@ -182,7 +184,6 @@
           const valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
-          beneficiosBox.className = "sucesso";
           beneficiosBox.innerHTML = `
             ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
             ✅ LOCALIZAÇÃO em tempo real<br>
