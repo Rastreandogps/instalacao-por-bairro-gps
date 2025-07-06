@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consultar Valor da Instalação</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+      text-align: center;
+      background: #f5f5f5;
+    }
+    input, select, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+
+    #popup, #mensalidadeBox, #beneficiosBox {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      font-size: 18px;
+      border-radius: 8px;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .sucesso {
+      background: #e6f4ea;
+      border: 1px solid #2ecc71;
+      color: #2d7d46;
+    }
+
+    .erro {
+      background: #fdecea;
+      border: 1px solid #e74c3c;
+      color: #c0392b;
+    }
+
+    #whatsapp, #duvidas {
+      display: none;
+      margin-top: 15px;
+    }
+
+    #whatsapp a, #duvidas a {
+      padding: 12px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    #whatsapp a {
+      background-color: #25D366;
+      color: white;
+    }
+
+    #whatsapp a:hover {
+      background-color: #1ebe5d;
+    }
+
+    #duvidas a {
+      background-color: #007BFF;
+      color: white;
+    }
+
+    #duvidas a:hover {
+      background-color: #0056b3;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Consulte o valor da instalação</h1>
+  <input type="text" id="bairroInput" placeholder="Digite o bairro do RJ" />
+  <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
+  <select id="tipoRastreador">
+    <option value="com">Com bloqueio</option>
+    <option value="sem">Sem bloqueio</option>
+  </select>
+  <br>
+  <button onclick="verValor()">Ver valor</button>
+
+  <div id="popup"></div>
+  <div id="mensalidadeBox"></div>
+  <div id="beneficiosBox"></div>
+
+  <div id="whatsapp">
+    <a href="https://wa.me/5521969312625" target="_blank">Gostaria de Agendar Minha Instalação</a>
+  </div>
+
+  <div id="duvidas">
+    <a href="https://wa.me/5521971280678" target="_blank">Ainda tenho dúvidas</a>
+  </div>
+
+  <script>
+    async function verValor() {
+      const bairroInput = document.getElementById("bairroInput").value.trim();
+      const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
+      const tipo = document.getElementById("tipoRastreador").value;
+      const popup = document.getElementById("popup");
+      const mensalidadeBox = document.getElementById("mensalidadeBox");
+      const beneficiosBox = document.getElementById("beneficiosBox");
+      const whatsapp = document.getElementById("whatsapp");
+      const duvidas = document.getElementById("duvidas");
+
+      const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
+      const data = await response.json();
+
+      const normalizar = str =>
+        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+
+      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
+
+      popup.style.display = "block";
+      whatsapp.style.display = "block";
+      duvidas.style.display = "block";
+      mensalidadeBox.style.display = "block";
+      beneficiosBox.style.display = "block";
+
+      if (resultado) {
+        const valorInstalacao = parseFloat(resultado.valor) * quantidade;
+        popup.className = "sucesso";
+        popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2)}`;
+
+        if (tipo === "com") {
+          const cheio = 54.90 * quantidade;
+          const desconto = 49.90 * quantidade;
+          mensalidadeBox.className = "sucesso";
+          mensalidadeBox.innerHTML = `
+            📅 Mensalidade: R$ ${cheio.toFixed(2)}<br>
+            Pagando até a data do vencimento, você ganha um desconto:<br>
+            <strong>R$ ${desconto.toFixed(2)} mensais</strong>
+          `;
+          beneficiosBox.className = "sucesso";
+          beneficiosBox.innerHTML = `
+            ✨ Benefícios que você vai ter com a Rastreando GPS:<br><br>
+            ✅ LOCALIZAÇÃO em tempo real<br>
+            ⚠️ ALERTAS de ignição<br>
+            🔒 BLOQUEIO e DESBLOQUEIO remoto<br>
+            🛣️ HISTÓRICO de rotas e VELOCIDADE<br>
+            📱 ACESSO pelo celular e computador<br>
+            🙋‍♂️ SUPORTE humano rápido e atencioso<br><br>
+            🚘 SEGURANÇA, praticidade e controle em um só lugar!<br><br>
+            Clique no botão abaixo e agende logo sua instalação 👇
+          `;
+        } else {
+          const valorMensal = 39.90 * quantidade;
+          mensalidadeBox.className = "sucesso";
+          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
+          beneficiosBox.className = "sucesso";
+          beneficiosBox.innerHTML = `
+            ✨ Benefícios que você vai ter com a Rastreando GPS:<br><br>
+            ✅ LOCALIZAÇÃO em tempo real<br>
+            ⚠️ ALERTAS de ignição<br>
+            🛣️ HISTÓRICO de rotas e VELOCIDADE<br>
+            📱 ACESSO pelo celular e computador<br>
+            🙋‍♂️ SUPORTE humano rápido e atencioso<br><br>
+            🚘 SEGURANÇA, praticidade e controle em um só lugar!<br><br>
+            Clique no botão abaixo e agende logo sua instalação 👇
+          `;
+        }
+
+      } else {
+        popup.className = "erro";
+        popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
+        mensalidadeBox.style.display = "none";
+        beneficiosBox.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
