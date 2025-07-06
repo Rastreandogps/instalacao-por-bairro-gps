@@ -43,31 +43,37 @@
       border: 1px solid #e74c3c;
       color: #c0392b;
     }
+
     #whatsapp, #duvidas, #naoEncontrou {
       display: none;
       margin-top: 15px;
     }
+
     #whatsapp a, #duvidas a, #naoEncontrou a {
       padding: 12px 20px;
-      border-radius: 5px;
+      border-radius: 50px;
       text-decoration: none;
       font-weight: bold;
       display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
+
     #whatsapp a {
       background-color: #25D366;
       color: white;
     }
-    #whatsapp a:hover {
-      background-color: #1ebe5d;
-    }
+
     #duvidas a, #naoEncontrou a {
       background-color: #007BFF;
       color: white;
     }
-    #duvidas a:hover, #naoEncontrou a:hover {
-      background-color: #0056b3;
+
+    #whatsapp a:hover, #duvidas a:hover, #naoEncontrou a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
+
     .pulsando {
       font-weight: bold;
       color: #065f46;
@@ -75,15 +81,18 @@
       display: inline-block;
       margin-top: 10px;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to   { opacity: 1; transform: scale(1); }
     }
+
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.03); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
+
     #beneficiosBox {
       text-align: left;
       background-color: #e8f4fd;
@@ -93,11 +102,12 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
     .destaque-video {
       margin: 40px 0 20px;
       font-size: 22px;
       font-weight: bold;
-      color: #000; /* cor preta */
+      color: #000;
       animation: pulse 1.6s infinite;
     }
   </style>
@@ -117,7 +127,6 @@
   <div id="mensalidadeBox"></div>
   <div id="beneficiosBox"></div>
 
-  <!-- VÍDEO -->
   <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
   <iframe width="100%" height="315"
     src="https://www.youtube.com/embed/nB5CC01cGIo"
@@ -126,7 +135,6 @@
     allowfullscreen>
   </iframe>
 
-  <!-- BOTÕES WHATSAPP -->
   <div id="whatsapp">
     <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." target="_blank">
       Clique Aqui e Agende já
