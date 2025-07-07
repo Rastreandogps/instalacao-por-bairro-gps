@@ -134,9 +134,8 @@
 
   <div id="popup"></div>
 
-  <!-- 🔽 NOVO BOTÃO POSICIONADO LOGO ABAIXO DO POPUP -->
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20ou%20minha%20cidade%20na%20lista%20de%20instala%C3%A7%C3%A3o." 
+    <a href="https://wa.me/5521969312625" 
        class="botaoZap vermelhoZap" 
        target="_blank">
       Não encontrei meu bairro
@@ -147,7 +146,7 @@
   <div id="beneficiosBox"></div>
 
   <div id="botaoExtraAcimaVideo" style="display:none;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." 
+    <a href="#" 
        class="botaoZap verdeZap" 
        target="_blank">
       Clique Aqui e Agende já
@@ -163,7 +162,7 @@
   </iframe>
 
   <div id="whatsapp" style="display:none;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." 
+    <a href="#" 
        class="botaoZap verdeZap" 
        target="_blank">
       Clique Aqui e Agende já
@@ -234,9 +233,18 @@
           <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
         `;
 
+        let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
+        textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
+        textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
+        textoMensagem += `📦 Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
+        textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2)}\n`;
+
+        let valorMensal = 0;
+
         if (tipo === "com") {
           const cheio = 54.90 * quantidade;
           const desconto = 49.90 * quantidade;
+          valorMensal = desconto;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `
             📅 Mensalidade: R$ ${cheio.toFixed(2)}<br>
@@ -244,13 +252,20 @@
             <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
         } else {
-          const valorMensal = 39.90 * quantidade;
+          valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
         }
 
+        textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2)}\n`;
+
         beneficiosBox.className = "sucesso";
         beneficiosBox.innerHTML = beneficios;
+
+        const textoEncoded = encodeURIComponent(textoMensagem);
+
+        whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
+        botaoExtraAcimaVideo.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
 
       } else {
         popup.className = "erro";
