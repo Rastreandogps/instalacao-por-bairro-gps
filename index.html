@@ -236,7 +236,7 @@
         let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
         textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
         textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
-        textoMensagem += `📦 Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
+        textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
         textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2)}\n`;
 
         let valorMensal = 0;
@@ -247,9 +247,9 @@
           valorMensal = desconto;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `
-            📅 Mensalidade: R$ ${cheio.toFixed(2)}<br>
-            Pagando até a data do vencimento, você ganha um desconto:<br>
-            <strong>R$ ${desconto.toFixed(2)} mensais</strong>
+            📅 Mensalidade: R$ ${(54.90).toFixed(2)}<br>
+            Pagando até a data do vencimento, sai por:<br>
+            💸 <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
         } else {
           valorMensal = 39.90 * quantidade;
