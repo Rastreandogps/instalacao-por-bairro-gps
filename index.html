@@ -251,13 +251,13 @@
             Pagando até a data do vencimento, sai por:<br>
             💸 <strong>R$ ${desconto.toFixed(2)} mensais</strong>
           `;
+          textoMensagem += `📅 Mensalidade: R$ ${(54.90).toFixed(2)} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2)})\n`;
         } else {
           valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
+          textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2)}\n`;
         }
-
-        textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2)}\n`;
 
         beneficiosBox.className = "sucesso";
         beneficiosBox.innerHTML = beneficios;
