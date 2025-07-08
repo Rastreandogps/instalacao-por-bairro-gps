@@ -11,13 +11,11 @@
       text-align: center;
       background: #f5f5f5;
     }
-
     input, select, button {
       padding: 10px;
       font-size: 16px;
       margin: 5px;
     }
-
     button {
       background-color: #28a745;
       color: white;
@@ -26,11 +24,9 @@
       border-radius: 50px;
       padding: 10px 20px;
     }
-
     button:hover {
       background-color: #218838;
     }
-
     #popup, #mensalidadeBox, #beneficiosBox {
       display: none;
       margin-top: 20px;
@@ -39,19 +35,16 @@
       border-radius: 8px;
       animation: fadeIn 0.4s ease-in-out;
     }
-
     .sucesso {
       background: #e6f4ea;
       border: 1px solid #2ecc71;
       color: #2d7d46;
     }
-
     .erro {
       background: #fdecea;
       border: 1px solid #e74c3c;
       color: #c0392b;
     }
-
     .botaoZap {
       padding: 12px 20px;
       border-radius: 50px;
@@ -62,16 +55,13 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       margin: 10px auto;
     }
-
     .botaoZap:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
-
     .verdeZap { background-color: #25D366; color: white; }
     .azulZap { background-color: #007BFF; color: white; }
     .vermelhoZap { background-color: #dc3545; color: white; }
-
     .pulsando {
       font-weight: bold;
       color: #065f46;
@@ -79,18 +69,15 @@
       display: inline-block;
       margin-top: 10px;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to   { opacity: 1; transform: scale(1); }
     }
-
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.03); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
-
     #beneficiosBox {
       text-align: left;
       background-color: #e8f4fd;
@@ -100,7 +87,6 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-
     .destaque-video {
       margin: 40px 0 20px;
       font-size: 22px;
@@ -112,7 +98,6 @@
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
-
   <input type="text" id="bairroInput" placeholder="Digite a cidade do RJ" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
   <select id="tipoRastreador">
@@ -240,16 +225,16 @@
 
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `
-            📅 Mensalidade: R$ ${cheio.toFixed(2)}<br>
+            📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br>
             Pagando até a data do vencimento, sai por:<br>
-            💸 <strong>R$ ${desconto.toFixed(2)} mensais</strong>
+            💸 <strong>R$ ${desconto.toFixed(2).replace(".", ",")} mensais</strong>
           `;
-          textoMensagem += `📅 Mensalidade: R$ ${cheio.toFixed(2)} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2)})\n`;
+          textoMensagem += `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2).replace(".", ",")})\n`;
         } else {
           valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
-          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2)} mensais</strong>`;
-          textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2)}\n`;
+          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2).replace(".", ",")} mensais</strong>`;
+          textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
         }
 
         beneficiosBox.className = "sucesso";
