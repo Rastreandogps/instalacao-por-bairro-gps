@@ -14,33 +14,44 @@ async function verValor() {
 
   const quantidade = parseInt(quantidadeRaw);
 
-  const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
-  const data = await response.json();
+  try {
+    const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
+    const data = await response.json();
 
-  const normalizar = str =>
-    str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    const normalizar = str =>
+      str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
-  const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
+    const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
-  if (resultado) {
-    // Remove "R$", espaço, e troca vírgula por ponto
-    const valorSanitizado = resultado.valor
-      .toString()
-      .replace(/r?\$?/gi, "")   // remove R ou R$ (qualquer forma)
-      .replace(",", ".")        // troca vírgula por ponto
-      .trim();
+    if (resultado) {
+      // Debug: ver valor original vindo do JSON
+      console.log("Valor original bruto:", JSON.stringify(resultado.valor));
 
-    const valorUnitario = parseFloat(valorSanitizado);
+      // Limpa tudo que não é número, vírgula ou ponto
+      const valorSanitizado = resultado.valor
+        .toString()
+        .replace(/[^0-9,\.]/gu, "") // remove qualquer símbolo ou letra
+        .replace(",", ".")
+        .trim();
 
-    if (isNaN(valorUnitario)) {
-      popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
-      return;
+      console.log("Valor sanitizado final:", valorSanitizado);
+
+      const valorUnitario = parseFloat(valorSanitizado);
+
+      if (isNaN(valorUnitario)) {
+        popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
+        console.error("🚨 Falha ao converter:", resultado.valor, "→", valorSanitizado);
+        return;
+      }
+
+      const total = valorUnitario * quantidade;
+
+      popup.innerHTML = `✅ Valor total da instalação: R$ ${total.toFixed(2).replace(".", ",")}`;
+    } else {
+      popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
     }
-
-    const total = valorUnitario * quantidade;
-
-    popup.innerHTML = `✅ Valor total da instalação: R$ ${total.toFixed(2).replace(".", ",")}`;
-  } else {
-    popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
+  } catch (error) {
+    popup.innerHTML = "❌ Erro ao buscar os dados. Tente novamente mais tarde.";
+    console.error("Erro de fetch:", error);
   }
 }

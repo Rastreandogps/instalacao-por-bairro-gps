@@ -68,20 +68,9 @@
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
 
-    .verdeZap {
-      background-color: #25D366;
-      color: white;
-    }
-
-    .azulZap {
-      background-color: #007BFF;
-      color: white;
-    }
-
-    .vermelhoZap {
-      background-color: #dc3545;
-      color: white;
-    }
+    .verdeZap { background-color: #25D366; color: white; }
+    .azulZap { background-color: #007BFF; color: white; }
+    .vermelhoZap { background-color: #dc3545; color: white; }
 
     .pulsando {
       font-weight: bold;
@@ -123,6 +112,7 @@
 </head>
 <body>
   <h1>Consulte o valor da instalação</h1>
+
   <input type="text" id="bairroInput" placeholder="Digite a cidade do RJ" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
   <select id="tipoRastreador">
@@ -135,9 +125,7 @@
   <div id="popup"></div>
 
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
-    <a href="https://wa.me/5521969312625" 
-       class="botaoZap vermelhoZap" 
-       target="_blank">
+    <a href="https://wa.me/5521969312625" class="botaoZap vermelhoZap" target="_blank">
       Não encontrei meu bairro
     </a>
   </div>
@@ -146,11 +134,7 @@
   <div id="beneficiosBox"></div>
 
   <div id="botaoExtraAcimaVideo" style="display:none;">
-    <a href="#" 
-       class="botaoZap verdeZap" 
-       target="_blank">
-      Clique Aqui e Agende já
-    </a>
+    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
 
   <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
@@ -162,25 +146,17 @@
   </iframe>
 
   <div id="whatsapp" style="display:none;">
-    <a href="#" 
-       class="botaoZap verdeZap" 
-       target="_blank">
-      Clique Aqui e Agende já
-    </a>
+    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
 
   <div id="duvidas" style="display:none;">
-    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." 
-       class="botaoZap azulZap" 
-       target="_blank">
+    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" target="_blank">
       Ainda tenho dúvidas
     </a>
   </div>
 
   <div id="naoEncontrou" style="display:none;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." 
-       class="botaoZap vermelhoZap" 
-       target="_blank">
+    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." class="botaoZap vermelhoZap" target="_blank">
       Não encontrei meu bairro
     </a>
   </div>
@@ -217,9 +193,29 @@
 
       if (resultado) {
         botaoBairroNaoEncontrado.style.display = "none";
-        const valorInstalacao = parseFloat(resultado.valor) * quantidade;
+
+        const valorSanitizado = resultado.valor
+          .toString()
+          .replace(/[^0-9,\.]/gu, "")
+          .replace(",", ".")
+          .trim();
+
+        const valorUnitario = parseFloat(valorSanitizado);
+
+        console.log("Valor original:", resultado.valor);
+        console.log("Valor sanitizado:", valorSanitizado);
+        console.log("Valor numérico:", valorUnitario);
+
+        if (isNaN(valorUnitario)) {
+          popup.className = "erro";
+          popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
+          return;
+        }
+
+        const valorInstalacao = valorUnitario * quantidade;
+
         popup.className = "sucesso";
-        popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2)}`;
+        popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
 
         const beneficios = `
           ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
@@ -237,7 +233,7 @@
         textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
         textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
         textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
-        textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2)}\n`;
+        textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
 
         let valorMensal = 0;
 
@@ -263,10 +259,8 @@
         beneficiosBox.innerHTML = beneficios;
 
         const textoEncoded = encodeURIComponent(textoMensagem);
-
         whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
         botaoExtraAcimaVideo.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
-
       } else {
         popup.className = "erro";
         popup.innerHTML = `
