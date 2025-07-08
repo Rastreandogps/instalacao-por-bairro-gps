@@ -23,22 +23,22 @@ async function verValor() {
   const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
   if (resultado) {
-    // TRATAMENTO COMPLETO DO VALOR
-    const valorLimpo = resultado.valor
+    // Remove "R$", espaço, e troca vírgula por ponto
+    const valorSanitizado = resultado.valor
       .toString()
-      .replace("R$", "")
-      .replace(" ", "")
-      .replace(",", ".")
+      .replace(/r?\$?/gi, "")   // remove R ou R$ (qualquer forma)
+      .replace(",", ".")        // troca vírgula por ponto
       .trim();
 
-    const valorUnitario = parseFloat(valorLimpo);
+    const valorUnitario = parseFloat(valorSanitizado);
 
     if (isNaN(valorUnitario)) {
-      popup.innerHTML = "❌ Erro ao interpretar o valor do bairro.";
+      popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
       return;
     }
 
     const total = valorUnitario * quantidade;
+
     popup.innerHTML = `✅ Valor total da instalação: R$ ${total.toFixed(2).replace(".", ",")}`;
   } else {
     popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
