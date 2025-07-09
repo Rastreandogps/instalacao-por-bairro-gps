@@ -100,7 +100,13 @@
       animation: pulse 1.6s infinite;
     }
 
-    /* Carrossel */
+    .destaque-carrossel {
+      margin-top: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+
     .carousel {
       width: 100%;
       max-width: 600px;
@@ -159,7 +165,10 @@
     allowfullscreen>
   </iframe>
 
-  <!-- Carrossel abaixo do vídeo -->
+  <div class="destaque-carrossel">
+    Veja com seus próprios olhos: veículos que foram recuperados graças ao nosso sistema de rastreamento. 🔒🚘
+  </div>
+
   <div class="carousel" id="carousel">
     <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1" />
     <img src="Recuperacao/Recuperacao2.jpg" alt="Veículo recuperado 2" />
@@ -184,7 +193,6 @@
     </a>
   </div>
 
-  <!-- Script original + carrossel automático -->
   <script>
     async function verValor() {
       const bairroInput = document.getElementById("bairroInput").value.trim();
@@ -310,10 +318,8 @@
       }
     }
 
-    // Carrossel automático
     let indexAtual = 0;
     const imagens = document.querySelectorAll("#carousel img");
-
     setInterval(() => {
       imagens[indexAtual].classList.remove("active");
       indexAtual = (indexAtual + 1) % imagens.length;
