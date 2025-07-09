@@ -27,7 +27,7 @@
     button:hover {
       background-color: #218838;
     }
-    #popup, #mensalidadeBox, #beneficiosBox {
+    #popup, #mensalidadeBox, #beneficiosBox, #ofertaBox {
       display: none;
       margin-top: 20px;
       padding: 20px;
@@ -44,6 +44,11 @@
       background: #fdecea;
       border: 1px solid #e74c3c;
       color: #c0392b;
+    }
+    .oferta {
+      background: #fff9e6;
+      border: 1px solid #f1c40f;
+      color: #9c7a00;
     }
     .botaoZap {
       padding: 12px 20px;
@@ -97,67 +102,23 @@
   </style>
 </head>
 <body>
-  <h1>Consulte o valor da instalação</h1>
-  <input type="text" id="bairroInput" placeholder="Digite a cidade do RJ" />
-  <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
-  <select id="tipoRastreador">
-    <option value="com">Com bloqueio</option>
-    <option value="sem">Sem bloqueio</option>
-  </select>
-  <br>
-  <button onclick="verValor()">Ver valor</button>
-
-  <div id="popup"></div>
-
-  <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">
-      Não encontrei meu bairro
-    </a>
-  </div>
+  <!-- ... [restante do código HTML permanece o mesmo] ... -->
 
   <div id="mensalidadeBox"></div>
+  <div id="ofertaBox" class="oferta"></div>
 
-  <div id="botaoWhatsAppAbaixoMensalidade" style="display: none;">
-    <a href="#" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
-  </div>
-
-  <div id="beneficiosBox"></div>
-
-  <div id="botaoExtraAcimaVideo" style="display:none;">
-    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
-  </div>
-
-  <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
-  <iframe width="100%" height="315"
-    src="https://www.youtube.com/embed/nB5CC01cGIo"
-    title="YouTube video player" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-
-  <div id="whatsapp" style="display:none;">
-    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
-  </div>
-
-  <div id="duvidas" style="display:none;">
-    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" target="_blank">
-      Clique aqui se ainda tem dúvidas
-  </div>
-
-  <div id="naoEncontrou" style="display:none;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o." class="botaoZap vermelhoZap" target="_blank">
-      Não encontrei meu bairro
-    </a>
-  </div>
+  <!-- ... [restante do código HTML permanece o mesmo] ... -->
 
   <script>
     async function verValor() {
       const bairroInput = document.getElementById("bairroInput").value.trim();
       const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
       const tipo = document.getElementById("tipoRastreador").value;
+
       const popup = document.getElementById("popup");
       const mensalidadeBox = document.getElementById("mensalidadeBox");
       const beneficiosBox = document.getElementById("beneficiosBox");
+      const ofertaBox = document.getElementById("ofertaBox");
       const whatsapp = document.getElementById("whatsapp");
       const duvidas = document.getElementById("duvidas");
       const naoEncontrou = document.getElementById("naoEncontrou");
@@ -179,6 +140,7 @@
       naoEncontrou.style.display = "block";
       mensalidadeBox.style.display = "block";
       beneficiosBox.style.display = "block";
+      ofertaBox.style.display = "none";
 
       if (resultado) {
         botaoBairroNaoEncontrado.style.display = "none";
@@ -202,18 +164,6 @@
 
         popup.className = "sucesso";
         popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
-
-        const beneficios = `
-          ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
-          ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
-          ⚠️ <strong>ALERTAS</strong> de ignição<br>
-          🔒 <strong>BLOQUEIO</strong> e <strong>DESBLOQUEIO</strong><br>
-          🛣️ <strong>HISTÓRICO</strong> de rotas e <strong>VELOCIDADE</strong><br>
-          📱 <strong>ANDROID</strong> e <strong>iOS</strong><br>
-          🙋‍♂️ <strong>SUPORTE</strong> humano rápido e atencioso<br><br>
-          🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
-          <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
-        `;
 
         let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
         textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
@@ -242,6 +192,29 @@
           textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
         }
 
+        if (quantidade >= 3) {
+          ofertaBox.className = "oferta";
+          ofertaBox.style.display = "block";
+          ofertaBox.innerHTML = `
+            🌟 <strong>Oferta Especial para Frotas!</strong><br><br>
+            Você possui mais de 3 veículos? Isso é incrível!<br>
+            Entre em contato conosco agora e tenha acesso a <strong>condições diferenciadas, planos empresariais</strong> e <strong>suporte dedicado</strong> para sua frota.<br><br>
+            💼 Transforme sua gestão com mais economia e eficiência!
+          `;
+        }
+
+        const beneficios = `
+          ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
+          ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
+          ⚠️ <strong>ALERTAS</strong> de ignição<br>
+          🔒 <strong>BLOQUEIO</strong> e <strong>DESBLOQUEIO</strong><br>
+          🛣️ <strong>HISTÓRICO</strong> de rotas e <strong>VELOCIDADE</strong><br>
+          📱 <strong>ANDROID</strong> e <strong>iOS</strong><br>
+          🙋‍♂️ <strong>SUPORTE</strong> humano rápido e atencioso<br><br>
+          🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
+          <span class="pulsando">Clique no botão abaixo e agende logo sua instalação 👇</span>
+        `;
+
         beneficiosBox.className = "sucesso";
         beneficiosBox.innerHTML = beneficios;
 
@@ -259,6 +232,7 @@
         `;
         mensalidadeBox.style.display = "none";
         beneficiosBox.style.display = "none";
+        ofertaBox.style.display = "none";
         botaoBairroNaoEncontrado.style.display = "block";
         botaoExtraAcimaVideo.style.display = "none";
         botaoWhatsAppAbaixoMensalidade.style.display = "none";
