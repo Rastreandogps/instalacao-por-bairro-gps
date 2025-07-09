@@ -99,6 +99,24 @@
       color: #000;
       animation: pulse 1.6s infinite;
     }
+
+    /* Carrossel */
+    #carrosselContainer {
+      margin-top: 30px;
+    }
+    #carrosselTitulo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 15px;
+      animation: pulse 1.6s infinite;
+    }
+    #carrossel {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 <body>
@@ -140,6 +158,12 @@
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen>
   </iframe>
+
+  <!-- Carrossel de imagens -->
+  <div id="carrosselContainer">
+    <div id="carrosselTitulo">📸 Casos de Sucesso – Veículos Recuperados</div>
+    <img id="carrossel" src="" alt="Imagem de recuperação" />
+  </div>
 
   <div id="whatsapp" style="display:none;">
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
@@ -285,6 +309,30 @@
         botaoWhatsAppAbaixoMensalidade.style.display = "none";
       }
     }
+
+    // Carrossel de imagens
+    const imagensRecuperacao = [
+      "/mnt/data/Recuperação 1.jpg",
+      "/mnt/data/Recuperação 2.jpg",
+      "/mnt/data/Recuperação 3.jpg",
+      "/mnt/data/Recuperação 4.jpg",
+      "/mnt/data/Recuperação 5.jpg"
+    ];
+
+    let indiceAtual = 0;
+    const carrossel = document.getElementById("carrossel");
+
+    function atualizarCarrossel() {
+      carrossel.style.opacity = 0;
+      setTimeout(() => {
+        carrossel.src = imagensRecuperacao[indiceAtual];
+        carrossel.style.opacity = 1;
+        indiceAtual = (indiceAtual + 1) % imagensRecuperacao.length;
+      }, 200);
+    }
+
+    setInterval(atualizarCarrossel, 2000);
+    window.onload = atualizarCarrossel;
   </script>
 </body>
 </html>
