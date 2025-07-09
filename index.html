@@ -151,10 +151,9 @@
     src="https://www.youtube.com/embed/nB5CC01cGIo"
     title="YouTube video player" frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
+    allowfullscreen></iframe>
 
-  <!-- Carrossel -->
+  <!-- CARROSSEL -->
   <div id="carrosselContainer">
     <div id="carrosselTitulo">📸 Casos de Sucesso – Veículos Recuperados</div>
     <img id="carrossel" src="" alt="Imagem de recuperação" />
@@ -173,138 +172,107 @@
       Não encontrei meu bairro
     </a>
   </div>
+<script>
+  async function verValor() {
+    const bairroInput = document.getElementById("bairroInput").value.trim();
+    const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
+    const tipo = document.getElementById("tipoRastreador").value;
 
-  <script>
-    async function verValor() {
-      const bairroInput = document.getElementById("bairroInput").value.trim();
-      const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
-      const tipo = document.getElementById("tipoRastreador").value;
+    const popup = document.getElementById("popup");
+    const mensalidadeBox = document.getElementById("mensalidadeBox");
+    const ofertaBox = document.getElementById("ofertaBox");
+    const beneficiosBox = document.getElementById("beneficiosBox");
+    const whatsapp = document.getElementById("whatsapp");
+    const duvidas = document.getElementById("duvidas");
+    const naoEncontrou = document.getElementById("naoEncontrou");
+    const botaoExtraAcimaVideo = document.getElementById("botaoExtraAcimaVideo");
+    const botaoWhatsAppAbaixoMensalidade = document.getElementById("botaoWhatsAppAbaixoMensalidade");
+    const botaoBairroNaoEncontrado = document.getElementById("botaoBairroNaoEncontrado");
 
-      const popup = document.getElementById("popup");
-      const mensalidadeBox = document.getElementById("mensalidadeBox");
-      const ofertaBox = document.getElementById("ofertaBox");
-      const beneficiosBox = document.getElementById("beneficiosBox");
-      const whatsapp = document.getElementById("whatsapp");
-      const duvidas = document.getElementById("duvidas");
-      const naoEncontrou = document.getElementById("naoEncontrou");
-      const botaoExtraAcimaVideo = document.getElementById("botaoExtraAcimaVideo");
-      const botaoBairroNaoEncontrado = document.getElementById("botaoBairroNaoEncontrado");
-      const botaoWhatsAppAbaixoMensalidade = document.getElementById("botaoWhatsAppAbaixoMensalidade");
+    popup.style.display = "none";
+    mensalidadeBox.style.display = "none";
+    ofertaBox.style.display = "none";
+    beneficiosBox.style.display = "none";
+    whatsapp.style.display = "none";
+    duvidas.style.display = "none";
+    naoEncontrou.style.display = "none";
+    botaoExtraAcimaVideo.style.display = "none";
+    botaoWhatsAppAbaixoMensalidade.style.display = "none";
+    botaoBairroNaoEncontrado.style.display = "none";
 
+    try {
       const response = await fetch("bairros.json");
       const data = await response.json();
 
-      const normalizar = str =>
-        str.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
+      const bairroEncontrado = data.find((b) => b.nome.toLowerCase() === bairroInput.toLowerCase());
 
-      const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
+      if (!bairroEncontrado) {
+        popup.textContent = "⚠️ Não encontramos esse bairro na nossa base.";
+        popup.className = "erro";
+        popup.style.display = "block";
+        botaoBairroNaoEncontrado.style.display = "block";
+        return;
+      }
 
+      const valorBase = tipo === "com" ? bairroEncontrado.valor_com_bloqueio : bairroEncontrado.valor_sem_bloqueio;
+      const total = valorBase * quantidade;
+
+      popup.innerHTML = `<strong>✅ Instalação disponível!</strong><br>Valor total: <strong>R$ ${total.toFixed(2).replace(".", ",")}</strong>`;
+      popup.className = "sucesso";
       popup.style.display = "block";
+
+      mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${bairroEncontrado.mensalidade.toFixed(2).replace(".", ",")}</strong>`;
+      mensalidadeBox.style.display = "block";
+
+      ofertaBox.innerHTML = "🎁 Oferta válida até <strong>hoje!</strong> Entre em contato agora mesmo:";
+      ofertaBox.className = "oferta";
+      ofertaBox.style.display = "block";
+
+      beneficiosBox.innerHTML = `
+        <ul>
+          <li>✔️ Rastreamento em tempo real</li>
+          <li>✔️ Aplicativo completo (iOS e Android)</li>
+          <li>✔️ Suporte 24h</li>
+          <li>✔️ Central de atendimento exclusiva</li>
+          <li>✔️ Certificado de instalação</li>
+        </ul>`;
+      beneficiosBox.style.display = "block";
+
       whatsapp.style.display = "block";
       duvidas.style.display = "block";
       naoEncontrou.style.display = "block";
-      mensalidadeBox.style.display = "block";
-      beneficiosBox.style.display = "block";
-      ofertaBox.style.display = "none";
-
-      if (resultado) {
-        botaoBairroNaoEncontrado.style.display = "none";
-        botaoExtraAcimaVideo.style.display = "block";
-
-        const valorUnitario = parseFloat(
-          resultado.valor.toString().replace(",", ".").replace(/[^0-9.]/g, "")
-        );
-
-        if (isNaN(valorUnitario)) {
-          popup.className = "erro";
-          popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
-          return;
-        }
-
-        const valorInstalacao = valorUnitario * quantidade;
-
-        popup.className = "sucesso";
-        popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
-
-        let valorMensal = 0;
-        let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
-        textoMensagem += `📍 Bairro: ${bairroInput}\n`;
-        textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
-        textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
-        textoMensagem += `💰 Instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
-
-        if (tipo === "com") {
-          const cheio = 54.90 * quantidade;
-          const desconto = 49.90 * quantidade;
-          valorMensal = desconto;
-          mensalidadeBox.innerHTML = `
-            📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br>
-            Pagando até o vencimento: <strong>R$ ${desconto.toFixed(2).replace(".", ",")}</strong>
-          `;
-        } else {
-          valorMensal = 39.90 * quantidade;
-          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2).replace(".", ",")}</strong>`;
-        }
-
-        textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
-
-        if (quantidade >= 3) {
-          ofertaBox.style.display = "block";
-          ofertaBox.className = "oferta";
-          ofertaBox.innerHTML = `🌟 Oferta especial para frotas! Fale com nossos especialistas.`;
-        }
-
-        beneficiosBox.innerHTML = `
-          ✅ LOCALIZAÇÃO em tempo real<br>
-          ⚠️ ALERTAS de ignição<br>
-          🔒 BLOQUEIO e DESBLOQUEIO<br>
-          🛣️ HISTÓRICO de rotas<br>
-          📱 Android e iOS<br>
-          🙋 Suporte humano<br>
-        `;
-
-        const textoEncoded = encodeURIComponent(textoMensagem);
-        const waLink = `https://wa.me/5521969312625?text=${textoEncoded}`;
-
-        whatsapp.querySelector("a").href = waLink;
-        botaoExtraAcimaVideo.querySelector("a").href = waLink;
-        botaoWhatsAppAbaixoMensalidade.style.display = "block";
-        botaoWhatsAppAbaixoMensalidade.querySelector("a").href = waLink;
-      } else {
-        popup.className = "erro";
-        popup.innerHTML = `❌ Bairro não encontrado. Verifique o nome.`;
-        mensalidadeBox.style.display = "none";
-        beneficiosBox.style.display = "none";
-        ofertaBox.style.display = "none";
-        botaoExtraAcimaVideo.style.display = "none";
-        botaoWhatsAppAbaixoMensalidade.style.display = "none";
-        botaoBairroNaoEncontrado.style.display = "block";
-      }
+      botaoExtraAcimaVideo.style.display = "block";
+      botaoWhatsAppAbaixoMensalidade.style.display = "block";
+    } catch (error) {
+      popup.textContent = "❌ Erro ao consultar. Tente novamente.";
+      popup.className = "erro";
+      popup.style.display = "block";
     }
+  }
 
-    // Carrossel
-    const imagensRecuperacao = [
-      "recuperacao1.jpg",
-      "recuperacao2.jpg",
-      "recuperacao3.jpg",
-      "recuperacao4.jpg",
-      "recuperacao5.jpg"
-    ];
+  // Carrossel
+  const imagensRecuperacao = [
+    "recuperacao1.jpg",
+    "recuperacao2.jpg",
+    "recuperacao3.jpg",
+    "recuperacao4.jpg",
+    "recuperacao5.jpg"
+  ];
 
-    let indiceAtual = 0;
-    const carrossel = document.getElementById("carrossel");
+  let indiceAtual = 0;
+  const carrossel = document.getElementById("carrossel");
 
-    function atualizarCarrossel() {
-      carrossel.style.opacity = 0;
-      setTimeout(() => {
-        carrossel.src = imagensRecuperacao[indiceAtual];
-        carrossel.style.opacity = 1;
-        indiceAtual = (indiceAtual + 1) % imagensRecuperacao.length;
-      }, 200);
-    }
+  function atualizarCarrossel() {
+    carrossel.style.opacity = 0;
+    setTimeout(() => {
+      carrossel.src = imagensRecuperacao[indiceAtual];
+      carrossel.style.opacity = 1;
+      indiceAtual = (indiceAtual + 1) % imagensRecuperacao.length;
+    }, 200);
+  }
 
-    setInterval(atualizarCarrossel, 2000);
-    window.onload = atualizarCarrossel;
-  </script>
+  setInterval(atualizarCarrossel, 2000);
+  window.onload = atualizarCarrossel;
+</script>
 </body>
 </html>
