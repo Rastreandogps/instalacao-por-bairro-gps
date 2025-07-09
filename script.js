@@ -24,28 +24,20 @@ async function verValor() {
     const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(input));
 
     if (resultado) {
-      // Debug: ver valor original vindo do JSON
-      console.log("Valor original bruto:", JSON.stringify(resultado.valor));
-
-      // Limpa tudo que não é número, vírgula ou ponto
       const valorSanitizado = resultado.valor
         .toString()
-        .replace(/[^0-9,\.]/gu, "") // remove qualquer símbolo ou letra
+        .replace(/[^0-9,\.]/gu, "")
         .replace(",", ".")
         .trim();
-
-      console.log("Valor sanitizado final:", valorSanitizado);
 
       const valorUnitario = parseFloat(valorSanitizado);
 
       if (isNaN(valorUnitario)) {
         popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
-        console.error("🚨 Falha ao converter:", resultado.valor, "→", valorSanitizado);
         return;
       }
 
       const total = valorUnitario * quantidade;
-
       popup.innerHTML = `✅ Valor total da instalação: R$ ${total.toFixed(2).replace(".", ",")}`;
     } else {
       popup.innerHTML = `❌ Este bairro não foi encontrado.<br>📌 Verifique se você digitou corretamente o nome do bairro.`;
@@ -55,3 +47,13 @@ async function verValor() {
     console.error("Erro de fetch:", error);
   }
 }
+
+// CARROSSEL AUTOMÁTICO
+let indexAtual = 0;
+const imagens = document.querySelectorAll("#carousel img");
+
+setInterval(() => {
+  imagens[indexAtual].classList.remove("active");
+  indexAtual = (indexAtual + 1) % imagens.length;
+  imagens[indexAtual].classList.add("active");
+}, 2000);

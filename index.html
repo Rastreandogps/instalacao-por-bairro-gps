@@ -99,6 +99,24 @@
       color: #000;
       animation: pulse 1.6s infinite;
     }
+
+    /* Carrossel */
+    .carousel {
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .carousel img {
+      width: 100%;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -141,6 +159,15 @@
     allowfullscreen>
   </iframe>
 
+  <!-- Carrossel abaixo do vídeo -->
+  <div class="carousel" id="carousel">
+    <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1" />
+    <img src="Recuperacao/Recuperacao2.jpg" alt="Veículo recuperado 2" />
+    <img src="Recuperacao/Recuperacao3.jpg" alt="Veículo recuperado 3" />
+    <img src="Recuperacao/Recuperacao4.jpg" alt="Veículo recuperado 4" />
+    <img src="Recuperacao/Recuperacao5.jpg" alt="Veículo recuperado 5" />
+  </div>
+
   <div id="whatsapp" style="display:none;">
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
@@ -157,6 +184,7 @@
     </a>
   </div>
 
+  <!-- Script original + carrossel automático -->
   <script>
     async function verValor() {
       const bairroInput = document.getElementById("bairroInput").value.trim();
@@ -201,7 +229,6 @@
           .trim();
 
         const valorUnitario = parseFloat(valorSanitizado);
-
         if (isNaN(valorUnitario)) {
           popup.className = "erro";
           popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
@@ -209,7 +236,6 @@
         }
 
         const valorInstalacao = valorUnitario * quantidade;
-
         popup.className = "sucesso";
         popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
 
@@ -250,7 +276,8 @@
           `;
         }
 
-        const beneficios = `
+        beneficiosBox.className = "sucesso";
+        beneficiosBox.innerHTML = `
           ✨ <strong>Benefícios que você vai ter com a Rastreando GPS:</strong><br><br>
           ✅ <strong>LOCALIZAÇÃO</strong> em tempo real<br>
           ⚠️ <strong>ALERTAS</strong> de ignição<br>
@@ -261,9 +288,6 @@
           🚘 <strong>SEGURANÇA</strong>, praticidade e controle em um só lugar!<br><br>
           <span class="pulsando">Clique no botão abaixo e agende sua instalação 👇</span>
         `;
-
-        beneficiosBox.className = "sucesso";
-        beneficiosBox.innerHTML = beneficios;
 
         const textoEncoded = encodeURIComponent(textoMensagem);
         whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
@@ -285,6 +309,16 @@
         botaoWhatsAppAbaixoMensalidade.style.display = "none";
       }
     }
+
+    // Carrossel automático
+    let indexAtual = 0;
+    const imagens = document.querySelectorAll("#carousel img");
+
+    setInterval(() => {
+      imagens[indexAtual].classList.remove("active");
+      indexAtual = (indexAtual + 1) % imagens.length;
+      imagens[indexAtual].classList.add("active");
+    }, 2000);
   </script>
 </body>
 </html>
