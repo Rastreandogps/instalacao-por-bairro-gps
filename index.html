@@ -123,12 +123,33 @@
     .carousel img.active {
       display: block;
     }
+
+    .headline-video-container {
+      position: relative;
+      width: 100%;
+      max-height: 300px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .headline-video {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      display: block;
+    }
   </style>
 </head>
 <body>
 
-  <div style="max-width: 100%; margin-bottom: 20px;">
-    <video src="HEADLINE/banner.mp4" autoplay muted loop playsinline style="width: 100%; height: auto; border-radius: 10px;"></video>
+  <!-- ✅ VÍDEO NO TOPO COMO HEADLINE -->
+  <div class="headline-video-container">
+    <video autoplay muted loop playsinline class="headline-video">
+      <source src="HEADLINE/banner.mp4" type="video/mp4" />
+      Seu navegador não suporta vídeo HTML5.
+    </video>
   </div>
 
   <h1>Consulte o valor da instalação</h1>
