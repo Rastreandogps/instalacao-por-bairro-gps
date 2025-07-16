@@ -15,8 +15,9 @@
     input, select, button {
       padding: 10px;
       font-size: 16px;
-      margin: 5px;
+      margin: 0;
     }
+
     button {
       background-color: #28a745;
       color: white;
@@ -25,9 +26,11 @@
       border-radius: 50px;
       padding: 10px 20px;
     }
+
     button:hover {
       background-color: #218838;
     }
+
     #popup, #mensalidadeBox, #beneficiosBox, #ofertaBox {
       display: none;
       margin-top: 20px;
@@ -36,21 +39,25 @@
       border-radius: 8px;
       animation: fadeIn 0.4s ease-in-out;
     }
+
     .sucesso {
       background: #e6f4ea;
       border: 1px solid #2ecc71;
       color: #2d7d46;
     }
+
     .erro {
       background: #fdecea;
       border: 1px solid #e74c3c;
       color: #c0392b;
     }
+
     .oferta {
       background: #fff8e1;
       border: 1px solid #f1c40f;
       color: #9c7a00;
     }
+
     .botaoZap {
       padding: 12px 20px;
       border-radius: 50px;
@@ -61,13 +68,16 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       margin: 10px auto;
     }
+
     .botaoZap:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     }
+
     .verdeZap { background-color: #25D366; color: white; }
     .azulZap { background-color: #ca5964; color: white; }
     .vermelhoZap { background-color: #ca5964; color: white; }
+
     .pulsando {
       font-weight: bold;
       color: black;
@@ -75,15 +85,18 @@
       display: inline-block;
       margin-top: 10px;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to   { opacity: 1; transform: scale(1); }
     }
+
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.03); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
+
     #beneficiosBox {
       text-align: left;
       background-color: #e8f4fd;
@@ -93,6 +106,7 @@
       border-radius: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+
     .destaque-video {
       margin: 40px 0 20px;
       font-size: 22px;
@@ -117,10 +131,12 @@
       overflow: hidden;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
+
     .carousel img {
       width: 100%;
       display: none;
     }
+
     .carousel img.active {
       display: block;
     }
@@ -139,6 +155,14 @@
       object-fit: cover;
       display: block;
     }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 400px;
+      margin: 0 auto 20px;
+    }
   </style>
 </head>
 <body>
@@ -152,15 +176,19 @@
   </div>
 
   <h1>Consulte o valor da instalação</h1>
-  <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
-  <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
-  <select id="tipoRastreador">
-    <option value="com">Com bloqueio</option>
-    <option value="sem">Sem bloqueio</option>
-  </select>
-  <br>
-  <button onclick="verValor()">Ver valor</button>
 
+  <!-- ✅ CAMPOS VERTICAIS -->
+  <div class="form-container">
+    <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
+    <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
+    <select id="tipoRastreador">
+      <option value="com">Com bloqueio</option>
+      <option value="sem">Sem bloqueio</option>
+    </select>
+    <button onclick="verValor()">Ver valor</button>
+  </div>
+
+  <!-- 🔽 RESTANTE IGUAL -->
   <div id="popup"></div>
 
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
