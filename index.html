@@ -99,12 +99,14 @@
       color: #000;
       animation: pulse 1.6s infinite;
     }
+
     .destaque-carrossel {
       margin-top: 40px;
       font-size: 20px;
       font-weight: bold;
       color: #333;
     }
+
     .carousel {
       width: 100%;
       max-width: 600px;
@@ -121,25 +123,9 @@
     .carousel img.active {
       display: block;
     }
-    .banner-container {
-      width: 100%;
-      max-width: 100%;
-      margin-bottom: 20px;
-    }
-    .banner-container video {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
-
-  <div class="banner-container">
-    <video src="HEADLINE/banner.mp4" autoplay muted loop playsinline></video>
-  </div>
-
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
