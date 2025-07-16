@@ -126,6 +126,10 @@
   </style>
 </head>
 <body>
+  <!-- =============== BANNER ADICIONADO AQUI =============== -->
+  <video autoplay loop muted playsinline width="100%" src="HEADLINE/banner.mp4"></video>
+  <!-- ====================================================== -->
+
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
@@ -139,7 +143,7 @@
   <div id="popup"></div>
 
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
-    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">
+    <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" >
       Clique aqui caso não encontre seu bairro
     </a>
   </div>
@@ -148,13 +152,13 @@
   <div id="ofertaBox"></div>
 
   <div id="botaoWhatsAppAbaixoMensalidade" style="display: none;">
-    <a href="#" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
+    <a href="#" class="botaoZap verdeZap pulsando" >Quero instalar meu rastreador!</a>
   </div>
 
   <div id="beneficiosBox"></div>
 
   <div id="botaoExtraAcimaVideo" style="display:none;">
-    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
+    <a href="#" class="botaoZap verdeZap" >Clique Aqui e Agende já</a>
   </div>
 
   <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
@@ -178,11 +182,11 @@
   </div>
 
   <div id="whatsapp" style="display:none;">
-    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
+    <a href="#" class="botaoZap verdeZap" >Clique Aqui e Agende já</a>
   </div>
 
   <div id="duvidas" style="display:none;">
-    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" target="_blank">
+    <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" >
       Clique aqui se ainda tem dúvidas
     </a>
   </div>
@@ -237,13 +241,13 @@
 
         const valorInstalacao = valorUnitario * quantidade;
         popup.className = "sucesso";
-        popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
+        popup.innerHTML = `✅ Valor total da instalação: R\$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
 
         let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
-        textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
-        textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
+        textoMensagem += `�� Endereço informado: ${bairroInput}\n`;
+        textoMensagem += `�� Quantidade de veículos: ${quantidade}\n`;
         textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
-        textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
+        textoMensagem += `💰 Valor da instalação: R\$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
 
         let valorMensal = 0;
 
@@ -254,16 +258,16 @@
 
           mensalidadeBox.className = "sucesso";
           mensalidadeBox.innerHTML = `
-            📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br>
+            📅 Mensalidade: R\$ ${cheio.toFixed(2).replace(".", ",")}<br>
             Pagando até a data do vencimento, sai por:<br>
-            💸 <strong>R$ ${desconto.toFixed(2).replace(".", ",")} mensais</strong>
+            💸 <strong>R\$ ${desconto.toFixed(2).replace(".", ",")} mensais</strong>
           `;
-          textoMensagem += `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2).replace(".", ",")})\n`;
+          textoMensagem += `�� Mensalidade: R\$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento, sai por R\$ ${desconto.toFixed(2).replace(".", ",")})\n`;
         } else {
           valorMensal = 39.90 * quantidade;
           mensalidadeBox.className = "sucesso";
-          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2).replace(".", ",")} mensais</strong>`;
-          textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
+          mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R\$ ${valorMensal.toFixed(2).replace(".", ",")} mensais</strong>`;
+          textoMensagem += `�� Mensalidade: R\$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
         }
 
         if (quantidade >= 3) {
@@ -299,24 +303,4 @@
         popup.innerHTML = `
           ❌ Este bairro não foi encontrado.<br>
           📌 Verifique se você digitou corretamente o nome da cidade.<br><br>
-          Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu
-        `;
-        mensalidadeBox.style.display = "none";
-        beneficiosBox.style.display = "none";
-        ofertaBox.style.display = "none";
-        botaoBairroNaoEncontrado.style.display = "block";
-        botaoExtraAcimaVideo.style.display = "none";
-        botaoWhatsAppAbaixoMensalidade.style.display = "none";
-      }
-    }
-
-    let indexAtual = 0;
-    const imagens = document.querySelectorAll("#carousel img");
-    setInterval(() => {
-      imagens[indexAtual].classList.remove("active");
-      indexAtual = (indexAtual + 1) % imagens.length;
-      imagens[indexAtual].classList.add("active");
-    }, 3000);
-  </script>
-</body>
-</html>
+          Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova
