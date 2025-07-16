@@ -158,16 +158,30 @@
 
     .form-container {
       display: flex;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .form-box {
+      display: flex;
       flex-direction: column;
       gap: 10px;
+      width: 90%;
       max-width: 400px;
-      margin: 0 auto 20px;
+      margin: 0 auto;
+    }
+
+    .form-box input,
+    .form-box select,
+    .form-box button {
+      width: 100%;
+      box-sizing: border-box;
     }
   </style>
 </head>
 <body>
 
-  <!-- ✅ VÍDEO NO TOPO COMO HEADLINE -->
+  <!-- Banner de vídeo -->
   <div class="headline-video-container">
     <video autoplay muted loop playsinline class="headline-video">
       <source src="HEADLINE/banner.mp4" type="video/mp4" />
@@ -177,18 +191,19 @@
 
   <h1>Consulte o valor da instalação</h1>
 
-  <!-- ✅ CAMPOS VERTICAIS -->
+  <!-- Formulário centralizado -->
   <div class="form-container">
-    <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
-    <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
-    <select id="tipoRastreador">
-      <option value="com">Com bloqueio</option>
-      <option value="sem">Sem bloqueio</option>
-    </select>
-    <button onclick="verValor()">Ver valor</button>
+    <div class="form-box">
+      <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
+      <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
+      <select id="tipoRastreador">
+        <option value="com">Com bloqueio</option>
+        <option value="sem">Sem bloqueio</option>
+      </select>
+      <button onclick="verValor()">Ver valor</button>
+    </div>
   </div>
 
-  <!-- 🔽 RESTANTE IGUAL -->
   <div id="popup"></div>
 
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
