@@ -5,6 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Consultar Valor da Instalação</title>
   <style>
+    .hero-video {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      margin: -30px -30px 30px -30px;
+    }
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.45);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .hero-overlay h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      animation: pulse 1.6s infinite;
+    }
+    .hero-overlay p {
+      font-size: 20px;
+      margin-bottom: 25px;
+    }
+    .hero-overlay .botaoZap {
+      background-color: #25D366;
+      color: white;
+      padding: 14px 30px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .hero-overlay .botaoZap:hover {
+      background-color: #1ebd5a;
+      transform: translateY(-2px);
+    }
+
     body {
       font-family: sans-serif;
       padding: 30px;
@@ -99,14 +148,12 @@
       color: #000;
       animation: pulse 1.6s infinite;
     }
-
     .destaque-carrossel {
       margin-top: 40px;
       font-size: 20px;
       font-weight: bold;
       color: #333;
     }
-
     .carousel {
       width: 100%;
       max-width: 600px;
@@ -126,6 +173,19 @@
   </style>
 </head>
 <body>
+
+  <section class="hero-video">
+    <video autoplay muted playsinline>
+      <source src="HEADLINE/banner.mp4" type="video/mp4">
+      Seu navegador não suporta vídeos HTML5.
+    </video>
+    <div class="hero-overlay">
+      <h1>Sua Proteção Começa Agora 🚗🔒</h1>
+      <p>Rastreamento com instalação rápida e suporte humanizado no RJ</p>
+      <a href="https://wa.me/5521969312625" class="botaoZap">Agendar Instalação</a>
+    </div>
+  </section>
+
   <h1>Consulte o valor da instalação</h1>
   <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
   <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
