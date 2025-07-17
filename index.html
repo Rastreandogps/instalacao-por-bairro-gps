@@ -183,34 +183,32 @@
       width: 100%;
       box-sizing: border-box;
     }
- 
+
     .input-grande {
-    font-size: 18px;
-    height: 50px;
-    text-align: center;
-   }
+      font-size: 18px;
+      height: 50px;
+      text-align: center;
+    }
 
-   .input-media {
-   font-size: 18px;
-   height: 50px;
-   text-align: center;
-   }
+    .input-media {
+      font-size: 18px;
+      height: 50px;
+      text-align: center;
+    }
 
-   .input-pequeno {
-   font-size: 18px;
-   height: 50px;
-   text-align: center;
-   }
-
+    .input-pequeno {
+      font-size: 18px;
+      height: 50px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
 
   <!-- Banner de vídeo -->
   <div class="headline-video-container">
-  <img src="HEADLINE/banner.gif" alt="Headline Animada" class="headline-video" />
- </div>
-
+    <img src="HEADLINE/banner.gif" alt="Headline Animada" class="headline-video" />
+  </div>
 
   <h1>Consulte o valor da instalação</h1>
 
@@ -219,7 +217,7 @@
     <div class="form-box">
       <input type="text" id="bairroInput" class="input-grande" placeholder="Digite apenas a cidade do RJ" />
       <input type="number" id="quantidadeInput" class="input-media" placeholder="Quantidade de veículos" min="1" />
-       <select id="tipoRastreador" class="input-pequeno">
+      <select id="tipoRastreador" class="input-pequeno">
         <option value="com">Com bloqueio</option>
         <option value="sem">Sem bloqueio</option>
       </select>
@@ -237,7 +235,6 @@
 
   <div id="mensalidadeBox"></div>
   <div id="ofertaBox"></div>
-
   <div id="botaoWhatsAppAbaixoMensalidade" style="display: none;">
     <a href="#" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
   </div>
@@ -251,14 +248,22 @@
   <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
 
   <div style="padding-left: 20px; padding-right: 20px; box-sizing: border-box;">
-  <iframe width="100%" height="315"
-    src="https://www.youtube.com/embed/nB5CC01cGIo"
-    title="YouTube video player" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
+    <iframe width="100%" height="315"
+      src="https://www.youtube.com/embed/nB5CC01cGIo"
+      title="YouTube video player" frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
 
-  <div class="destaque-carrossel">
+        <!-- 🚨 NOVO BOTÃO FIXO LOGO ABAIXO DO VÍDEO -->
+    <div style="margin-top: 20px;">
+      <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." class="botaoZap verdeZap pulsando" target="_blank">
+        Agende agora sua instalação
+      </a>
+    </div>
+    <div class="destaque-carrossel">
+
+
     🚨 Esses veículos poderiam ter sido perdidos. Mas estavam com nosso rastreador.
   </div>
 
@@ -409,7 +414,7 @@
       imagens[indexAtual].classList.remove("active");
       indexAtual = (indexAtual + 1) % imagens.length;
       imagens[indexAtual].classList.add("active");
-    }, 3000);
+    }, 2000);
   </script>
 </body>
 </html>
