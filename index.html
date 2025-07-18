@@ -42,17 +42,30 @@
       background-color: #218838;
     }
 
-    #popup, #mensalidadeBox, #beneficiosBox, #ofertaBox {
-      display: none;
-      margin: 30px auto;
-      padding: 20px;
-      font-size: 18px;
-      border-radius: 8px;
-      animation: fadeIn 0.4s ease-in-out;
-      max-width: 600px;
-      width: 90%;
-      box-sizing: border-box;
-    }
+    #popup, #mensalidadeBox, #ofertaBox {
+     display: none;
+     margin: 30px auto;
+     padding: 20px;
+     font-size: 18px;
+     border-radius: 8px;
+     animation: fadeIn 0.4s ease-in-out;
+     max-width: 400px;
+     width: 90%;
+     box-sizing: border-box;
+}
+
+    #beneficiosBox {
+     display: none;
+     margin: 30px auto;
+     padding: 0;
+     font-size: 18px;
+     border-radius: 8px;
+     animation: fadeIn 0.4s ease-in-out;
+     max-width: 400px;
+     width: 90%;
+     box-sizing: border-box;
+}
+
 
     .sucesso {
       background: #e6f4ea;
@@ -427,7 +440,8 @@
             `;
           }
 
-          beneficiosBox.innerHTML = `<img src="beneficios/beneficios1.jpg" alt="Benefícios" style="max-width: 100%; height: auto; padding-left: 0px; padding-right: 10px;" />`;
+          beneficiosBox.innerHTML = `<img src="beneficios/beneficios1.jpg" alt="Benefícios" style="width: 100%; height: auto; display: block; padding: 0; margin: 0;" />`;
+
 
           const textoEncoded = encodeURIComponent(textoMensagem);
           whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
