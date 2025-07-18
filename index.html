@@ -440,8 +440,11 @@
             `;
           }
 
-          beneficiosBox.innerHTML = `<img src="beneficios/beneficios1.jpg" alt="Benefícios" style="width: 100%; height: auto; display: block; padding: 0; margin: 0;" />`;
-
+           beneficiosBox.innerHTML = `
+            <div style="width: 100vw; margin-left: -5vw;">
+              <img src="beneficios/beneficios1.jpg" alt="Benefícios" style="width: 100vw; height: auto; display: block; margin: 0; padding: 0;" />
+             </div>
+            ;
 
           const textoEncoded = encodeURIComponent(textoMensagem);
           whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
