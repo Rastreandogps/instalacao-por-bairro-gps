@@ -108,13 +108,15 @@
       50% { transform: scale(1.03); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
-     #beneficiosBox {
-      text-align: left;
-      background-color: #e8f4fd;
-      border: 1px solid #2e86de;
+
+    #beneficiosBox {
+      text-align: center;
+      background-color: #ffffff;
+      border: none;
       color: #0d3c61;
       border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: none;
+      padding: 0;
     }
 
     .destaque-video {
@@ -171,8 +173,7 @@
       object-fit: cover;
       display: block;
     }
-
-    .form-container {
+     .form-container {
       display: flex;
       justify-content: center;
       margin: 0 auto 20px;
@@ -283,8 +284,7 @@
   <div id="botaoExtraAcimaVideo" style="display:none;">
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
-
-  <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
+    <div class="destaque-video">📱 Veja como funciona o nosso aplicativo na prática:</div>
 
   <div style="padding-left: 20px; padding-right: 20px; box-sizing: border-box;">
     <iframe width="100%" height="315"
@@ -293,8 +293,202 @@
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen>
     </iframe>
-    #beneficiosBox {
-      </div> <!-- fecha o div do vídeo -->
+
+    <div style="margin-top: 20px;">
+      <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20minha%20instala%C3%A7%C3%A3o." class="botaoZap verdeZap pulsando" target="_blank">
+        Quero instalar meu rastreador
+      </a>
+    </div>
+
+    <div class="destaque-carrossel">
+      🚨 Esses veículos poderiam ter sido perdidos. Mas estavam com nosso rastreador.
+    </div>
+
+    <div class="carousel" id="carousel">
+      <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1" />
+      <img src="Recuperacao/Recuperacao2.jpg" alt="Veículo recuperado 2" />
+      <img src="Recuperacao/Recuperacao3.jpg" alt="Veículo recuperado 3" />
+      <img src="Recuperacao/Recuperacao4.jpg" alt="Veículo recuperado 4" />
+      <img src="Recuperacao/Recuperacao5.jpg" alt="Veículo recuperado 5" />
+      <img src="Recuperacao/Recuperacao6.jpg" alt="Veículo recuperado 6" />
+    </div>
+
+    <div id="whatsapp" style="display:none;">
+      <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
+    </div>
+    <div id="duvidas" style="display:none;">
+      <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" target="_blank">
+        Clique aqui se ainda tem dúvidas
+      </a>
+    </div>
+
+    <!-- Seção de Depoimentos -->
+    <div class="depoimentos-container">
+      <h2>💬 Veja o que dizem nossos clientes</h2>
+      <div class="depoimentos-grid">
+        <img src="Depoimentos/depoimento1.png" alt="Depoimento 1">
+        <img src="Depoimentos/depoimento2.png" alt="Depoimento 2">
+        <img src="Depoimentos/depoimento3.png" alt="Depoimento 3">
+        <img src="Depoimentos/depoimento4.png" alt="Depoimento 4">
+      </div>
+    </div>
+    <script>
+      async function verValor() {
+        const bairroInput = document.getElementById("bairroInput").value.trim();
+        const quantidade = parseInt(document.getElementById("quantidadeInput").value) || 1;
+        const tipo = document.getElementById("tipoRastreador").value;
+
+        const popup = document.getElementById("popup");
+        const mensalidadeBox = document.getElementById("mensalidadeBox");
+        const ofertaBox = document.getElementById("ofertaBox");
+        const beneficiosBox = document.getElementById("beneficiosBox");
+        const whatsapp = document.getElementById("whatsapp");
+        const duvidas = document.getElementById("duvidas");
+        const botaoExtraAcimaVideo = document.getElementById("botaoExtraAcimaVideo");
+        const botaoBairroNaoEncontrado = document.getElementById("botaoBairroNaoEncontrado");
+        const botaoWhatsAppAbaixoMensalidade = document.getElementById("botaoWhatsAppAbaixoMensalidade");
+
+        const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
+        const data = await response.json();
+
+        const normalizar = str =>
+          str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+
+        const resultado = data.find(entry => normalizar(entry.bairro) === normalizar(bairroInput));
+
+        popup.style.display = "block";
+        whatsapp.style.display = "block";
+        duvidas.style.display = "block";
+        mensalidadeBox.style.display = "block";
+        beneficiosBox.style.display = "block";
+        ofertaBox.style.display = "none";
+
+        if (resultado) {
+          botaoBairroNaoEncontrado.style.display = "none";
+          botaoExtraAcimaVideo.style.display = "block";
+
+          const valorSanitizado = resultado.valor.toString().replace(/[^0-9,\.]/gu, "").replace(",", ".").trim();
+          const valorUnitario = parseFloat(valorSanitizado);
+          if (isNaN(valorUnitario)) {
+            popup.className = "erro";
+            popup.innerHTML = "❌ Erro ao interpretar o valor da instalação.";
+            return;
+          }
+
+          const valorInstalacao = valorUnitario * quantidade;
+          popup.className = "sucesso";
+          popup.innerHTML = `✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}`;
+
+          let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
+          textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
+          textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
+          textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
+          textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
+
+          let valorMensal = 0;
+
+          if (tipo === "com") {
+            const cheio = 54.90 * quantidade;
+            const desconto = 49.90 * quantidade;
+            valorMensal = desconto;
+
+            mensalidadeBox.className = "sucesso";
+            mensalidadeBox.innerHTML = `
+              📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br>
+              Pagando até a data do vencimento, sai por:<br>
+              💸 <strong>R$ ${desconto.toFixed(2).replace(".", ",")} mensais</strong>
+            `;
+            textoMensagem += `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2).replace(".", ",")})\n`;
+          } else {
+            valorMensal = 39.90 * quantidade;
+            mensalidadeBox.className = "sucesso";
+            mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2).replace(".", ",")} mensais</strong>`;
+            textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
+          }
+
+          if (quantidade >= 3) {
+            ofertaBox.style.display = "block";
+            ofertaBox.className = "oferta";
+            ofertaBox.innerHTML = `
+              🌟 <strong>Oferta Especial para Frotas!</strong><br><br>
+              Você possui 3 ou mais veículos? Fale agora com um de nossos especialistas e aproveite condições personalizadas para sua frota!<br><br>
+              💼 Atendimento exclusivo • 📦 Pacotes empresariais • 💰 Economia garantida!
+            `;
+          }
+
+          beneficiosBox.innerHTML = `<img src="beneficios/beneficios1.jpg" alt="Benefícios" style="max-width: 100%; height: auto;" />`;
+
+          const textoEncoded = encodeURIComponent(textoMensagem);
+          whatsapp.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
+          botaoExtraAcimaVideo.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
+          botaoWhatsAppAbaixoMensalidade.style.display = "block";
+          botaoWhatsAppAbaixoMensalidade.querySelector("a").href = `https://wa.me/5521969312625?text=${textoEncoded}`;
+        } else {
+          popup.className = "erro";
+          popup.innerHTML = `
+            ❌ Este bairro não foi encontrado.<br>
+            📌 Verifique se você digitou corretamente o nome da cidade.<br><br>
+            Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu
+          `;
+          mensalidadeBox.style.display = "none";
+          beneficiosBox.style.display = "none";
+          ofertaBox.style.display = "none";
+          botaoBairroNaoEncontrado.style.display = "block";
+          botaoExtraAcimaVideo.style.display = "none";
+          botaoWhatsAppAbaixoMensalidade.style.display = "none";
+        }
+      }
+
+      let indexAtual = 0;
+      const imagens = document.querySelectorAll("#carousel img");
+      setInterval(() => {
+        imagens[indexAtual].classList.remove("active");
+        indexAtual = (indexAtual + 1) % imagens.length;
+        imagens[indexAtual].classList.add("active");
+      }, 2000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+      particlesJS("particles-js", {
+        particles: {
+          number: { value: 40 },
+          color: { value: "#e53935" },
+          shape: { type: "circle" },
+          opacity: { value: 0.3 },
+          size: { value: 3 },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#e53935",
+            opacity: 0.3,
+            width: 1
+          },
+          move: { enable: true, speed: 1 }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: false },
+            onclick: { enable: false }
+          }
+        },
+        retina_detect: true
+      });
+    </script>
+
+  <!-- Rodapé institucional -->
+ <footer style="background-color: #fdecea; color: #333; font-size: 14px; padding: 20px; text-align: center; margin-top: 60px;">
+  <strong>Rastreando GPS | Soluções em Rastreamento Veicular</strong><br>
+  CNPJ: 29.488.621/0001-48<br>
+  Atendimento em todo o estado do Rio de Janeiro<br>
+  Equipamentos 4G fornecidos em comodato, com instalação no local escolhido pelo cliente.<br>
+  Aceitamos pagamento por boleto, Pix ou cartão (somente para instalação).<br>
+  <em>Não somos seguradora nem cooperativa de proteção veicular.</em><br><br>
+  Contato: (21) 98088-6087 / (21) 96931-2625<br>
+  E-mail: rastreandogpsbr@rastreandogps.com<br><br>
+  © 2025 Rastreando GPS. Todos os direitos reservados.
+</footer>
+
 </body>
 </html>
- 
