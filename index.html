@@ -315,19 +315,26 @@
     <img src="HEADLINE/banner.gif" alt="Headline Animada" class="headline-video" />
   </div>
 
-  <h1>Consulte o valor da instalação aqui</h1>
-
-  <div class="form-container">
-    <div class="form-box">
-      <input type="text" id="bairroInput" class="input-grande" placeholder="Digite apenas a cidade do RJ" />
-      <input type="number" id="quantidadeInput" class="input-media" placeholder="Quantidade de veículos" min="1" />
-      <select id="tipoRastreador" class="input-pequeno">
-        <option value="com">Com bloqueio</option>
-        <option value="sem">Sem bloqueio</option>
-      </select>
-      <button onclick="verValor()">Ver valor</button>
-    </div>
+ <div class="form-container">
+  <div class="form-box" style="
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 25px 20px 30px;
+    border: 1px solid #ddd;
+    animation: fadeIn 0.4s ease-in-out;
+  ">
+    <h2 style="margin-bottom: 15px; color: #0d3c61; font-size: 20px;">📍 Consulte o valor da instalação</h2>
+    <input type="text" id="bairroInput" class="input-grande" placeholder="Digite apenas a cidade do RJ" />
+    <input type="number" id="quantidadeInput" class="input-media" placeholder="Quantidade de veículos" min="1" />
+    <select id="tipoRastreador" class="input-pequeno">
+      <option value="com">Com bloqueio</option>
+      <option value="sem">Sem bloqueio</option>
+    </select>
+    <button onclick="verValor()">Ver valor</button>
   </div>
+ </div>
+
 
   <!-- Resultado da busca e demais caixas -->
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
