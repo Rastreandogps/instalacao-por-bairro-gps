@@ -459,16 +459,18 @@
           textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
 
           let textoMensalidade = '';
+          let textoMensalidadeWhats = '';
+
           if (tipo === "com") {
             const cheio = 54.90 * quantidade;
             const desconto = 49.90 * quantidade;
             valorMensal = desconto;
             textoMensalidade = `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br><strong>(pagando até o vencimento: R$ ${desconto.toFixed(2).replace(".", ",")})</strong>`;
-            textoMensagem += `${textoMensalidade}\n`;
+            textoMensalidadeWhats = `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento: R$ ${desconto.toFixed(2).replace(".", ",")})`;
           } else {
             valorMensal = 39.90 * quantidade;
             textoMensalidade = `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}`;
-            textoMensagem += `${textoMensalidade}\n`;
+            textoMensagem += `${textoMensalidadeWhats}\n`;
           }
 
           let ofertaHTML = '';
