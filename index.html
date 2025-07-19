@@ -41,7 +41,8 @@
     button:hover {
       background-color: #218838;
     }
-     .modal-overlay {
+
+    .modal-overlay {
       position: fixed;
       top: 0;
       left: 0;
@@ -53,7 +54,7 @@
       z-index: 9000;
     }
 
-     #popup {
+    #popup {
       display: none;
       padding: 25px 20px 30px;
       font-size: 18px;
@@ -71,7 +72,7 @@
       text-align: center;
     }
 
-     .botao-fechar {
+    .botao-fechar {
       position: absolute;
       top: 10px;
       right: 15px;
@@ -85,7 +86,7 @@
       color: #c0392b;
     }
 
-    #mensalidadeBox, #ofertaBox {
+    #mensalidadeBox, #ofertaBox, #ofertaFixaBox {
       display: none;
       margin: 30px auto;
       padding: 20px;
@@ -337,16 +338,17 @@
 
   <div id="mensalidadeBox"></div>
   <div id="ofertaBox"></div>
+  <div id="ofertaFixaBox"></div> <!-- Novo bloco de oferta fixa -->
 
   <div id="botaoWhatsAppAbaixoMensalidade" style="display: none;">
     <a href="#" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
   </div>
 
   <div id="beneficiosBox"></div>
-
-  <div id="botaoExtraAcimaVideo" style="display:none;">
+    <div id="botaoExtraAcimaVideo" style="display:none;">
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
+
   <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-top: 30px;">
     📱 Experimente na prática: como funciona nosso app de rastreamento
   </h2>
@@ -406,8 +408,7 @@
         <img src="Depoimentos/depoimento4.png" alt="Depoimento 4">
       </div>
     </div>
-
-    <script>
+     <script>
       function fecharModal() {
         document.getElementById("popup").style.display = "none";
         document.getElementById("modalOverlay").style.display = "none";
@@ -422,6 +423,7 @@
         const overlay = document.getElementById("modalOverlay");
         const mensalidadeBox = document.getElementById("mensalidadeBox");
         const ofertaBox = document.getElementById("ofertaBox");
+        const ofertaFixaBox = document.getElementById("ofertaFixaBox");
         const beneficiosBox = document.getElementById("beneficiosBox");
         const whatsapp = document.getElementById("whatsapp");
         const duvidas = document.getElementById("duvidas");
@@ -442,6 +444,7 @@
         mensalidadeBox.style.display = "block";
         beneficiosBox.style.display = "block";
         ofertaBox.style.display = "none";
+        ofertaFixaBox.style.display = "none";
 
         if (resultado) {
           botaoBairroNaoEncontrado.style.display = "none";
@@ -470,13 +473,18 @@
           }
 
           if (quantidade >= 3) {
-            ofertaBox.style.display = "block";
-            ofertaBox.className = "oferta";
-            ofertaBox.innerHTML = `
+            const ofertaHTML = `
               🌟 <strong>Oferta Especial para Frotas!</strong><br><br>
               Você possui 3 ou mais veículos? Fale agora com um de nossos especialistas e aproveite condições personalizadas para sua frota!<br><br>
               💼 Atendimento exclusivo • 📦 Pacotes empresariais • 💰 Economia garantida!
             `;
+            ofertaBox.style.display = "block";
+            ofertaBox.className = "oferta";
+            ofertaBox.innerHTML = ofertaHTML;
+
+            ofertaFixaBox.style.display = "block";
+            ofertaFixaBox.className = "oferta";
+            ofertaFixaBox.innerHTML = ofertaHTML;
           }
 
           beneficiosBox.innerHTML = `
@@ -513,6 +521,7 @@
           mensalidadeBox.style.display = "none";
           beneficiosBox.style.display = "none";
           ofertaBox.style.display = "none";
+          ofertaFixaBox.style.display = "none";
           botaoBairroNaoEncontrado.style.display = "none";
           botaoExtraAcimaVideo.style.display = "none";
           botaoWhatsAppAbaixoMensalidade.style.display = "none";
