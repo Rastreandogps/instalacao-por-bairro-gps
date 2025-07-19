@@ -41,23 +41,21 @@
     button:hover {
       background-color: #218838;
     }
-
-    /* MODAL overlay com blur */
-    .modal-overlay {
+     .modal-overlay {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0,0,0,0.55);
+      background: rgba(0, 0, 0, 0.55);
       backdrop-filter: blur(4px);
       display: none;
       z-index: 9000;
     }
 
-    /* MODAL caixa principal */
-    #popup {
+     #popup {
       display: none;
-      padding: 20px;
+      padding: 25px 20px 30px;
       font-size: 18px;
       border-radius: 10px;
       background-color: #ffffff;
@@ -73,12 +71,11 @@
       text-align: center;
     }
 
-    /* Botão de fechar (X) */
-    .botao-fechar {
+     .botao-fechar {
       position: absolute;
       top: 10px;
       right: 15px;
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
       color: #333;
       cursor: pointer;
@@ -144,7 +141,7 @@
       display: inline-block;
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      margin: 10px auto;
+      margin: 10px auto 0;
     }
 
     .botaoZap:hover {
@@ -173,7 +170,7 @@
       50% { transform: scale(1.03); opacity: 0.8; }
       100% { transform: scale(1); opacity: 1; }
     }
-    .destaque-video {
+        .destaque-video {
       margin: 40px 0 20px;
       font-size: 22px;
       font-weight: bold;
@@ -296,21 +293,23 @@
 <body>
   <div id="particles-js"></div>
 
-  <!-- overlay desfocado -->
+  <!-- Overlay escurecido e desfocado -->
   <div id="modalOverlay" class="modal-overlay" onclick="fecharModal()"></div>
 
-  <!-- popup (modal) com botão de fechar -->
+  <!-- Popup centralizado com botão X -->
   <div id="popup">
     <span class="botao-fechar" onclick="fecharModal()">&times;</span>
-    <!-- conteúdo dinâmico será inserido via JS -->
+    <!-- Conteúdo será preenchido via JavaScript -->
   </div>
 
+  <!-- Botão fixo do WhatsApp -->
   <div class="whatsapp-fixo">
     <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Poderia%20me%20ajudar%20com%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener noreferrer">
       <img src="botao whatsapp/whatsapp.png" alt="WhatsApp" />
     </a>
   </div>
 
+  <!-- Headline com banner -->
   <div class="headline-video-container">
     <img src="HEADLINE/banner.gif" alt="Headline Animada" class="headline-video" />
   </div>
@@ -329,6 +328,7 @@
     </div>
   </div>
 
+  <!-- Resultado da busca e demais caixas -->
   <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px;">
     <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">
       Clique aqui se não encontrou seu bairro
@@ -347,7 +347,7 @@
   <div id="botaoExtraAcimaVideo" style="display:none;">
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
-    <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-top: 30px;">
+  <h2 style="font-size: 22px; font-weight: 600; color: #333; margin-top: 30px;">
     📱 Experimente na prática: como funciona nosso app de rastreamento
   </h2>
   <p style="font-size: 16px; color: #555;">
@@ -387,12 +387,14 @@
     <div id="whatsapp" style="display:none;">
       <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
     </div>
+
     <div id="duvidas" style="display:none;">
       <a href="https://wa.me/5521971280678?text=Ol%C3%A1!%20Ainda%20tenho%20algumas%20d%C3%BAvidas%20sobre%20o%20rastreador." class="botaoZap azulZap" target="_blank">
         Clique aqui se ainda tem dúvidas
       </a>
-     </div>
-     <div class="depoimentos-container">
+    </div>
+
+    <div class="depoimentos-container">
       <h2>💬 Clientes que confiam e recomendam</h2>
       <p style="font-size: 16px; color: #555; margin-bottom: 20px;">
         Mensagens reais de quem já monitora o veículo com a Rastreando GPS.
@@ -445,40 +447,26 @@
           botaoBairroNaoEncontrado.style.display = "none";
           botaoExtraAcimaVideo.style.display = "block";
 
-          const valorSanitizado = resultado.valor.toString().replace(/[^0-9,\.]/gu, "").replace(",", ".").trim();
-          const valorUnitario = parseFloat(valorSanitizado);
-          if (isNaN(valorUnitario)) {
-            popup.className = "erro";
-            popup.innerHTML = `<span class="botao-fechar" onclick="fecharModal()">&times;</span>❌ Erro ao interpretar o valor da instalação.`;
-            return;
-          }
-
+          const valorUnitario = parseFloat(resultado.valor.toString().replace(/[^0-9,\.]/gu, "").replace(",", ".")) || 0;
           const valorInstalacao = valorUnitario * quantidade;
+          let valorMensal = 0;
           let textoMensagem = `Olá! Gostaria de agendar minha instalação.\n\n`;
           textoMensagem += `📍 Endereço informado: ${bairroInput}\n`;
           textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
           textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
           textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
 
-          let valorMensal = 0;
-
+          let textoMensalidade = '';
           if (tipo === "com") {
             const cheio = 54.90 * quantidade;
             const desconto = 49.90 * quantidade;
             valorMensal = desconto;
-
-            mensalidadeBox.className = "sucesso";
-            mensalidadeBox.innerHTML = `
-              📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br>
-              Pagando até a data do vencimento, sai por:<br>
-              💸 <strong>R$ ${desconto.toFixed(2).replace(".", ",")} mensais</strong>
-            `;
-            textoMensagem += `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento, sai por R$ ${desconto.toFixed(2).replace(".", ",")})\n`;
+            textoMensalidade = `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento: R$ ${desconto.toFixed(2).replace(".", ",")})`;
+            textoMensagem += `${textoMensalidade}\n`;
           } else {
             valorMensal = 39.90 * quantidade;
-            mensalidadeBox.className = "sucesso";
-            mensalidadeBox.innerHTML = `📅 Mensalidade: <strong>R$ ${valorMensal.toFixed(2).replace(".", ",")} mensais</strong>`;
-            textoMensagem += `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}\n`;
+            textoMensalidade = `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}`;
+            textoMensagem += `${textoMensalidade}\n`;
           }
 
           if (quantidade >= 3) {
@@ -493,16 +481,18 @@
 
           beneficiosBox.innerHTML = `
             <div style="width: 100vw; margin-left: -5vw;">
-             <img src="beneficios/beneficios1.jpg" alt="Benefícios" style="width: 100vw; height: auto; display: block; margin: 0; padding: 0;" />
-           </div>
-           `;
+              <img src="beneficios/beneficios1.jpg" alt="Benefícios" style="width: 100vw; height: auto; display: block; margin: 0; padding: 0;" />
+            </div>
+          `;
+
           const textoEncoded = encodeURIComponent(textoMensagem);
           const linkWhats = `https://wa.me/5521969312625?text=${textoEncoded}`;
 
           popup.className = "sucesso";
           popup.innerHTML = `
             <span class="botao-fechar" onclick="fecharModal()">&times;</span>
-            ✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}<br><br>
+            ✅ Valor total da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}<br>
+            ${textoMensalidade}<br><br>
             <a href="${linkWhats}" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
           `;
 
@@ -510,18 +500,20 @@
           botaoExtraAcimaVideo.querySelector("a").href = linkWhats;
           botaoWhatsAppAbaixoMensalidade.style.display = "block";
           botaoWhatsAppAbaixoMensalidade.querySelector("a").href = linkWhats;
+
         } else {
           popup.className = "erro";
           popup.innerHTML = `
             <span class="botao-fechar" onclick="fecharModal()">&times;</span>
-            ❌ Este bairro não foi encontrado.<br>
+            ❌ Este bairro não foi encontrado.<br><br>
             📌 Verifique se você digitou corretamente o nome da cidade.<br><br>
-            Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu
+            Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu<br><br>
+            <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
           `;
           mensalidadeBox.style.display = "none";
           beneficiosBox.style.display = "none";
           ofertaBox.style.display = "none";
-          botaoBairroNaoEncontrado.style.display = "block";
+          botaoBairroNaoEncontrado.style.display = "none";
           botaoExtraAcimaVideo.style.display = "none";
           botaoWhatsAppAbaixoMensalidade.style.display = "none";
         }
@@ -577,6 +569,5 @@
     E-mail: rastreandogpsbr@rastreandogps.com<br><br>
     © 2025 Rastreando GPS. Todos os direitos reservados.
   </footer>
-
- </body>
- </html>
+</body>
+</html>
