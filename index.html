@@ -468,9 +468,9 @@
             textoMensalidade = `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")}<br><strong>(pagando até o vencimento: R$ ${desconto.toFixed(2).replace(".", ",")})</strong>`;
             textoMensalidadeWhats = `📅 Mensalidade: R$ ${cheio.toFixed(2).replace(".", ",")} (pagando até o vencimento: R$ ${desconto.toFixed(2).replace(".", ",")})`;
           } else {
-            valorMensal = 39.90 * quantidade;
-            textoMensalidade = `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}`;
-            textoMensagem += `${textoMensalidadeWhats}\n`;
+              valorMensal = 39.90 * quantidade;
+              textoMensalidade = `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}`;
+              textoMensalidadeWhats = textoMensalidade;  
           }
 
           let ofertaHTML = '';
