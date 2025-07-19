@@ -428,7 +428,7 @@
         const duvidas = document.getElementById("duvidas");
         const botaoExtraAcimaVideo = document.getElementById("botaoExtraAcimaVideo");
         const botaoBairroNaoEncontrado = document.getElementById("botaoBairroNaoEncontrado");
-        const botaoWhatsAppAbaixoMensalidade = document.getElementById("botaoWhatsAppAbaixoMensalidade");
+       
 
         const response = await fetch("https://instalacao-por-bairro-gps.vercel.app/bairros.json");
         const data = await response.json();
@@ -457,7 +457,7 @@
           textoMensagem += `🚗 Quantidade de veículos: ${quantidade}\n`;
           textoMensagem += `🛰️ Tipo de rastreador: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n`;
           textoMensagem += `💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace(".", ",")}\n`;
-          textoMensagem += `📅 ${textoMensalidadeWhats}\n`;
+        
 
           let textoMensalidade = '';
           let textoMensalidadeWhats = '';
@@ -473,6 +473,7 @@
               textoMensalidade = `📅 Mensalidade: R$ ${valorMensal.toFixed(2).replace(".", ",")}`;
               textoMensalidadeWhats = textoMensalidade;  
           }
+             textoMensagem += `${textoMensalidadeWhats}\n`;
 
           let ofertaHTML = '';
           if (quantidade >= 3) {
@@ -516,9 +517,7 @@
 
           whatsapp.querySelector("a").href = linkWhats;
           botaoExtraAcimaVideo.querySelector("a").href = linkWhats;
-          botaoWhatsAppAbaixoMensalidade.style.display = "block";
-          botaoWhatsAppAbaixoMensalidade.querySelector("a").href = linkWhats;
-
+          
         } else {
           popup.className = "erro";
           popup.innerHTML = `
