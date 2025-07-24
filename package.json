@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0",
+    "pdf-parse": "^1.1.1"
+  },
+  "name": "pasta-da-pagina-html",
+  "version": "1.0.0",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rastreandogps/instalacao-por-bairro-gps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rastreandogps/instalacao-por-bairro-gps/issues"
+  },
+  "homepage": "https://github.com/Rastreandogps/instalacao-por-bairro-gps#readme",
+  "description": ""
+}
