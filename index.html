@@ -1620,29 +1620,36 @@
 
       // ========== [CONTADOR REGRESSIVO INTELIGENTE] ==========
       document.addEventListener('DOMContentLoaded', function() {
-        const countdownStartTime = localStorage.getItem('countdownStartTime');
-        const countdownDuration = 60 * 60 * 1000; // 60 minutos em milissegundos
+        const countdownData = localStorage.getItem('countdownData');
+        const countdownDuration = 60 * 60; // 60 minutos em segundos
 
-        if (!countdownStartTime) {
-          // Primeira visita: inicia o contador
-          localStorage.setItem('countdownStartTime', new Date().getTime());
-          document.getElementById('countdownContainer').style.display = 'flex';
-          startCountdown();
-        } else {
-          // Verifica tempo restante
-          const elapsedTime = new Date().getTime() - parseInt(countdownStartTime);
+        if (countdownData) {
+          // Recupera os dados do localStorage
+          const data = JSON.parse(countdownData);
+          const currentTime = Math.floor(Date.now() / 1000);
+          const elapsedTime = currentTime - data.startTime;
           const remainingTime = countdownDuration - elapsedTime;
 
           if (remainingTime > 0) {
             document.getElementById('countdownContainer').style.display = 'flex';
-            startCountdown(Math.floor(remainingTime / 1000)); // Continua de onde parou
+            startCountdown(remainingTime); // Continua de onde parou
           } else {
-            localStorage.removeItem('countdownStartTime'); // Remove se expirou
+            // Tempo expirado - remove do localStorage
+            localStorage.removeItem('countdownData');
+            showCountdownExpired();
           }
+        } else {
+          // Primeira visita: inicia o contador
+          const startTime = Math.floor(Date.now() / 1000);
+          localStorage.setItem('countdownData', JSON.stringify({
+            startTime: startTime
+          }));
+          document.getElementById('countdownContainer').style.display = 'flex';
+          startCountdown(countdownDuration);
         }
       });
 
-      function startCountdown(initialTime = 60 * 60) { // 60 minutos em segundos (padrão)
+      function startCountdown(initialTime) {
         let timeLeft = initialTime;
         const countdownElement = document.getElementById('countdown');
         
@@ -1654,15 +1661,19 @@
           
           if (timeLeft <= 0) {
             clearInterval(timer);
-            countdownElement.textContent = "00:00";
-            countdownElement.parentElement.innerHTML = 
-              '<strong style="color: #e74c3c;">TEMPO ESGOTADO!</strong><br>' +
-              '<small>Entre em contato para verificar novas promoções</small>';
-            localStorage.removeItem('countdownStartTime');
+            showCountdownExpired();
+            localStorage.removeItem('countdownData');
           } else {
             timeLeft--;
           }
         }, 1000);
+      }
+
+      function showCountdownExpired() {
+        const countdownElement = document.getElementById('countdown');
+        countdownElement.parentElement.innerHTML = 
+          '<strong style="color: #e74c3c;">TEMPO ESGOTADO!</strong><br>' +
+          '<small>Entre em contato para verificar novas promoções</small>';
       }
 
       // ========== [POPUP DE BOAS-VINDAS] ==========
