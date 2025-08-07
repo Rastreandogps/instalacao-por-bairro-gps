@@ -2365,51 +2365,84 @@
   });
 </script>
 
-<!-- Botões de Download de Apps -->
-<div class="app-download-section" style="margin: 40px auto; text-align: center;">
-  <h3 style="color: #0d3c61; font-size: 22px; margin-bottom: 20px;">📲 Baixe nosso app e monitore seu veículo de qualquer lugar!</h3>
+<!-- Botões de Download - Versão Premium -->
+<div class="app-download-section" style="margin: 50px auto 30px; text-align: center;">
+  <h3 class="section-title" style="margin-bottom: 30px;">📲 Baixe nosso app agora mesmo</h3>
   
-  <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+  <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
     <!-- Botão Android -->
     <a href="https://play.google.com/store/apps/details?id=com.rastreandogpsrastreamento.br" 
        target="_blank" 
-       class="app-button" 
-       style="background: linear-gradient(135deg, #3ddc84, #2bb673);">
-      <div style="display: flex; align-items: center; padding: 12px 25px; border-radius: 50px;">
-        <img src="https://cdn-icons-png.flaticon.com/512/226/226770.png" 
-             alt="Android" 
-             style="width: 30px; height: 30px; margin-right: 10px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2))">
-        <span style="color: white; font-weight: 600;">Disponível no<br><span style="font-size: 18px;">Google Play</span></span>
+       class="app-button-android" 
+       style="text-decoration: none;">
+      <div style="background: #3DDC84; border-radius: 16px; padding: 15px 25px; box-shadow: 0 4px 15px rgba(61, 220, 132, 0.3); transition: all 0.3s; display: flex; align-items: center; height: 60px;">
+        <div style="background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <img src="https://cdn-icons-png.flaticon.com/512/226/226770.png" 
+               alt="Android" 
+               style="width: 30px; height: 30px;">
+        </div>
+        <div style="text-align: left; color: white;">
+          <div style="font-size: 12px; opacity: 0.9;">Disponível no</div>
+          <div style="font-size: 18px; font-weight: 600; margin-top: -3px;">Google Play</div>
+        </div>
       </div>
     </a>
     
     <!-- Botão iPhone -->
     <a href="https://apps.apple.com/br/app/rastreando-gps/id1642112039" 
        target="_blank" 
-       class="app-button" 
-       style="background: linear-gradient(135deg, #0071e3, #00498e);">
-      <div style="display: flex; align-items: center; padding: 12px 25px; border-radius: 50px;">
-        <img src="https://cdn-icons-png.flaticon.com/512/179/179309.png" 
-             alt="iPhone" 
-             style="width: 30px; height: 30px; margin-right: 10px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2))">
-        <span style="color: white; font-weight: 600;">Disponível na<br><span style="font-size: 18px;">App Store</span></span>
+       class="app-button-ios" 
+       style="text-decoration: none;">
+      <div style="background: #000000; border-radius: 16px; padding: 15px 25px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s; display: flex; align-items: center; height: 60px;">
+        <div style="background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <img src="https://cdn-icons-png.flaticon.com/512/179/179309.png" 
+               alt="iPhone" 
+               style="width: 24px; height: 24px;">
+        </div>
+        <div style="text-align: left; color: white;">
+          <div style="font-size: 12px; opacity: 0.9;">Baixe na</div>
+          <div style="font-size: 18px; font-weight: 600; margin-top: -3px;">App Store</div>
+        </div>
       </div>
     </a>
     
     <!-- Botão Versão Web -->
     <a href="https://rastreamento.ong.br/index.php" 
        target="_blank" 
-       class="app-button" 
-       style="background: linear-gradient(135deg, #0d3c61, #082a44);">
-      <div style="display: flex; align-items: center; padding: 12px 25px; border-radius: 50px;">
-        <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" 
-             alt="Web" 
-             style="width: 30px; height: 30px; margin-right: 10px; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2))">
-        <span style="color: white; font-weight: 600;">Acesse também<br><span style="font-size: 18px;">Versão Web</span></span>
+       class="app-button-web" 
+       style="text-decoration: none;">
+      <div style="background: linear-gradient(135deg, #0d3c61, #1a5a8d); border-radius: 16px; padding: 15px 25px; box-shadow: 0 4px 15px rgba(13, 60, 97, 0.3); transition: all 0.3s; display: flex; align-items: center; height: 60px;">
+        <div style="background: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" 
+               alt="Web" 
+               style="width: 26px; height: 26px;">
+        </div>
+        <div style="text-align: left; color: white;">
+          <div style="font-size: 12px; opacity: 0.9;">Acesse pelo</div>
+          <div style="font-size: 18px; font-weight: 600; margin-top: -3px;">Computador</div>
+        </div>
       </div>
     </a>
   </div>
 </div>
+
+<style>
+  /* Efeitos de hover */
+  .app-button-android div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(61, 220, 132, 0.4);
+  }
+  
+  .app-button-ios div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .app-button-web div:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(13, 60, 97, 0.4);
+  }
+</style>
 
 <!-- Rodapé Atualizado -->
 <footer>
