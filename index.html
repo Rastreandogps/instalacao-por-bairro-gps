@@ -82,14 +82,125 @@
     /* Blocos brancos base */
     .shadow{box-shadow:0 10px 30px rgba(2,6,23,.16)}
 
-    /* Form consultor (mantém textos escuros pois é cartão branco) */
-    .form-container{display:flex;justify-content:center;margin:18px 0}
-    .form-box{background:#fff;border-radius:18px;padding:28px 22px;box-shadow:0 10px 30px rgba(2,6,23,.25);width:100%;max-width:420px;border:1px solid #e6eef7}
-    .form-box h2{color:var(--ink);font-size:22px;margin:0 0 16px;text-align:center}
-    .form-box input,.form-box select{width:100%;padding:14px;border-radius:12px;border:2px solid #e6eef1;margin-bottom:12px;font-size:16px;transition:border .2s, box-shadow .2s}
-    .form-box input:focus,.form-box select:focus{border-color:var(--green);box-shadow:0 0 0 4px var(--ring);outline:0}
-    .form-box button{background:linear-gradient(90deg,var(--green),#39e08a);color:#062b1b;border:0;padding:14px;border-radius:12px;font-size:17px;font-weight:800;width:100%;cursor:pointer}
-    .form-box button:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(34,197,94,.35)}
+/* Formulário Modernizado */
+.form-container {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0;
+}
+
+.form-box {
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  padding: 32px 28px;
+  box-shadow: 
+    0 12px 32px rgba(2, 6, 23, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 24px rgba(34, 197, 94, 0.12);
+  width: 100%;
+  max-width: 420px;
+  border: none;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  transition: all 0.3s ease;
+}
+
+.form-box:hover {
+  box-shadow: 
+    0 15px 35px rgba(2, 6, 23, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 0 30px rgba(34, 197, 94, 0.18);
+}
+
+.form-box h2 {
+  color: var(--ink);
+  font-size: 24px;
+  margin: 0 0 24px;
+  text-align: center;
+  font-weight: 700;
+  position: relative;
+}
+
+.form-box h2::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #22c55e, #0ea5e9);
+  border-radius: 3px;
+}
+
+.form-box input, 
+.form-box select {
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.form-box input:focus, 
+.form-box select:focus {
+  border-color: #22c55e;
+  box-shadow: 
+    0 0 0 3px rgba(34, 197, 94, 0.15),
+    0 0 20px rgba(34, 197, 94, 0.1);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.form-box button {
+  background: linear-gradient(90deg, #22c55e, #25D366);
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 800;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 15px rgba(34, 197, 94, 0.3),
+    0 2px 3px rgba(0, 0, 0, 0.05);
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.form-box button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  transform: rotate(30deg);
+  transition: all 0.5s ease;
+}
+
+.form-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(34, 197, 94, 0.4),
+    0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+.form-box button:hover::before {
+  left: 100%;
+}
 
     /* Seções (títulos claros sobre o fundo escuro da página) */
     .section-title{font-size:28px;font-weight:700;color:#ffffff;margin:40px 0 15px;position:relative;display:inline-block;padding-bottom:10px;text-align:center;width:100%}
