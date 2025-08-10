@@ -242,6 +242,25 @@
   color: #000 !important; /* Preto puro */
 }
 
+/* Mantém a pergunta visível e remove o fundo azul */
+.faq-item.active .faq-question {
+  background: #f9f9f9 !important; /* Mantém o fundo original */
+  color: #0d3c61 !important; /* Cor do texto (azul escuro) */
+  border-bottom: 1px solid #e0e0e0; /* Linha de separação */
+}
+
+/* Ajusta o ícone (+) */
+.faq-item.active .faq-icon {
+  color: #0d3c61 !important; /* Ícone escuro */
+  transform: rotate(45deg) !important;
+}
+
+/* Espaçamento da resposta */
+.faq-answer p {
+  padding-top: 10px;
+  margin-top: 0;
+}
+
 /* Opcional: Aumenta o contraste do fundo se necessário */
  #resultadoFixo .resultado-features {
   background-color: #f8f9fa; /* Cinza bem clarinho (opcional) */
@@ -790,15 +809,25 @@
             <p>${a}</p>
           </div>
         `;
-        root.appendChild(item);
+       root.appendChild(item);
       });
 
-      root.querySelectorAll('.faq-item').forEach(item=>{
-        item.querySelector('.faq-question').addEventListener('click',()=>{
-          root.querySelectorAll('.faq-item').forEach(o=>{
-            if(o!==item)o.classList.remove('active');
+      // NOVO CÓDIGO - Mantém perguntas visíveis ao expandir
+      root.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', (e) => {
+          const item = question.parentElement;
+          const isActive = item.classList.contains('active');
+          
+          // Fecha outras respostas
+          root.querySelectorAll('.faq-item').forEach(el => {
+            if (el !== item) el.classList.remove('active');
           });
-          item.classList.toggle('active');
+          
+          // Alterna apenas a resposta clicada
+          item.classList.toggle('active', !isActive);
+          
+          // Evita que o evento propague (opcional)
+          e.stopPropagation();
         });
       });
     });
