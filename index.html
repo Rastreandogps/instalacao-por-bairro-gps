@@ -230,6 +230,10 @@
   color: #333; /* Texto escuro (cinza quase preto) */
 }
 
+ /* Esconde a caixa branca quando o pop-up é fechado */
+ .modal-overlay:not(.active) ~ #resultadoFixo {
+  display: none !important;
+}
   /* ==== NOVO CÓDIGO ==== */
   .botao-fechar {
     z-index: 10001;
@@ -479,16 +483,20 @@
 
   <!-- Scripts -->
   <script>
-    function fecharModal(){
-      const p=document.getElementById('popup'),
-      o=document.getElementById('modalOverlay');
-      p.classList.remove('active');
-      o.classList.remove('active');
-      setTimeout(()=>{
-        p.style.display='none';
-        o.style.display='none';
-      },300);
-    }
+    function fecharModal() {
+  const p = document.getElementById('popup'),
+        o = document.getElementById('modalOverlay'),
+        r = document.getElementById('resultadoFixo'); // Adicione esta linha
+  
+  p.classList.remove('active');
+  o.classList.remove('active');
+  r.style.display = 'none'; // Adicione esta linha
+  
+  setTimeout(() => {
+    p.style.display = 'none';
+    o.style.display = 'none';
+  }, 300);
+}
     
     async function verValor(){
       const bairroInput=document.getElementById('bairroInput').value.trim();
