@@ -86,7 +86,8 @@
     #popup .popup-header{background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;position:relative}
     #popup .popup-header h3{margin:0;font-size:22px;font-weight:700}
     #popup .popup-content{padding:25px;color:#333}
-    .botao-fechar{position:absolute;top:15px;right:15px;width:32px;height:32px;background:rgba(255,255,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;cursor:pointer;border:2px solid #fff}
+    .botao-fechar{position:absolute;top:15px;right:15px;width:32px;height:32px;background:rgba(255,255,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;cursor:pointer;border:2px solid #fff;transition:all 0.2s ease}
+    .botao-fechar:hover{background:rgba(255,255,255,.5);transform:scale(1.1)}
 
     /* Carrosséis e FAQ: mantém estilos do seu arquivo */
     .carousel{width:100%;max-width:600px;margin:20px auto;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1);padding:0 10px}
@@ -125,6 +126,57 @@
     .faq-answer p{padding:0 20px 20px;margin:0;line-height:1.6;color:#333}
     .faq-item.active .faq-question{background:#0d3c61;color:#fff}
     .faq-item.active .faq-answer{max-height:300px}
+
+    /* Estilos melhorados para a caixa de benefícios */
+    #beneficiosBox {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px auto;
+      max-width: 1000px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    #beneficiosBox ul {
+      color: #333;
+      line-height: 1.6;
+      padding-left: 20px;
+    }
+    #beneficiosBox li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    #beneficiosBox strong {
+      color: #0d3c61;
+    }
+
+    /* Estilos para os botões */
+    .botaoZap {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 700;
+      text-align: center;
+      margin: 10px 0;
+      transition: all 0.2s ease;
+    }
+    .verdeZap {
+      background: linear-gradient(90deg, #25D366, #22c55e);
+      color: white;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    .vermelhoZap {
+      background: linear-gradient(90deg, #e74c3c, #c0392b);
+      color: white;
+      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    }
+    .pulsando {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -399,12 +451,12 @@
           const linkWhats=`https://wa.me/5521969312625?text=${textoEncoded}`;
           document.getElementById('popup-title').textContent='Valor da Instalação';
           document.getElementById('popup-header').style.background='linear-gradient(135deg,#0d3c61,#22c55e)';
-          document.getElementById('popup-content').innerHTML=`<div class="popup-price" id="popup-price">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div><div class="popup-details" id="popup-details"><p>📍 Cidade: <span id="popup-address">${bairroInput}</span></p><p>🚗 Veículos: <span id="popup-vehicles">${quantidade}</span></p><p>🛰️ Tipo: <span id="popup-type">${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</span></p><p id="popup-monthly" style="margin: 15px 0; font-size: 17px;">📅 <strong>Mensalidade:</strong> <span id="popup-monthly-value" style="font-size: 1.1em; font-weight: bold; color: #0d3c61;">${textoMensalidade}</span></p></div><div class="popup-features" id="popup-features"><ul><li>Instalação no seu endereço</li><li>Localização em tempo real</li><li>Históricos de rotas</li><li>Baixe em até 5 telefones</li></ul></div><a href="${linkWhats}" id="popup-whatsapp" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>`;
+          document.getElementById('popup-content').innerHTML=`<div class="popup-price" id="popup-price">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div><div class="popup-details" id="popup-details"><p>📍 Cidade: <span id="popup-address">${bairroInput}</span></p><p>🚗 Veículos: <span id="popup-vehicles">${quantidade}</span></p><p>🛰️ Tipo: <span id="popup-type">${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</span></p><p id="popup-monthly" style="margin: 15px 0; font-size: 17px;">📅 <strong>Mensalidade:</strong> <span id="popup-monthly-value" style="font-size: 1.1em; font-weight: bold; color: #0d3c61;">${textoMensalidade}</span></p></div><div class="popup-features" id="popup-features"><ul style="text-align: left; padding-left: 20px;"><li>Instalação no seu endereço</li><li>Localização em tempo real</li><li>Históricos de rotas</li><li>Baixe em até 5 telefones</li></ul></div><a href="${linkWhats}" id="popup-whatsapp" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>`;
 
           document.getElementById('resultadoFixo').className='sucesso';
           document.getElementById('resultadoFixo').innerHTML=`<div class='resultado-header' style="background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;text-align:center"><h3>✅ Valor da Instalação</h3></div><div class='resultado-container' style="padding:25px"><div class='resultado-price' style="font-size:36px;font-weight:800;color:#22c55e">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div><div class='resultado-details' style="text-align:left;margin:20px 0;line-height:1.6"><p>📍 <strong>Endereço:</strong> ${bairroInput}</p><p>🚗 <strong>Veículos:</strong> ${quantidade}</p><p>🛰️ <strong>Tipo:</strong> ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</p><div class='mensalidade-container'><span class='mensalidade-label'>📅 <strong>Mensalidade:</strong></span> <span class='mensalidade-valores'>${textoMensalidade}</span></div></div><div class='resultado-features' style="background:#f8f9fa;border-radius:10px;padding:15px"><ul><li>Instalação no seu endereço</li><li>Localização em tempo real</li><li>Históricos de rotas</li><li>Baixe em até 4 telefones</li></ul></div><div style="margin-top:20px"><a href='${linkWhats}' class='botaoZap verdeZap pulsando' target='_blank'>Quero instalar meu rastreador!</a></div></div>`;
           document.getElementById('resultadoFixo').style.display='block';
-          beneficiosBox.innerHTML=`<div style='width: 100vw; margin-left: -5vw;'><img src='beneficios/beneficios1.jpg' alt='Benefícios' style='width:100vw;height:auto;display:block;margin:0;padding:0' /></div>`;
+          beneficiosBox.innerHTML=`<div style='background: white; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 1000px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);'><h3 style='color: #0d3c61; text-align: center; margin-bottom: 15px;'>📌 Benefícios da Instalação</h3><ul style='color: #333; line-height: 1.6; padding-left: 20px;'><li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li><li><strong>Localização em tempo real</strong> com atualizações a cada 10 segundos</li><li><strong>Histórico completo de rotas</strong> com até 90 dias de armazenamento</li><li><strong>Compartilhamento fácil</strong> - baixe o app em até 4 dispositivos</li><li><strong>Notificações instantâneas</strong> de ignição, velocidade e muito mais</li><li><strong>Suporte 24h</strong> por WhatsApp para qualquer dúvida ou emergência</li></ul></div>`;
           botaoExtraAcimaVideo.querySelector('a').href=linkWhats;
         }else{
           document.getElementById('popup-title').textContent='Bairro não encontrado';
@@ -510,7 +562,7 @@
       ];
       const root=document.getElementById('faqRoot');
       faqs.forEach(([q,a])=>{const item=document.createElement('div');item.className='faq-item';item.innerHTML=`<div class='faq-question'><span>${q}</span><div class='faq-icon'>+</div></div><div class='faq-answer'><p>${a}</p></div>`;root.appendChild(item)});
-      root.querySelectorAll('.faq-item').forEach(item=>{item.querySelector('.faq-question').addEventListener('click',()=>{root.querySelectorAll('.faq-item').forEach(o=>{if(o!==item)o.classList.remove('active')});item.classList.toggle('active')})})
+      root.querySelectorAll('.faq-item').forEach(item=>{item.querySelector('.faq-question').addEventListener('click',()=>{root.querySelectorAll('.faq-item').forEach(o=>{if(o!==item)o.classList.remove('active')});item.classList.toggle('active')})
     });
   </script>
 
