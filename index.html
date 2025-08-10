@@ -931,7 +931,11 @@
           document.getElementById('resultadoFixo').style.display='block';
           
           beneficiosBox.innerHTML=`
-            <h3>Por apenas R$ ${valorInstalacao.toFixed(2).replace('.', ',')} e R$ ${valorMensal.toFixed(2).replace('.', ',')} mensal, menos de R$ ${valorDiario} por dia, você garante:</h3>
+          <h3 style="font-size: clamp(18px, 4vw, 22px); font-weight: 700; color: #0d3c61; line-height: 1.4; text-align: center;">
+          Por apenas <span style="white-space: nowrap;">R$ ${valorInstalacao.toFixed(2).replace('.', ',')}</span> e 
+           <span style="white-space: nowrap;">R$ ${valorMensal.toFixed(2).replace('.', ',')}</span> mensal,<br>
+           <span style="white-space: nowrap;">menos de R$ ${valorDiario} por dia</span>, você garante:
+           </h3>
             <ul>
               <li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li>
               <li><strong>Localização em tempo real</strong> com atualizações a cada 30 segundos</li>
