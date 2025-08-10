@@ -483,20 +483,16 @@
 
   <!-- Scripts -->
   <script>
-    function fecharModal() {
-  const p = document.getElementById('popup'),
-        o = document.getElementById('modalOverlay'),
-        r = document.getElementById('resultadoFixo'); // Adicione esta linha
-  
-  p.classList.remove('active');
-  o.classList.remove('active');
-  r.style.display = 'none'; // Adicione esta linha
-  
-  setTimeout(() => {
-    p.style.display = 'none';
-    o.style.display = 'none';
-  }, 300);
-}
+    function fecharModal(){
+      const p=document.getElementById('popup'),
+      o=document.getElementById('modalOverlay');
+      p.classList.remove('active');
+      o.classList.remove('active');
+      setTimeout(()=>{
+        p.style.display='none';
+        o.style.display='none';
+      },300);
+    }
     
     async function verValor(){
       const bairroInput=document.getElementById('bairroInput').value.trim();
