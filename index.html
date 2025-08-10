@@ -373,10 +373,11 @@
       color: #0d3c61;
       text-align: center;
       margin-bottom: 20px;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       position: relative;
       padding-bottom: 10px;
+      line-height: 1.4;
     }
     #beneficiosBox h3:after {
       content: '';
@@ -866,6 +867,9 @@
             textoMensalidadeWhats=textoMensalidade;
           }
           
+          // NOVO CÁLCULO DO VALOR DIÁRIO
+          const valorDiario = (valorMensal / 31).toFixed(2).replace('.', ',');
+          
           const textoMensagem=`Olá! Gostaria de agendar minha instalação.\n\n📍 Endereço informado: ${bairroInput}\n🚗 Quantidade de veículos: ${quantidade}\n🛰️ Tipo de rastreador: ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}\n💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace('.',',')}\n📅 Mensalidade: ${textoMensalidadeWhats}\n`;
           const textoEncoded=encodeURIComponent(textoMensagem);
           const linkWhats=`https://wa.me/5521969312625?text=${textoEncoded}`;
@@ -927,7 +931,7 @@
           document.getElementById('resultadoFixo').style.display='block';
           
           beneficiosBox.innerHTML=`
-            <h3>📌 Instale seu GPS e garanta:</h3>
+            <h3>Por apenas R$ ${valorInstalacao.toFixed(2).replace('.', ',')} e R$ ${valorMensal.toFixed(2).replace('.', ',')} mensal, menos de R$ ${valorDiario} por dia, você garante:</h3>
             <ul>
               <li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li>
               <li><strong>Localização em tempo real</strong> com atualizações a cada 30 segundos</li>
