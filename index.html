@@ -23,6 +23,73 @@
       left: 0;
     }
 
+    /* Cabeçalho */
+    header {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(8px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    header .wrap {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .brand a {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff4d4d;
+      text-decoration: none;
+    }
+
+    header .brand .dot {
+      color: #000;
+    }
+
+    header .nav a {
+      margin: 0 15px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    header .nav a:hover {
+      color: #ff4d4d;
+    }
+
+    header .cta {
+      padding: 10px 20px;
+      background: #ff4d4d;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    header .cta:hover {
+      background: #e03e3e;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      header .nav {
+        display: none;
+      }
+    }
+
     /* NOVO FORMULÁRIO ESTILIZADO */
     .form-container {
       display: flex;
@@ -31,6 +98,7 @@
       padding: 0 15px;
       box-sizing: border-box;
     }
+
 
     .form-box {
       background-color: #ffffff;
@@ -2463,4 +2531,5 @@
     © 2025 Rastreando GPS. Todos os direitos reservados.
   </div>
 </footer>
+
 
