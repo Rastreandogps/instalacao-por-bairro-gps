@@ -16,15 +16,58 @@
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
 
-    /* Header */
-    header{position:sticky;top:0;z-index:40;background:rgba(10,18,32,.65);backdrop-filter:blur(8px) saturate(140%);border-bottom:1px solid rgba(255,255,255,.06)}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
-    .nav{height:64px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:10px;align-items:center;color:#e5f7ff}
-    .dot{width:28px;height:28px;border-radius:10px;background:conic-gradient(from 210deg, var(--green), var(--blue));box-shadow:0 6px 20px rgba(34,197,94,.35)}
-    .brand strong{font-weight:900;letter-spacing:.2px}
-    .cta{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(90deg,var(--green),#39e08a);color:#062b1b;padding:10px 14px;border-radius:12px;font-weight:800;border:1px solid rgba(0,0,0,.08)}
-    .cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(34,197,94,.35)}
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(10,18,32,.65);
+  backdrop-filter: blur(8px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.nav {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #e5f7ff;
+}
+.logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(34,197,94,0.35));
+}
+.brand strong {
+  font-weight: 900;
+  letter-spacing: .2px;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(90deg,var(--green),#39e08a);
+  color: #062b1b;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  border: 1px solid rgba(0,0,0,.08);
+}
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(34,197,94,.35);
+}
 
     /* Hero */
     .hero{padding:34px 0 10px}
@@ -279,7 +322,7 @@
   <!-- Header -->
   <header>
     <div class="wrap nav">
-      <div class="brand"><span class="dot" aria-hidden="true"></span><strong>Rastreando GPS</strong></div>
+      <div class="brand"><img src="Logo/Logo1.png" alt="Logo Rastreando GPS" class="logo"><strong>Rastreando GPS</strong></div>
       <a class="cta" href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Quero%20instalar%20meu%20rastreador." target="_blank" rel="noopener">Agendar instalação</a>
     </div>
   </header>
