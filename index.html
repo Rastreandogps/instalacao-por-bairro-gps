@@ -349,6 +349,20 @@
   color: #333; /* Texto escuro (cinza quase preto) */
 }
 
+/* Efeito de pulsação suave */
+@keyframes pulse-opacity {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
+.plano-preco > div {
+  font-size: 18px !important; /* Mantém o tamanho original */
+  margin-top: 5px !important;
+  color: #a5f3fc; /* Cor neon azul claro (troque para #86efac se preferir verde) */
+  font-weight: 600;
+  animation: pulse-opacity 2s infinite; /* Pulsação sutil */
+}
 
   /* ==== NOVO CÓDIGO ==== */
   .botao-fechar {
