@@ -40,16 +40,16 @@
     /* Form consultor (mantém textos escuros pois é cartão branco) */
     .form-container{display:flex;justify-content:center;margin:18px 0}
     .form-box{background:#fff;border-radius:18px;padding:28px 22px;box-shadow:0 10px 30px rgba(2,6,23,.25);width:100%;max-width:420px;border:1px solid #e6eef7}
-    .form-box h2{color:var(--ink);font-size:22px;margin:0 0 16px}
+    .form-box h2{color:var(--ink);font-size:22px;margin:0 0 16px;text-align:center}
     .form-box input,.form-box select{width:100%;padding:14px;border-radius:12px;border:2px solid #e6eef1;margin-bottom:12px;font-size:16px;transition:border .2s, box-shadow .2s}
     .form-box input:focus,.form-box select:focus{border-color:var(--green);box-shadow:0 0 0 4px var(--ring);outline:0}
     .form-box button{background:linear-gradient(90deg,var(--green),#39e08a);color:#062b1b;border:0;padding:14px;border-radius:12px;font-size:17px;font-weight:800;width:100%;cursor:pointer}
     .form-box button:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(34,197,94,.35)}
 
     /* Seções (títulos claros sobre o fundo escuro da página) */
-    .section-title{font-size:28px;font-weight:700;color:#ffffff;margin:40px 0 15px;position:relative;display:inline-block;padding-bottom:10px}
+    .section-title{font-size:28px;font-weight:700;color:#ffffff;margin:40px 0 15px;position:relative;display:inline-block;padding-bottom:10px;text-align:center;width:100%}
     .section-title:after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:4px;background:linear-gradient(90deg,#22c55e,#8ad0ff);border-radius:2px}
-    .section-subtitle{font-size:16px;color:#d8e7ff;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5}
+    .section-subtitle{font-size:16px;color:#d8e7ff;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5;text-align:center}
 
     /* Planos (caixas escuras com textos claros) */
     .planos-container{display:flex;justify-content:center;flex-wrap:wrap;gap:25px;margin:40px auto;padding:0 20px;max-width:1000px}
@@ -126,24 +126,58 @@
     .faq-answer p{padding:0 20px 20px;margin:0;line-height:1.6;color:#333}
     .faq-item.active .faq-question{background:#0d3c61;color:#fff}
     .faq-item.active .faq-answer{max-height:300px}
+    .faq-icon{font-size:20px;font-weight:bold;color:#0d3c61;transition:transform 0.3s ease}
+    .faq-item.active .faq-icon{transform:rotate(45deg);color:#fff}
 
     /* Estilos melhorados para a caixa de benefícios */
     #beneficiosBox {
       background: white;
-      padding: 20px;
-      border-radius: 12px;
-      margin: 20px auto;
+      padding: 25px;
+      border-radius: 16px;
+      margin: 30px auto;
       max-width: 1000px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      display: none;
+    }
+    #beneficiosBox h3 {
+      color: #0d3c61;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    #beneficiosBox h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #22c55e, #0d3c61);
+      border-radius: 3px;
     }
     #beneficiosBox ul {
       color: #333;
-      line-height: 1.6;
+      line-height: 1.8;
       padding-left: 20px;
+      list-style-type: none;
+      margin: 0;
     }
     #beneficiosBox li {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
       font-size: 16px;
+      position: relative;
+      padding-left: 30px;
+    }
+    #beneficiosBox li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
     }
     #beneficiosBox strong {
       color: #0d3c61;
@@ -176,6 +210,13 @@
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
       100% { transform: scale(1); }
+    }
+    
+    /* Estilo para o popup features */
+    .popup-features ul {
+      color: #000;
+      text-align: left;
+      padding-left: 20px;
     }
   </style>
 </head>
@@ -215,14 +256,14 @@
   <!-- Formulário (mantém nomes/JS) -->
   <div class="form-container">
     <div class="form-box shadow">
-      <h2>📍 Consulte o valor da instalação aqui!</h2>
+      <h2>📍 CONSULTE o valor da instalação aqui</h2>
       <input type="text" id="bairroInput" placeholder="Digite apenas a cidade do RJ" />
       <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
       <select id="tipoRastreador">
         <option value="com">Com bloqueio</option>
         <option value="sem">Sem bloqueio</option>
       </select>
-      <button onclick="verValor()">Ver valor</button>
+      <button onclick="verValor()">VER VALOR</button>
       <div id="countdownContainer" style="display:none;margin-top:14px;background:#fff8e1;padding:12px;border-radius:12px;border-left:5px solid #f1c40f;align-items:center;justify-content:center;gap:12px">
         <div style="font-size:22px;color:#e74c3c">⏱️</div>
         <div>
@@ -294,7 +335,7 @@
   </div>
 
   <!-- Carrossel de Recuperações -->
-  <h2 class="section-title" style="text-align:center">🔐 Recuperações Eficientes</h2>
+  <h2 class="section-title">🔐 Recuperações Eficientes</h2>
   <p class="section-subtitle">Casos reais de veículos recuperados com o sistema Rastreando GPS em todo o estado do Rio de Janeiro.</p>
   <div class="carousel" id="carousel">
     <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1" />
@@ -418,7 +459,17 @@
 
   <!-- Scripts -->
   <script>
-    function fecharModal(){const p=document.getElementById('popup'),o=document.getElementById('modalOverlay');p.classList.remove('active');o.classList.remove('active');setTimeout(()=>{p.style.display='none';o.style.display='none';},300)}
+    function fecharModal(){
+      const p=document.getElementById('popup'),
+      o=document.getElementById('modalOverlay');
+      p.classList.remove('active');
+      o.classList.remove('active');
+      setTimeout(()=>{
+        p.style.display='none';
+        o.style.display='none';
+      },300);
+    }
+    
     async function verValor(){
       const bairroInput=document.getElementById('bairroInput').value.trim();
       const quantidade=parseInt(document.getElementById('quantidadeInput').value)||1;
@@ -434,42 +485,154 @@
       const duvidas=document.getElementById('duvidas')||document.createElement('div');
       const botaoExtraAcimaVideo=document.getElementById('botaoExtraAcimaVideo');
       const botaoBairroNaoEncontrado=document.getElementById('botaoBairroNaoEncontrado');
-      overlay.style.display='block';popup.style.display='block';setTimeout(()=>{overlay.classList.add('active');popup.classList.add('active');},10);
-      whatsapp.style.display='block';duvidas.style.display='block';mensalidadeBox.style.display='block';beneficiosBox.style.display='block';ofertaBox.style.display='none';resultadoFixo.style.display='none';
+      
+      overlay.style.display='block';
+      popup.style.display='block';
+      setTimeout(()=>{
+        overlay.classList.add('active');
+        popup.classList.add('active');
+      },10);
+      
+      whatsapp.style.display='block';
+      duvidas.style.display='block';
+      mensalidadeBox.style.display='block';
+      beneficiosBox.style.display='block';
+      ofertaBox.style.display='none';
+      resultadoFixo.style.display='none';
+      
       try{
         const response=await fetch('https://instalacao-por-bairro-gps.vercel.app/bairros.json');
         const data=await response.json();
         const normalizar=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
         const resultado=data.find(e=>normalizar(e.bairro)===normalizar(bairroInput));
+        
         if(resultado){
-          botaoBairroNaoEncontrado.style.display='none';botaoExtraAcimaVideo.style.display='block';
+          botaoBairroNaoEncontrado.style.display='none';
+          botaoExtraAcimaVideo.style.display='block';
+          
           const valorUnitario=parseFloat(resultado.valor.toString().replace(/[^0-9,\.]/gu,'').replace(',','.'))||0;
-          const valorInstalacao=valorUnitario*quantidade;let valorMensal=0;let textoMensalidade='';let textoMensalidadeWhats='';
-          if(tipo==='com'){const cheio=54.90*quantidade;const desconto=49.90*quantidade;valorMensal=desconto;textoMensalidade=`<span class='valor-normal'>R$ ${cheio.toFixed(2).replace('.',',')}</span> <span class='valor-desconto'>(R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)</span>`;textoMensalidadeWhats=`R$ ${cheio.toFixed(2).replace('.',',')} (ou R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)`;} else {valorMensal=39.90*quantidade;textoMensalidade=`R$ ${valorMensal.toFixed(2).replace('.',',')}`;textoMensalidadeWhats=textoMensalidade}
+          const valorInstalacao=valorUnitario*quantidade;
+          let valorMensal=0;
+          let textoMensalidade='';
+          let textoMensalidadeWhats='';
+          
+          if(tipo==='com'){
+            const cheio=54.90*quantidade;
+            const desconto=49.90*quantidade;
+            valorMensal=desconto;
+            textoMensalidade=`<span class='valor-normal'>R$ ${cheio.toFixed(2).replace('.',',')}</span> <span class='valor-desconto'>(R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)</span>`;
+            textoMensalidadeWhats=`R$ ${cheio.toFixed(2).replace('.',',')} (ou R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)`;
+          } else {
+            valorMensal=39.90*quantidade;
+            textoMensalidade=`R$ ${valorMensal.toFixed(2).replace('.',',')}`;
+            textoMensalidadeWhats=textoMensalidade;
+          }
+          
           const textoMensagem=`Olá! Gostaria de agendar minha instalação.\n\n📍 Endereço informado: ${bairroInput}\n🚗 Quantidade de veículos: ${quantidade}\n🛰️ Tipo de rastreador: ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}\n💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace('.',',')}\n📅 Mensalidade: ${textoMensalidadeWhats}\n`;
           const textoEncoded=encodeURIComponent(textoMensagem);
           const linkWhats=`https://wa.me/5521969312625?text=${textoEncoded}`;
+          
           document.getElementById('popup-title').textContent='Valor da Instalação';
           document.getElementById('popup-header').style.background='linear-gradient(135deg,#0d3c61,#22c55e)';
-          document.getElementById('popup-content').innerHTML=`<div class="popup-price" id="popup-price">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div><div class="popup-details" id="popup-details"><p>📍 Cidade: <span id="popup-address">${bairroInput}</span></p><p>🚗 Veículos: <span id="popup-vehicles">${quantidade}</span></p><p>🛰️ Tipo: <span id="popup-type">${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</span></p><p id="popup-monthly" style="margin: 15px 0; font-size: 17px;">📅 <strong>Mensalidade:</strong> <span id="popup-monthly-value" style="font-size: 1.1em; font-weight: bold; color: #0d3c61;">${textoMensalidade}</span></p></div><div class="popup-features" id="popup-features"><ul style="text-align: left; padding-left: 20px;"><li>Instalação no seu endereço</li><li>Localização em tempo real</li><li>Históricos de rotas</li><li>Baixe em até 5 telefones</li></ul></div><a href="${linkWhats}" id="popup-whatsapp" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>`;
+          
+          document.getElementById('popup-content').innerHTML=`
+            <div class="popup-price" id="popup-price">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div>
+            <div class="popup-details" id="popup-details">
+              <p>📍 Cidade: <span id="popup-address">${bairroInput}</span></p>
+              <p>🚗 Veículos: <span id="popup-vehicles">${quantidade}</span></p>
+              <p>🛰️ Tipo: <span id="popup-type">${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</span></p>
+              <p id="popup-monthly" style="margin: 15px 0; font-size: 17px;">
+                📅 <strong>Mensalidade:</strong> <span id="popup-monthly-value" style="font-size: 1.1em; font-weight: bold; color: #0d3c61;">${textoMensalidade}</span>
+              </p>
+            </div>
+            <div class="popup-features" id="popup-features">
+              <ul>
+                <li>Instalação no seu endereço</li>
+                <li>Localização em tempo real</li>
+                <li>Históricos de rotas</li>
+                <li>Baixe em até 5 telefones</li>
+              </ul>
+            </div>
+            <a href="${linkWhats}" id="popup-whatsapp" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
+          `;
 
           document.getElementById('resultadoFixo').className='sucesso';
-          document.getElementById('resultadoFixo').innerHTML=`<div class='resultado-header' style="background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;text-align:center"><h3>✅ Valor da Instalação</h3></div><div class='resultado-container' style="padding:25px"><div class='resultado-price' style="font-size:36px;font-weight:800;color:#22c55e">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div><div class='resultado-details' style="text-align:left;margin:20px 0;line-height:1.6"><p>📍 <strong>Endereço:</strong> ${bairroInput}</p><p>🚗 <strong>Veículos:</strong> ${quantidade}</p><p>🛰️ <strong>Tipo:</strong> ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</p><div class='mensalidade-container'><span class='mensalidade-label'>📅 <strong>Mensalidade:</strong></span> <span class='mensalidade-valores'>${textoMensalidade}</span></div></div><div class='resultado-features' style="background:#f8f9fa;border-radius:10px;padding:15px"><ul><li>Instalação no seu endereço</li><li>Localização em tempo real</li><li>Históricos de rotas</li><li>Baixe em até 4 telefones</li></ul></div><div style="margin-top:20px"><a href='${linkWhats}' class='botaoZap verdeZap pulsando' target='_blank'>Quero instalar meu rastreador!</a></div></div>`;
+          document.getElementById('resultadoFixo').innerHTML=`
+            <div class='resultado-header' style="background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;text-align:center">
+              <h3>✅ Valor da Instalação</h3>
+            </div>
+            <div class='resultado-container' style="padding:25px">
+              <div class='resultado-price' style="font-size:36px;font-weight:800;color:#22c55e">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div>
+              <div class='resultado-details' style="text-align:left;margin:20px 0;line-height:1.6">
+                <p>📍 <strong>Endereço:</strong> ${bairroInput}</p>
+                <p>🚗 <strong>Veículos:</strong> ${quantidade}</p>
+                <p>🛰️ <strong>Tipo:</strong> ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</p>
+                <div class='mensalidade-container'>
+                  <span class='mensalidade-label'>📅 <strong>Mensalidade:</strong></span> 
+                  <span class='mensalidade-valores'>${textoMensalidade}</span>
+                </div>
+              </div>
+              <div class='resultado-features' style="background:#f8f9fa;border-radius:10px;padding:15px">
+                <ul>
+                  <li>Instalação no seu endereço</li>
+                  <li>Localização em tempo real</li>
+                  <li>Históricos de rotas</li>
+                  <li>Baixe em até 4 telefones</li>
+                </ul>
+              </div>
+              <div style="margin-top:20px">
+                <a href='${linkWhats}' class='botaoZap verdeZap pulsando' target='_blank'>Quero instalar meu rastreador!</a>
+              </div>
+            </div>
+          `;
+          
           document.getElementById('resultadoFixo').style.display='block';
-          beneficiosBox.innerHTML=`<div style='background: white; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 1000px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);'><h3 style='color: #0d3c61; text-align: center; margin-bottom: 15px;'>📌 Benefícios da Instalação</h3><ul style='color: #333; line-height: 1.6; padding-left: 20px;'><li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li><li><strong>Localização em tempo real</strong> com atualizações a cada 10 segundos</li><li><strong>Histórico completo de rotas</strong> com até 90 dias de armazenamento</li><li><strong>Compartilhamento fácil</strong> - baixe o app em até 4 dispositivos</li><li><strong>Notificações instantâneas</strong> de ignição, velocidade e muito mais</li><li><strong>Suporte 24h</strong> por WhatsApp para qualquer dúvida ou emergência</li></ul></div>`;
+          
+          beneficiosBox.innerHTML=`
+            <h3>📌 Benefícios da Instalação</h3>
+            <ul>
+              <li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li>
+              <li><strong>Localização em tempo real</strong> com atualizações a cada 10 segundos</li>
+              <li><strong>Histórico completo de rotas</strong> com até 90 dias de armazenamento</li>
+              <li><strong>Compartilhamento fácil</strong> - baixe o app em até 4 dispositivos</li>
+              <li><strong>Notificações instantâneas</strong> de ignição, velocidade e muito mais</li>
+              <li><strong>Suporte 24h</strong> por WhatsApp para qualquer dúvida ou emergência</li>
+            </ul>
+          `;
+          
+          beneficiosBox.style.display = 'block';
           botaoExtraAcimaVideo.querySelector('a').href=linkWhats;
-        }else{
+        } else {
           document.getElementById('popup-title').textContent='Bairro não encontrado';
           document.getElementById('popup-header').style.background='#e74c3c';
-          document.getElementById('popup-content').innerHTML=`<div style="font-size:60px;margin:20px 0;color:#e74c3c">❌</div><p>Este bairro não foi encontrado em nossa base de dados.</p><p>Verifique se você digitou corretamente o nome da cidade.</p><p>Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu</p><div style="margin-top:20px"><a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">Clique aqui se não encontrou a cidade</a></div>`;
+          document.getElementById('popup-content').innerHTML=`
+            <div style="font-size:60px;margin:20px 0;color:#e74c3c">❌</div>
+            <p>Este bairro não foi encontrado em nossa base de dados.</p>
+            <p>Verifique se você digitou corretamente o nome da cidade.</p>
+            <p>Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu</p>
+            <div style="margin-top:20px">
+              <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">Clique aqui se não encontrou a cidade</a>
+            </div>
+          `;
+          
           document.getElementById('resultadoFixo').style.display='none';
-          mensalidadeBox.style.display='none';beneficiosBox.style.display='none';ofertaBox.style.display='none';
-          botaoBairroNaoEncontrado.style.display='block';botaoExtraAcimaVideo.style.display='none';
+          mensalidadeBox.style.display='none';
+          beneficiosBox.style.display='none';
+          ofertaBox.style.display='none';
+          botaoBairroNaoEncontrado.style.display='block';
+          botaoExtraAcimaVideo.style.display='none';
         }
-      }catch(e){
+      } catch(e) {
         document.getElementById('popup-title').textContent='Erro na consulta';
         document.getElementById('popup-header').style.background='#e74c3c';
-        document.getElementById('popup-content').innerHTML=`<div style="font-size:60px;margin:20px 0;color:#e74c3c">⚠️</div><p>Ocorreu um erro ao consultar os valores.</p><p>Por favor, tente novamente mais tarde ou entre em contato conosco.</p><div style="margin-top:20px"><a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Tive%20um%20problema%20ao%20consultar%20o%20valor%20da%20instala%C3%A7%C3%A3o." class="botaoZap vermelhoZap pulsando" target="_blank">Falar com atendente</a></div>`;
+        document.getElementById('popup-content').innerHTML=`
+          <div style="font-size:60px;margin:20px 0;color:#e74c3c">⚠️</div>
+          <p>Ocorreu um erro ao consultar os valores.</p>
+          <p>Por favor, tente novamente mais tarde ou entre em contato conosco.</p>
+          <div style="margin-top:20px">
+            <a href="https://wa.me/5521969312625?text=Ol%C3%A1!%20Tive%20um%20problema%20ao%20consultar%20o%20valor%20da%20instala%C3%A7%C3%A3o." class="botaoZap vermelhoZap pulsando" target="_blank">Falar com atendente</a>
+          </div>
+        `;
       }
     }
 
@@ -529,8 +692,28 @@
         startCountdown(dur)
       }
     });
-    function startCountdown(t){let timeLeft=t;const el=document.getElementById('countdown');const timer=setInterval(()=>{const m=Math.floor(timeLeft/60);const s=Math.floor(timeLeft%60);el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;if(timeLeft<=0){clearInterval(timer);showCountdownExpired();localStorage.removeItem('countdownData')}else{timeLeft--}},1000)}
-    function showCountdownExpired(){const el=document.getElementById('countdown');el.parentElement.innerHTML='<strong style="color:#e74c3c;">TEMPO ESGOTADO!</strong><br><small>Entre em contato para verificar novas promoções</small>'}
+    
+    function startCountdown(t){
+      let timeLeft=t;
+      const el=document.getElementById('countdown');
+      const timer=setInterval(()=>{
+        const m=Math.floor(timeLeft/60);
+        const s=Math.floor(timeLeft%60);
+        el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        if(timeLeft<=0){
+          clearInterval(timer);
+          showCountdownExpired();
+          localStorage.removeItem('countdownData')
+        } else {
+          timeLeft--
+        }
+      },1000)
+    }
+    
+    function showCountdownExpired(){
+      const el=document.getElementById('countdown');
+      el.parentElement.innerHTML='<strong style="color:#e74c3c;">TEMPO ESGOTADO!</strong><br><small>Entre em contato para verificar novas promoções</small>'
+    }
 
     // FAQ
     document.addEventListener('DOMContentLoaded',function(){
@@ -565,7 +748,15 @@
       faqs.forEach(([q,a])=>{
         const item=document.createElement('div');
         item.className='faq-item';
-        item.innerHTML=`<div class='faq-question'><span>${q}</span><div class='faq-icon'>+</div></div><div class='faq-answer'><p>${a}</p></div>`;
+        item.innerHTML=`
+          <div class='faq-question'>
+            <span>${q}</span>
+            <div class='faq-icon'>+</div>
+          </div>
+          <div class='faq-answer'>
+            <p>${a}</p>
+          </div>
+        `;
         root.appendChild(item);
       });
 
