@@ -43,8 +43,8 @@
   color: #e5f7ff;
 }
 .logo {
-  width: 36px;
-  height: 36px;
+  width: 36px;  /* aumentei de 28 para 36 */
+  height: 36px; /* aumentei de 28 para 36 */
   border-radius: 10px;
   object-fit: contain;
   filter: drop-shadow(0 4px 10px rgba(34,197,94,0.35));
@@ -59,7 +59,7 @@
   gap: 8px;
   background: linear-gradient(90deg,var(--green),#39e08a);
   color: #062b1b;
-  padding: 8px 12px;
+  padding: 8px 12px; /* 20% menor que o original */
   border-radius: 10px;
   font-weight: 800;
   font-size: 0.92em;
@@ -82,7 +82,7 @@
     /* Blocos brancos base */
     .shadow{box-shadow:0 10px 30px rgba(2,6,23,.16)}
 
-    /* Formulário Modernizado */
+/* Formulário Modernizado */
 .form-container {
   display: flex;
   justify-content: center;
@@ -207,7 +207,7 @@
     .section-title:after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:4px;background:linear-gradient(90deg,#22c55e,#8ad0ff);border-radius:2px}
     .section-subtitle{font-size:16px;color:#d8e7ff;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5;text-align:center}
 
-    /* Planos (caixas escuras com textos claros) */
+/* Planos (caixas escuras com textos claros) */
  .planos-container {
   display: flex;
   justify-content: center;
@@ -249,9 +249,9 @@
   margin-bottom: 15px;
   color: #fff;
   position: relative;
-  display: block;
-  text-align: center;
-  width: 100%;
+  display: block; /* Alterado de inline-block para block */
+  text-align: center; /* Adicionado para centralizar */
+  width: 100%; /* Garante que ocupe toda a largura */
 }
  .plano-titulo::after {
   content: '';
@@ -275,8 +275,10 @@
   font-weight: 700;
   margin: 20px 0;
   color: #fff;
-  text-align: center;
+  text-align: center; /* Adicione esta linha para centralizar */
 }
+/* ... (mantenha o resto do CSS igual) ... */
+
 .plano-botao {
   display: block;
   background: linear-gradient(90deg, #22c55e, #25D366);
@@ -286,11 +288,10 @@
   text-decoration: none;
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-  margin: 0 auto;
-  text-align: center;
-  width: fit-content;
+  margin: 0 auto; /* Centraliza o botão */
+  text-align: center; /* Centraliza o texto */
+  width: fit-content; /* Largura ajustável */
 }
-
     /* Footer */
     footer{margin-top:48px;background:linear-gradient(135deg,#0d3c61,#082a44);color:#e8f5ff;padding:28px 16px;border-top:4px solid var(--green)}
     footer .wrap{display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center}
@@ -327,8 +328,7 @@
     .carrossel-container{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
     .carrossel-track{display:flex;transition:transform .5s ease;touch-action:pan-y}
     .carrossel-slide{min-width:100%;padding:10px;box-sizing:border-box}
-    /* >>> MOD: Depoimentos sem molduras/bordas/sombras <<< */
-    .carrossel-slide img{width:100%;border-radius:0;box-shadow:none;border:none}
+    .carrossel-slide img{width:100%;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #e0e0e0}
     .carrossel-nav{display:flex;justify-content:center;align-items:center;margin-top:20px;gap:15px}
     .carrossel-prev,.carrossel-next{background:linear-gradient(90deg,#22c55e,#0d3c61);color:#fff;border:0;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
     .carrossel-dots{display:flex;gap:8px}
@@ -421,7 +421,7 @@
 }
 
 .oferta-destaque .valor-promo {
-  color: #86efac;
+  color: #86efac; /* Verde claro */
   font-weight: 600;
   display: inline-block;
   position: relative;
@@ -487,7 +487,7 @@
     padding-left: 20px;
   }
   .popup-content {
-  color: #333;
+  color: #333; /* Texto escuro (cinza quase preto) */
 }
 
 /* Efeito de pulsação suave */
@@ -505,15 +505,15 @@
 
 .popup-price strong {
   font-weight: 800;
-  color: #16a34a;
+  color: #16a34a; /* Verde escuro para destaque */
 }
 
 .plano-preco > div {
-  font-size: 18px !important;
+  font-size: 18px !important; /* Mantém o tamanho original */
   margin-top: 5px !important;
-  color: #a5f3fc;
+  color: #a5f3fc; /* Cor neon azul claro (troque para #86efac se preferir verde) */
   font-weight: 600;
-  animation: pulse-opacity 2s infinite;
+  animation: pulse-opacity 2s infinite; /* Pulsação sutil */
 }
 
   /* ==== NOVO CÓDIGO ==== */
@@ -524,19 +524,19 @@
 
   /* DEIXA O TEXTO DA LISTA DE BENEFÍCIOS PRETO */
  #resultadoFixo .resultado-features ul {
-  color: #000 !important;
+  color: #000 !important; /* Preto puro */
 }
 
 /* Mantém a pergunta visível e remove o fundo azul */
 .faq-item.active .faq-question {
-  background: #f9f9f9 !important;
-  color: #0d3c61 !important;
-  border-bottom: 1px solid #e0e0e0;
+  background: #f9f9f9 !important; /* Mantém o fundo original */
+  color: #0d3c61 !important; /* Cor do texto (azul escuro) */
+  border-bottom: 1px solid #e0e0e0; /* Linha de separação */
 }
 
 /* Ajusta o ícone (+) */
 .faq-item.active .faq-icon {
-  color: #0d3c61 !important;
+  color: #0d3c61 !important; /* Ícone escuro */
   transform: rotate(45deg) !important;
 }
 
@@ -548,50 +548,121 @@
 
 /* Opcional: Aumenta o contraste do fundo se necessário */
  #resultadoFixo .resultado-features {
-  background-color: #f8f9fa;
+  background-color: #f8f9fa; /* Cinza bem clarinho (opcional) */
   padding: 15px;
   border-radius: 8px;
 }
 
-/* ==== NOVAS CAIXAS DE INSTALAÇÃO (NEON) ==== */
-.insta-grid{
-  display:grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap:16px;
-  margin-top:20px;
-}
-@media (max-width:720px){ .insta-grid{ grid-template-columns:1fr; } }
-.insta-card{
-  position:relative;
-  padding:18px 16px;
-  border-radius:16px;
-  background: radial-gradient(120% 120% at 10% 10%, rgba(34,197,94,.12), rgba(14,165,233,.10) 50%, rgba(255,255,255,.06) 100%);
-  border:1px solid rgba(134,239,172,.35);
-  box-shadow:
-    0 0 0 2px rgba(34,197,94,.12) inset,
-    0 10px 30px rgba(2,6,23,.35),
-    0 0 24px rgba(34,197,94,.25);
-  overflow:hidden;
-}
-.insta-card:before{
-  content:'';
-  position:absolute;
-  inset:-2px;
-  background: conic-gradient(from 180deg at 50% 50%, rgba(34,197,94,.35), rgba(14,165,233,.35), rgba(34,197,94,.35));
-  filter: blur(24px);
-  opacity:.25;
-  z-index:-1;
-}
-.insta-title{
-  display:flex; align-items:center; gap:10px;
-  font-weight:800; color:#eafff5; margin:0 0 8px; font-size:18px;
-}
-.insta-title .dot{
-  width:10px;height:10px;border-radius:50%;background:#22c55e;box-shadow:0 0 12px #22c55e;
-}
-.insta-text{margin:0;color:#dff7ff;line-height:1.55}
+/* ===== MODIFICAÇÕES SOLICITADAS ===== */
 
-/* ===== FIM NOVAS CAIXAS ==== */
+/* 1. Banner inicial - Pontas mais arredondadas */
+.headline-video-container {
+  border-radius: 24px !important; /* Aumentado de 16px para 24px */
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+/* 2. Título acima do vídeo */
+.video-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin: 40px 0 20px;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.video-title:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #8ad0ff);
+  border-radius: 2px;
+}
+
+/* 3. Seção de instalação - Caixas modernas */
+.instalacao-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px auto;
+  max-width: 1000px;
+  padding: 0 20px;
+}
+
+.instalacao-card {
+  background: rgba(13, 60, 97, 0.3);
+  border-radius: 16px;
+  padding: 25px;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.instalacao-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(34, 197, 94, 0.1),
+    rgba(34, 197, 94, 0)
+  );
+  transform: rotate(30deg);
+  transition: all 0.5s ease;
+}
+
+.instalacao-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+}
+
+.instalacao-card:hover::before {
+  left: 100%;
+}
+
+.instalacao-card h3 {
+  color: #22c55e;
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.instalacao-card h3:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: #22c55e;
+  border-radius: 3px;
+}
+
+.instalacao-card p {
+  color: #d8e7ff;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 4. Carrossel de depoimentos - Remover molduras */
+.carrossel-slide img {
+  border: none !important;
+  box-shadow: none !important;
+}
 
 </style> <!-- NÃO APAGUE ESSE </style>! -->
 
@@ -617,8 +688,7 @@
         <h1 class="title">Consulte o valor da instalação — com e sem bloqueio</h1>
         <p class="lead">Instalação a domicílio, app iOS/Android e suporte por WhatsApp. Tecnologia 4G com plataforma Web.</p>
       </div>
-      <!-- >>> MOD: Banner com cantos mais arredondados <<< -->
-      <div class="headline-video-container" style="border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.08)">
+      <div class="headline-video-container">
         <img src="HEADLINE/banner.png" alt="Headline" class="headline-video" />
       </div>
     </div>
@@ -676,34 +746,33 @@
     <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
   </div>
 
-  <!-- Vídeo + seção de instalação -->
+  <!-- Vídeo + título -->
+  <h2 class="video-title">Veja como funciona nosso aplicativo</h2>
   <div style="padding-left: 20px; padding-right: 20px; box-sizing: border-box;">
-    <!-- >>> MOD: Título acima do vídeo <<< -->
-    <h2 class="section-title">Veja como funciona nosso aplicativo</h2>
     <iframe width="100%" height="315" src="https://www.youtube.com/embed/nB5CC01cGIo" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
 
-    <!-- >>> MOD: Substitui a foto Instalacao1 por caixas neon <<< -->
-    <div class="insta-grid">
-      <div class="insta-card">
-        <h4 class="insta-title"><span class="dot"></span> Instalação rápida e no local</h4>
-        <p class="insta-text">Vamos até você: casa, trabalho ou garagem. Comodidade total para sua agenda.</p>
-      </div>
-      <div class="insta-card">
-        <h4 class="insta-title"><span class="dot"></span> 30 a 60 minutos</h4>
-        <p class="insta-text">Tempo médio de serviço por veículo, mantendo padrão e acabamento discretos.</p>
-      </div>
-      <div class="insta-card">
-        <h4 class="insta-title"><span class="dot"></span> Suporte após o serviço</h4>
-        <p class="insta-text">Atendimento humano para ajustes, dúvidas e configuração do seu app.</p>
-      </div>
-      <div class="insta-card">
-        <h4 class="insta-title"><span class="dot"></span> Qualquer modelo e ano</h4>
-        <p class="insta-text">Carros, motos, vans e caminhões. Instalação segura e compatível.</p>
-      </div>
-      <div class="insta-card" style="grid-column:1/-1">
-        <h4 class="insta-title"><span class="dot"></span> Como funciona</h4>
-        <p class="insta-text">Instalamos o rastreador, ativamos seu login e, no app, você acompanha rotas, recebe alertas e pode bloquear/desbloquear quando precisar.</p>
-      </div>
+  <!-- Seção de instalação (substituindo a foto Instalacao1) -->
+  <div class="instalacao-info">
+    <div class="instalacao-card">
+      <h3>Instalação rápida e no local</h3>
+      <p>Nossos técnicos vão até você e realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
+    </div>
+    <div class="instalacao-card">
+      <h3>Duração média de 30 a 60 minutos</h3>
+      <p>Processo ágil e profissional, com tempo médio entre 30 e 60 minutos, sem comprometer sua rotina.</p>
+    </div>
+    <div class="instalacao-card">
+      <h3>Suporte após o serviço</h3>
+      <p>Assistência completa mesmo após a instalação, com suporte técnico especializado sempre que precisar.</p>
+    </div>
+    <div class="instalacao-card">
+      <h3>Compatível com qualquer modelo e ano</h3>
+      <p>Funciona em todos os veículos, independente do modelo, ano ou tipo (carros, motos, caminhões, etc.).</p>
+    </div>
+    <div class="instalacao-card">
+      <h3>Explicação visual de como funciona</h3>
+      <p>Nossos técnicos explicam o funcionamento do sistema e do aplicativo, garantindo que você aproveite todos os recursos.</p>
     </div>
   </div>
 
