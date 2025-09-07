@@ -339,6 +339,29 @@ footer {
     .carousel{width:100%;max-width:600px;margin:20px auto;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1);padding:0 10px}
     .carousel img{width:100%;display:none}
     .carousel img.active{display:block}
+    
+   .carousel {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,.1);
+  padding: 0 10px;
+  height: 300px; /* ← ALTURA FIXA PARA O CARROSSEL */
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* ← MANTÉM A PROPORÇÃO DAS IMAGENS */
+  display: none;
+}
+
+.carousel img.active {
+  display: block;
+}
 
     .depoimentos-carrossel{max-width:800px;margin:30px auto;position:relative;padding:0 20px}
     .carrossel-container{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
@@ -1432,25 +1455,23 @@ footer {
       }
     }
 
-    // Carrossel de instalações
-    const instalacoesTrack=document.addEventListener('DOMContentLoaded',()=>{
-      const track=document.querySelector('.instalacoes-track');
-      const slides=[...document.querySelectorAll('.instalacoes-slide')];
-      const dotsC=document.querySelector('.instalacoes-dots');
-      const prev=document.querySelector('.instalacoes-prev');
-      const next=document.querySelector('.instalacoes-next');
-      let idx=0,startX=0,endX=0; 
-      slides.forEach((_,i)=>{const d=document.createElement('div');d.className='instalacoes-dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsC.appendChild(d)});
-      const dots=[...document.querySelectorAll('.instalacoes-dot')];
-      function render(){track.style.transform=`translateX(-${idx*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===idx))}
-      function go(i){idx=i;render()}
-      function prevFn(){idx=idx>0?idx-1:slides.length-1;render()}
-      function nextFn(){idx=idx<slides.length-1?idx+1:0;render()}
-      prev.addEventListener('click',prevFn);next.addEventListener('click',nextFn);
-      track.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
-      track.addEventListener('touchend',e=>{endX=e.changedTouches[0].screenX;const d=startX-endX;if(d>50)nextFn();if(d<-50)prevFn()},{passive:true});
-      setInterval(nextFn,2000);
-    });
+// Carrossel de recuperações - CORRIGIDO
+document.addEventListener('DOMContentLoaded', () => {
+  const carousel = document.getElementById('carousel');
+  if (!carousel) return;
+  
+  const imgs = carousel.querySelectorAll('img');
+  let i = 0;
+  
+  // Mostra a primeira imagem
+  imgs[i].classList.add('active');
+  
+  setInterval(() => {
+    imgs[i].classList.remove('active');
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add('active');
+  }, 2000);
+});
 
     // Carrossel de recuperações
     document.addEventListener('DOMContentLoaded',()=>{let i=0;const imgs=document.querySelectorAll('#carousel img');setInterval(()=>{imgs[i].classList.remove('active');i=(i+1)%imgs.length;imgs[i].classList.add('active')},2000)});
