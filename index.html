@@ -339,29 +339,6 @@ footer {
     .carousel{width:100%;max-width:600px;margin:20px auto;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1);padding:0 10px}
     .carousel img{width:100%;display:none}
     .carousel img.active{display:block}
-    
-   .carousel {
-  width: 100%;
-  max-width: 600px;
-  margin: 20px auto;
-  position: relative;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,.1);
-  padding: 0 10px;
-  height: 300px; /* ← ALTURA FIXA PARA O CARROSSEL */
-}
-
-.carousel img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* ← MANTÉM A PROPORÇÃO DAS IMAGENS */
-  display: none;
-}
-
-.carousel img.active {
-  display: block;
-}
 
     .depoimentos-carrossel{max-width:800px;margin:30px auto;position:relative;padding:0 20px}
     .carrossel-container{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
@@ -938,7 +915,7 @@ footer {
     </div>
   </header>
 
-  <!-- Hero com banner HEADLINE - IMAGEM SUBSTITUÍDA -->
+  <!-- Hero com banner HEADLINE -->
   <section class="hero">
     <div class="wrap card">
       <div>
@@ -947,8 +924,7 @@ footer {
         <p class="lead">Instalação a domicílio, app iOS/Android e suporte por WhatsApp. Tecnologia 4G com plataforma Web.</p>
       </div>
       <div class="headline-video-container">
-        <!-- IMAGEM SUBSTITUÍDA: banner.png por carro-ceu-recuperacao.jpg -->
-        <img src="Recuperacao/carro-ceu-recuperacao.jpg" alt="Carro recuperado com sucesso pelo sistema Rastreando GPS" class="headline-video" />
+        <img src="HEADLINE/banner.png" alt="Headline" class="headline-video" />
       </div>
     </div>
   </section>
@@ -1015,7 +991,7 @@ footer {
 <div class="instalacao-info">
   <div class="instalacao-card">
     <h3>Instalação rápida e no local</h3>
-    <p>Nossos técnicos vão até você vào realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
+    <p>Nossos técnicos vão até você e realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
   </div>
   <div class="instalacao-card">
     <h3>Duração média de 30 a 60 minutos</h3>
@@ -1124,7 +1100,7 @@ footer {
     <p>Controle total sobre seus veículos e motoristas com nossa tecnologia de rastreamento avançada</p>
   </div>
   
-  <!-- GIF adicionado abaixo do título and subtítulo -->
+  <!-- GIF adicionado abaixo do título e subtítulo -->
   <div class="frota-gif-container">
     <img src="beneficios/tela.gif" alt="Demonstração do sistema de gestão de frotas">
   </div>
@@ -1208,8 +1184,8 @@ footer {
         <button class="carrossel-prev" aria-label="Anterior">❮</button>
         <div class="carrossel-dots"></div>
         <button class="carrossel-next" aria-label="Próximo">❯</button>
+      </div>
     </div>
-  </div>
   </div>
 
   <!-- Botões de apps -->
@@ -1455,25 +1431,28 @@ footer {
       }
     }
 
-// Carrossel de recuperações - CORRIGIDO
-document.addEventListener('DOMContentLoaded', () => {
-  const carousel = document.getElementById('carousel');
-  if (!carousel) return;
-  
-  const imgs = carousel.querySelectorAll('img');
-  let i = 0;
-  
-  // Mostra a primeira imagem
-  imgs[i].classList.add('active');
-  
-  setInterval(() => {
-    imgs[i].classList.remove('active');
-    i = (i + 1) % imgs.length;
-    imgs[i].classList.add('active');
-  }, 2000);
-});
+    // Carrossel de instalações
+    const instalacoesTrack=document.addEventListener('DOMContentLoaded',()=>{
+      const track=document.querySelector('.instalacoes-track');
+      const slides=[...document.querySelectorAll('.instalacoes-slide')];
+      const dotsC=document.querySelector('.instalacoes-dots');
+      const prev=document.querySelector('.instalacoes-prev');
+      const next=document.querySelector('.instalacoes-next');
+      let idx=0,startX=0,endX=0; 
+      slides.forEach((_,i)=>{const d=document.createElement('div');d.className='instalacoes-dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsC.appendChild(d)});
+      const dots=[...document.querySelectorAll('.instalacoes-dot')];
+      function render(){track.style.transform=`translateX(-${idx*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===idx))}
+      function go(i){idx=i;render()}
+      function prevFn(){idx=idx>0?idx-1:slides.length-1;render()}
+      function nextFn(){idx=idx<slides.length-1?idx+1:0;render()}
+      prev.addEventListener('click',prevFn);next.addEventListener('click',nextFn);
+      track.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
+      track.addEventListener('touchend',e=>{endX=e.changedTouches[0].screenX;const d=startX-endX;if(d>50)nextFn();if(d<-50)prevFn()},{passive:true});
+      setInterval(nextFn,2000);
+    });
 
-
+    // Carrossel de recuperações
+    document.addEventListener('DOMContentLoaded',()=>{let i=0;const imgs=document.querySelectorAll('#carousel img');setInterval(()=>{imgs[i].classList.remove('active');i=(i+1)%imgs.length;imgs[i].classList.add('active')},2000)});
 
     // Carrossel de depoimentos
     document.addEventListener('DOMContentLoaded',()=>{
@@ -1498,11 +1477,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded',function(){
       const saved=localStorage.getItem('countdownData');const dur=60*60;
       if(saved){
-        const data=JSON.parse(saved);const now=Math.floor(Date.now/1000);const rem=dur-(now-data.startTime);
+        const data=JSON.parse(saved);const now=Math.floor(Date.now()/1000);const rem=dur-(now-data.startTime);
         if(rem>0){document.getElementById('countdownContainer').style.display='flex';startCountdown(rem)}
         else {localStorage.removeItem('countdownData');showCountdownExpired()}
       } else {
-        const start=Math.floor(Date.now/1000);
+        const start=Math.floor(Date.now()/1000);
         localStorage.setItem('countdownData',JSON.stringify({startTime:start}));
         document.getElementById('countdownContainer').style.display='flex';
         startCountdown(dur)
@@ -1535,7 +1514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('DOMContentLoaded',function(){
       const faqs=[
         ['Tem fidelidade ou multa pra cancelar?','❌ Não temos fidelidade. Pode cancelar quando quiser, sem multa.'],
-        ['O app funciona em Android and iPhone?','📱 Sim! 👉 Android e 👉 iPhone'],
+        ['O app funciona em Android e iPhone?','📱 Sim! 👉 Android e 👉 iPhone'],
         ['Posso compartilhar o rastreador com a família?','👨‍👩‍👧‍👦 Sim! Instale o app em outro celular e use o mesmo login.'],
         ['O rastreador funciona com o carro desligado?','✅ Sim! Mesmo com o carro parado, a localização continua sendo transmitida.'],
         ['Tem alerta quando ligam o carro?','🚨 Sim! Você recebe notificação assim que a ignição for ligada.'],
