@@ -915,7 +915,7 @@ footer {
     </div>
   </header>
 
-  <!-- Hero com banner HEADLINE -->
+  <!-- Hero com banner HEADLINE - IMAGEM SUBSTITUÍDA -->
   <section class="hero">
     <div class="wrap card">
       <div>
@@ -924,7 +924,8 @@ footer {
         <p class="lead">Instalação a domicílio, app iOS/Android e suporte por WhatsApp. Tecnologia 4G com plataforma Web.</p>
       </div>
       <div class="headline-video-container">
-        <img src="HEADLINE/banner.png" alt="Headline" class="headline-video" />
+        <!-- IMAGEM SUBSTITUÍDA: banner.png por carro-ceu-recuperacao.jpg -->
+        <img src="Recuperacao/carro-ceu-recuperacao.jpg" alt="Carro recuperado com sucesso pelo sistema Rastreando GPS" class="headline-video" />
       </div>
     </div>
   </section>
@@ -991,7 +992,7 @@ footer {
 <div class="instalacao-info">
   <div class="instalacao-card">
     <h3>Instalação rápida e no local</h3>
-    <p>Nossos técnicos vão até você e realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
+    <p>Nossos técnicos vão até você vào realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
   </div>
   <div class="instalacao-card">
     <h3>Duração média de 30 a 60 minutos</h3>
@@ -1100,7 +1101,7 @@ footer {
     <p>Controle total sobre seus veículos e motoristas com nossa tecnologia de rastreamento avançada</p>
   </div>
   
-  <!-- GIF adicionado abaixo do título e subtítulo -->
+  <!-- GIF adicionado abaixo do título and subtítulo -->
   <div class="frota-gif-container">
     <img src="beneficios/tela.gif" alt="Demonstração do sistema de gestão de frotas">
   </div>
@@ -1184,8 +1185,8 @@ footer {
         <button class="carrossel-prev" aria-label="Anterior">❮</button>
         <div class="carrossel-dots"></div>
         <button class="carrossel-next" aria-label="Próximo">❯</button>
-      </div>
     </div>
+  </div>
   </div>
 
   <!-- Botões de apps -->
@@ -1477,11 +1478,11 @@ footer {
     document.addEventListener('DOMContentLoaded',function(){
       const saved=localStorage.getItem('countdownData');const dur=60*60;
       if(saved){
-        const data=JSON.parse(saved);const now=Math.floor(Date.now()/1000);const rem=dur-(now-data.startTime);
+        const data=JSON.parse(saved);const now=Math.floor(Date.now/1000);const rem=dur-(now-data.startTime);
         if(rem>0){document.getElementById('countdownContainer').style.display='flex';startCountdown(rem)}
         else {localStorage.removeItem('countdownData');showCountdownExpired()}
       } else {
-        const start=Math.floor(Date.now()/1000);
+        const start=Math.floor(Date.now/1000);
         localStorage.setItem('countdownData',JSON.stringify({startTime:start}));
         document.getElementById('countdownContainer').style.display='flex';
         startCountdown(dur)
@@ -1514,7 +1515,7 @@ footer {
     document.addEventListener('DOMContentLoaded',function(){
       const faqs=[
         ['Tem fidelidade ou multa pra cancelar?','❌ Não temos fidelidade. Pode cancelar quando quiser, sem multa.'],
-        ['O app funciona em Android e iPhone?','📱 Sim! 👉 Android e 👉 iPhone'],
+        ['O app funciona em Android and iPhone?','📱 Sim! 👉 Android e 👉 iPhone'],
         ['Posso compartilhar o rastreador com a família?','👨‍👩‍👧‍👦 Sim! Instale o app em outro celular e use o mesmo login.'],
         ['O rastreador funciona com o carro desligado?','✅ Sim! Mesmo com o carro parado, a localização continua sendo transmitida.'],
         ['Tem alerta quando ligam o carro?','🚨 Sim! Você recebe notificação assim que a ignição for ligada.'],
