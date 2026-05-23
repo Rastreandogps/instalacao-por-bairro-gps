@@ -4,1625 +4,1314 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rastreando GPS — Consulte o valor da instalação</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
-    :root{
-      --bg:#0a1220; --card:#ffffff; --ink:#0d3c61; --muted:#64748b; --green:#22c55e; --green-2:#16a34a; --blue:#0ea5e9; --ring:rgba(34,197,94,.25);
+    :root {
+      --bg:       #070d18;
+      --bg2:      #0c1628;
+      --card:     #111d30;
+      --border:   rgba(255,255,255,0.07);
+      --blue:     #0ea5e9;
+      --green:    #22c55e;
+      --green2:   #16a34a;
+      --wa:       #25d366;
+      --red:      #ef4444;
+      --yellow:   #fde047;
+      --muted:    #7e99bc;
+      --white:    #eaf4ff;
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#070c16,#0a1424 50%,#0b1628);} 
-    /* TEXTO PADRÃO CLARO PARA FUNDO ESCURO */
-    body{color:#eaf2ff}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
 
- /* Header */
- header {
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  background: rgba(10,18,32,.65);
-  backdrop-filter: blur(8px) saturate(140%);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
- .wrap {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 16px;
-}
- .nav {
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
- .brand {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  color: #e5f7ff;
-}
-.logo {
-  width: 36px;  /* aumentei de 28 para 36 */
-  height: 36px; /* aumentei de 28 para 36 */
-  border-radius: 10px;
-  object-fit: contain;
-  filter: drop-shadow(0 4px 10px rgba(34,197,94,0.35));
-}
- .brand strong {
-  font-weight: 900;
-  letter-spacing: .2px;
-}
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: linear-gradient(90deg,var(--green),#39e08a);
-  color: #062b1b;
-  padding: 8px 12px; /* 20% menor que o original */
-  border-radius: 10px;
-  font-weight: 800;
-  font-size: 0.92em;
-  border: 1px solid rgba(0,0,0,.08);
-  transition: all 0.2s ease;
-}
-.cta:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(34,197,94,.35);
-}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-    /* Hero */
-    .hero{padding:34px 0 10px}
-    .hero .card{display:grid;grid-template-columns:1.05fr .95fr;gap:24px;align-items:center}
-    .kicker{display:inline-flex;gap:8px;align-items:center;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35);color:#d1fae5;padding:6px 10px;border-radius:999px;font-weight:800}
-    .spark{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 6px rgba(34,197,94,.18)}
-    .title{font-size:clamp(26px,5vw,42px);line-height:1.06;color:#ebf7ff;margin:12px 0 8px;font-weight:900}
-    .lead{color:#d6ebff;opacity:1}
-
-    /* Blocos brancos base */
-    .shadow{box-shadow:0 10px 30px rgba(2,6,23,.16)}
-
-/* Formulário Modernizado */
-.form-container {
-  display: flex;
-  justify-content: center;
-  margin: 18px 0;
-}
-
-.form-box {
-  background: rgba(255, 255, 255, 0.96);
-  border-radius: 16px;
-  padding: 32px 28px;
-  box-shadow: 
-    0 12px 32px rgba(2, 6, 23, 0.15),
-    0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 0 24px rgba(34, 197, 94, 0.12);
-  width: 100%;
-  max-width: 420px;
-  border: none;
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(34, 197, 94, 0.15);
-  transition: all 0.3s ease;
-}
-
-.form-box:hover {
-  box-shadow: 
-    0 15px 35px rgba(2, 6, 23, 0.2),
-    0 0 0 1px rgba(255, 255, 255, 0.3),
-    0 0 30px rgba(34, 197, 94, 0.18);
-}
-
-.form-box h2 {
-  color: var(--ink);
-  font-size: 24px;
-  margin: 0 0 24px;
-  text-align: center;
-  font-weight: 700;
-  position: relative;
-}
-
-.form-box h2::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #22c55e, #0ea5e9);
-  border-radius: 3px;
-}
-
-.form-box input, 
-.form-box select {
-  width: 100%;
-  padding: 15px 18px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  margin-bottom: 16px;
-  font-size: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-}
-
-.form-box input:focus, 
-.form-box select:focus {
-  border-color: #22c55e;
-  box-shadow: 
-    0 0 0 3px rgba(34, 197, 94, 0.15),
-    0 0 20px rgba(34, 197, 94, 0.1);
-  outline: none;
-  transform: translateY(-1px);
-}
-
-.form-box button {
-  background: linear-gradient(90deg, #22c55e, #25D366);
-  color: white;
-  border: none;
-  padding: 16px;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 800;
-  width: 100%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 
-    0 4px 15px rgba(34, 197, 94, 0.3),
-    0 2px 3px rgba(0, 0, 0, 0.05);
-  margin-top: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.form-box button::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.3),
-    rgba(255, 255, 255, 0)
-  );
-  transform: rotate(30deg);
-  transition: all 0.5s ease;
-}
-
-.form-box button:hover {
-  transform: translateY(-2px);
-  box-shadow: 
-    0 8px 25px rgba(34, 197, 94, 0.4),
-    0 0 15px rgba(34, 197, 94, 0.2);
-}
-
-.form-box button:hover::before {
-  left: 100%;
-}
-
-    /* Seções (títulos claros sobre o fundo escuro da página) */
-    .section-title{font-size:28px;font-weight:700;color:#ffffff;margin:40px 0 15px;position:relative;display:inline-block;padding-bottom:10px;text-align:center;width:100%}
-    .section-title:after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:4px;background:linear-gradient(90deg,#22c55e,#8ad0ff);border-radius:2px}
-    .section-subtitle{font-size:16px;color:#d8e7ff;margin-bottom:30px;max-width:600px;margin-left:auto;margin-right:auto;line-height:1.5;text-align:center}
-
-/* Planos (caixas escuras com textos claros) */
- .planos-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin: 40px auto;
-  padding: 0 20px;
-  max-width: 1000px;
-}
- .plano-box {
-  background: linear-gradient(135deg, #0d3c61, #082a44);
-  color: #fff;
-  border-radius: 16px;
-  padding: 30px;
-  width: 100%;
-  max-width: 400px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(13, 60, 97, 0.3);
-  border: 2px solid #22c55e;
-}
- .plano-box.sem-bloqueio {
-  border-color: #ca5964;
-}
- .plano-destaque {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: #25D366;
-  color: #fff;
-  padding: 5px 15px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 600;
-}
- .plano-titulo {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 15px;
-  color: #fff;
-  position: relative;
-  display: block; /* Alterado de inline-block para block */
-  text-align: center; /* Adicionado para centralizar */
-  width: 100%; /* Garante que ocupe toda a largura */
-}
- .plano-titulo::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: #22c55e;
-  border-radius: 3px;
-}
- .plano-preco {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 20px 0;
-  color: #fff;
-}
-.plano-preco {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 20px 0;
-  color: #fff;
-  text-align: center; /* Adicione esta linha para centralizar */
-}
-/* ... (mantenha o resto do CSS igual) ... */
-
-.plano-botao {
-  display: block;
-  background: linear-gradient(90deg, #22c55e, #25D366);
-  color: #062b1b;
-  padding: 12px 30px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
-  margin: 0 auto; /* Centraliza o botão */
-  text-align: center; /* Centraliza o texto */
-  width: fit-content; /* Largura ajustável */
-}
-    /* Footer */
-footer {
-  margin-top: 48px;
-  background: linear-gradient(135deg, #0d3c61, #082a44);
-  color: #e8f5ff;
-  padding: 28px 16px;
-  border-top: 4px solid var(--green); /* Adicionei o ponto e vírgula faltante aqui */
-}
-
-/* Linha 297 (original) - Corrigindo a declaração de gradiente */
-.frota-section {
-  background: linear-gradient(135deg, #0d3c61, #082a44); /* Corrigi a sintaxe do gradiente */
-  border-radius: 16px;
-  padding: 40px 30px;
-  margin: 50px auto;
-  max-width: 1000px;
-  box-shadow: 0 15px 35px rgba(13, 60, 97, 0.4); /* Corrigi a sintaxe da sombra */
-  border: 2px solid #22c55e;
-  position: relative;
-  overflow: hidden;
-}
-    /* Responsivo */
-    @media (max-width:960px){.hero .card{grid-template-columns:1fr}}
-
-    /* ===== Seu CSS específico preservado (ajustes mínimos) ===== */
-    #particles-js{position:fixed;width:100%;height:100%;z-index:-1;top:0;left:0}
-    .whatsapp-fixo{position:fixed;bottom:20px;right:20px;z-index:9999}
-    .whatsapp-fixo img{width:60px;height:60px}
-
-    .headline-video-container{position:relative;width:100%;max-height:300px;overflow:hidden;margin-bottom:30px;padding-left:10px;padding-right:10px;box-sizing:border-box}
-    .headline-video{width:100%;height:auto;object-fit:cover}
-
-    /* Popup + overlay (mantidos) */
-    .modal-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);display:none;z-index:9000;opacity:0;transition:opacity .3s ease}
-    .modal-overlay.active{opacity:1}
-    #popup{display:none;padding:0;font-size:16px;border-radius:16px;background:#fff;box-shadow:0 20px 40px rgba(0,0,0,.25);max-width:420px;width:90%;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);z-index:10000;box-sizing:border-box;text-align:center;overflow:hidden;opacity:0;transition:all .3s cubic-bezier(.175,.885,.32,1.275)}
-    #popup.active{opacity:1;transform:translate(-50%,-50%) scale(1)}
-    #popup .popup-header{background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;position:relative}
-    #popup .popup-header h3{margin:0;font-size:22px;font-weight:700}
-    #popup .popup-content{padding:25px;color:#333}
-    .botao-fechar{position:absolute;top:15px;right:15px;width:32px;height:32px;background:rgba(255,255,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;cursor:pointer;border:2px solid #fff;transition:all 0.2s ease}
-    .botao-fechar:hover{background:rgba(255,255,255,.5);transform:scale(1.1)}
-
-    /* Carrosséis e FAQ: mantém estilos do seu arquivo */
-    .carousel{width:100%;max-width:600px;margin:20px auto;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1);padding:0 10px}
-    .carousel img{width:100%;display:none}
-    .carousel img.active{display:block}
-
-    .depoimentos-carrossel{max-width:800px;margin:30px auto;position:relative;padding:0 20px}
-    .carrossel-container{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
-    .carrossel-track{display:flex;transition:transform .5s ease;touch-action:pan-y}
-    .carrossel-slide{min-width:100%;padding:10px;box-sizing:border-box}
-    .carrossel-slide img{width:100%;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #e0e0e0}
-    .carrossel-nav{display:flex;justify-content:center;align-items:center;margin-top:20px;gap:15px}
-    .carrossel-prev,.carrossel-next{background:linear-gradient(90deg,#22c55e,#0d3c61);color:#fff;border:0;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
-    .carrossel-dots{display:flex;gap:8px}
-    .carrossel-dot{width:12px;height:12px;border-radius:50%;background:#e0e0e0;cursor:pointer}
-    .carrossel-dot.active{background:linear-gradient(90deg,#22c55e,#0d3c61);transform:scale(1.2)}
-
-    .instalacoes-carrossel{max-width:600px;margin:30px auto;position:relative;padding:0 20px}
-    .instalacoes-container{position:relative;overflow:hidden;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.1)}
-    .instalacoes-track{display:flex;transition:transform .5s ease;touch-action:pan-y}
-    .instalacoes-slide{min-width:100%;padding:10px;box-sizing:border-box}
-    .instalacoes-slide img{width:100%;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);border:1px solid #e0e0e0}
-    .instalacoes-nav{display:flex;justify-content:center;align-items:center;margin-top:20px;gap:15px}
-    .instalacoes-prev,.instalacoes-next{background:linear-gradient(90deg,#22c55e,#0d3c61);color:#fff;border:0;width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
-    .instalacoes-dots{display:flex;gap:8px}
-    .instalacoes-dot{width:12px;height:12px;border-radius:50%;background:#e0e0e0;cursor:pointer}
-    .instalacoes-dot.active{background:linear-gradient(90deg,#22c55e,#0d3c61);transform:scale(1.2)}
-
-    /* FAQ (cartões claros, textos escuros mantidos) */
-    .faq-container{max-width:800px;margin:50px auto;padding:0 20px}
-    .faq-accordion{margin-top:30px;border-radius:12px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.05)}
-    .faq-item{border-bottom:1px solid #e0e0e0}
-    .faq-question{padding:20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#f9f9f9}
-    .faq-question span{font-weight:600;color:#0d3c61;font-size:16px}
-    .faq-answer{max-height:0;overflow:hidden;transition:max-height .3s ease;background:#fff}
-    .faq-answer p{padding:0 20px 20px;margin:0;line-height:1.6;color:#333}
-    .faq-item.active .faq-question{background:#0d3c61;color:#fff}
-    .faq-item.active .faq-answer{max-height:300px}
-    .faq-icon{font-size:20px;font-weight:bold;color:#0d3c61;transition:transform 0.3s ease}
-    .faq-item.active .faq-icon{transform:rotate(45deg);color:#fff}
-
-    /* Estilos melhorados para a caixa de benefícios */
-    #beneficiosBox {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      margin: 30px auto;
-      max-width: 1000px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      display: none;
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
     }
-    #beneficiosBox h3 {
-      color: #0d3c61;
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 22px;
-      font-weight: 700;
-      position: relative;
-      padding-bottom: 10px;
-      line-height: 1.4;
-    }
-    #beneficiosBox h3:after {
+
+    /* Fundo animado */
+    body::before {
       content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(14,165,233,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(34,197,94,0.06) 0%, transparent 60%);
+    }
+
+    /* Partículas substituídas por canvas CSS */
+    #particles-js { display: none; }
+
+    .container { width: min(1100px, 94vw); margin: 0 auto; position: relative; z-index: 1; }
+
+    /* ─── TOPBAR ─── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(7,13,24,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav {
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      width: min(1100px, 94vw); margin: 0 auto; padding: 0 16px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 21px; font-weight: 800; color: var(--white);
+      text-decoration: none; letter-spacing: 0.3px;
+    }
+    .brand img {
+      width: 36px; height: 36px; border-radius: 9px; object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(34,197,94,0.4));
+    }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(90deg, var(--green), #39e08a);
+      color: #052b18; padding: 9px 18px; border-radius: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 800; letter-spacing: 0.3px;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.35); }
+
+    /* ─── SEÇÕES BASE ─── */
+    .section { padding: 64px 0; }
+    .tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green);
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.25);
+      padding: 4px 14px; border-radius: 50px; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(30px, 5vw, 46px);
+      font-weight: 900; line-height: 1.05;
+      text-transform: uppercase; color: var(--white);
+    }
+    .section-sub {
+      color: var(--muted); font-size: 16px; line-height: 1.6; margin-top: 10px;
+    }
+    .text-center { text-align: center; }
+    .text-center .section-sub { max-width: 620px; margin: 10px auto 0; }
+    .grad {
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    /* ─── HERO / KICKER ─── */
+    .hero-kicker {
+      padding: 40px 0 20px; text-align: center;
+    }
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      color: #d1fae5; padding: 8px 18px; border-radius: 50px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+    }
+    .spark {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green); box-shadow: 0 0 0 5px rgba(34,197,94,0.2);
+      animation: blink 2s infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.5; transform:scale(1.4); }
+    }
+
+    /* ─── CARROSSEL RECUPERAÇÕES ─── */
+    .recovery-section { padding: 20px 0 40px; }
+    .simple-carousel {
+      max-width: 600px; margin: 20px auto 0;
+      border-radius: 16px; overflow: hidden;
+      position: relative;
+    }
+    .simple-carousel img {
+      width: 100%; display: none; border-radius: 16px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .simple-carousel img.active { display: block; }
+
+    /* ─── FORMULÁRIO ─── */
+    .form-section { padding: 20px 0 40px; }
+    .form-wrap {
+      max-width: 460px; margin: 0 auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 20px; padding: 36px 32px;
+      border: 1px solid rgba(34,197,94,0.2);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 30px rgba(34,197,94,0.08);
+    }
+    .form-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px; font-weight: 900;
+      color: #0d3c61; text-align: center;
+      margin-bottom: 28px; line-height: 1.2;
+      position: relative; padding-bottom: 16px;
+    }
+    .form-title::after {
+      content: ''; position: absolute; bottom: 0; left: 50%;
       transform: translateX(-50%);
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, #22c55e, #0d3c61);
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
       border-radius: 3px;
     }
-    #beneficiosBox ul {
-      color: #333;
-      line-height: 1.8;
-      padding-left: 20px;
-      list-style-type: none;
-      margin: 0;
+    .form-wrap input,
+    .form-wrap select {
+      width: 100%; padding: 14px 16px;
+      border: 1.5px solid rgba(0,0,0,0.1);
+      border-radius: 10px; font-size: 15px;
+      font-family: 'Barlow', sans-serif;
+      background: #fff; color: #1e293b;
+      margin-bottom: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    #beneficiosBox li {
-      margin-bottom: 15px;
-      font-size: 16px;
+    .form-wrap input:focus,
+    .form-wrap select:focus {
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+    }
+    .form-wrap input::placeholder { color: #94a3b8; }
+    .form-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(90deg, var(--green), var(--wa));
+      color: #fff; border: none; border-radius: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800; letter-spacing: 0.5px;
+      cursor: pointer; margin-top: 8px;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.35);
+      transition: all 0.2s;
+    }
+    .form-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,197,94,0.45); }
+
+    /* Countdown */
+    .countdown-box {
+      display: none; margin-top: 16px;
+      background: #fff8e1; border-left: 4px solid #f59e0b;
+      border-radius: 10px; padding: 14px 16px;
+      align-items: center; gap: 12px; color: #1e293b;
+    }
+    .countdown-box.show { display: flex; }
+    .countdown-emoji { font-size: 24px; }
+    #countdown { font-size: 20px; font-weight: 800; color: #d97706; }
+
+    /* ─── MODAL ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      display: none; opacity: 0; transition: opacity 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; }
+    #popup {
+      display: none; position: fixed; z-index: 1000;
+      top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0.9);
+      width: 90%; max-width: 440px;
+      background: #fff; border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+      opacity: 0; transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+    }
+    #popup.active { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    .popup-header {
+      background: linear-gradient(135deg, #0d3c61, #22c55e);
+      color: #fff; padding: 22px 24px;
       position: relative;
-      padding-left: 30px;
     }
-    #beneficiosBox li:before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: #22c55e;
-      font-weight: bold;
+    .popup-header h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:800; margin:0; }
+    .btn-fechar {
+      position: absolute; top: 14px; right: 14px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.5);
+      color: #fff; font-size: 18px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
     }
-    #beneficiosBox strong {
-      color: #0d3c61;
+    .btn-fechar:hover { background: rgba(255,255,255,0.4); }
+    .popup-body { padding: 24px; color: #1e293b; }
+    .popup-price-big {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 40px; font-weight: 900; text-align: center;
+      color: #0d3c61; margin-bottom: 16px;
     }
-/* Adicione isso na seção de estilos */
-.oferta-destaque {
-  font-size: 18px;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.oferta-destaque .valor-promo {
-  color: #86efac; /* Verde claro */
-  font-weight: 600;
-  display: inline-block;
-  position: relative;
-  padding: 0 5px;
-}
-
-.oferta-destaque .valor-promo::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: currentColor;
-  animation: pisca 1.5s infinite;
-}
-
-@keyframes pisca {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-    /* Estilos para os botões */
-    .botaoZap {
-      display: inline-block;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-weight: 700;
-      text-align: center;
-      margin: 10px 0;
-      transition: all 0.2s ease;
+    .popup-info p { font-size: 15px; color: #475569; margin-bottom: 8px; }
+    .popup-info strong { color: #0d3c61; }
+    .popup-list { margin: 16px 0; padding: 0; list-style: none; }
+    .popup-list li {
+      font-size: 14px; color: #475569; padding: 5px 0 5px 22px;
+      position: relative;
     }
-    .verdeZap {
-      background: linear-gradient(90deg, #25D366, #22c55e);
-      color: white;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    .popup-list li::before { content:'✓'; position:absolute; left:0; color:var(--green); font-weight:700; }
+
+    /* ─── RESULTADO FIXO ─── */
+    #resultadoFixo {
+      display: none; max-width: 460px; margin: 20px auto;
+      background: #fff; border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
     }
-    .vermelhoZap {
-      background: linear-gradient(90deg, #e74c3c, #c0392b);
-      color: white;
-      box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    .res-header {
+      background: linear-gradient(135deg, #0d3c61, #22c55e);
+      color: #fff; padding: 18px 24px; text-align: center;
     }
-    .pulsando {
-      animation: pulse 2s infinite;
+    .res-header h3 { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:800; margin:0; }
+    .res-body { padding: 22px 24px; color: #1e293b; }
+    .res-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 900; color: var(--green2);
+      text-align: center; margin-bottom: 14px;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+    .res-details p { font-size: 15px; color: #475569; margin-bottom: 8px; }
+    .res-details strong { color: #0d3c61; }
+
+    /* ─── BENEFÍCIOS BOX ─── */
+    #beneficiosBox {
+      display: none; max-width: 460px; margin: 16px auto;
+      background: #fff; border-radius: 16px; padding: 24px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.15);
     }
-    
-    /* Estilo para o popup features */
-    .popup-features ul {
-      color: #000;
-      text-align: left;
-      padding-left: 20px;
+    #beneficiosBox h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px; font-weight: 800; color: #0d3c61;
+      text-align: center; margin-bottom: 16px; line-height: 1.3;
     }
-  /* ... (todo o CSS anterior) ... */
+    #beneficiosBox ul { list-style: none; }
+    #beneficiosBox li {
+      font-size: 14px; color: #334155; padding: 6px 0 6px 24px;
+      position: relative; border-bottom: 1px solid #f1f5f9;
+    }
+    #beneficiosBox li:last-child { border-bottom: none; }
+    #beneficiosBox li::before { content:'✓'; position:absolute; left:0; color:var(--green); font-weight:700; }
+    #beneficiosBox strong { color: #0d3c61; }
 
-  /* Estilo para o popup features */
-  .popup-features ul {
-    color: #000;
-    text-align: left;
-    padding-left: 20px;
-  }
-  .popup-content {
-  color: #333; /* Texto escuro (cinza quase preto) */
-}
+    /* ─── BOTÕES ZAP ─── */
+    .btn-zap {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 24px; border-radius: 10px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 800; letter-spacing: 0.3px;
+      text-decoration: none; transition: all 0.2s; width: 100%;
+    }
+    .btn-zap.verde {
+      background: linear-gradient(90deg, var(--green), var(--wa));
+      color: #fff; box-shadow: 0 4px 20px rgba(34,197,94,0.3);
+    }
+    .btn-zap.verde:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(34,197,94,0.4); }
+    .btn-zap.vermelho {
+      background: linear-gradient(90deg, #ef4444, #dc2626);
+      color: #fff; box-shadow: 0 4px 20px rgba(239,68,68,0.3);
+    }
+    .btn-zap.pulsando { animation: pulsa 2s infinite; }
+    @keyframes pulsa { 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
 
-/* Efeito de pulsação suave */
-@keyframes pulse-opacity {
-  0% { opacity: 0.9; }
-  50% { opacity: 1; }
-  100% { opacity: 0.9; }
-}
+    #botaoBairroNaoEncontrado { display:none; margin:14px auto; max-width:460px; }
+    #botaoExtraAcimaVideo { display:none; margin:14px auto; max-width:460px; }
 
-.popup-price {
-  font-size: 22px;
-  text-align: center;
-  margin-bottom: 20px;
-}
+    /* ─── VÍDEO ─── */
+    .video-section { padding: 48px 0; }
+    .video-wrap { max-width: 420px; margin: 28px auto 0; }
+    .video-inner {
+      position: relative; padding-top: 177.77%;
+      border-radius: 18px; overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .video-inner iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:none; }
 
-.popup-price strong {
-  font-weight: 800;
-  color: #16a34a; /* Verde escuro para destaque */
-}
+    /* ─── CARDS INSTALAÇÃO ─── */
+    .install-cards {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 18px; margin-top: 32px;
+    }
+    .install-card {
+      background: rgba(14,165,233,0.06);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 16px; padding: 24px;
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .install-card:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.4); }
+    .install-card-icon {
+      font-size: 28px; margin-bottom: 14px;
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(34,197,94,0.1);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .install-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800; color: var(--green); margin-bottom: 10px;
+    }
+    .install-card p { color: var(--muted); font-size: 14px; line-height: 1.6; }
 
-.plano-preco > div {
-  font-size: 18px !important; /* Mantém o tamanho original */
-  margin-top: 5px !important;
-  color: #a5f3fc; /* Cor neon azul claro (troque para #86efac se preferir verde) */
-  font-weight: 600;
-  animation: pulse-opacity 2s infinite; /* Pulsação sutil */
-}
+    /* ─── CARROSSEL INSTALAÇÕES ─── */
+    .inst-carousel-section { padding: 32px 0 48px; }
+    .track-wrap {
+      max-width: 640px; margin: 28px auto 0;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .track-container { overflow: hidden; border-radius: 16px; }
+    .track { display: flex; transition: transform 0.5s cubic-bezier(.4,0,.2,1); }
+    .slide { min-width: 100%; }
+    .slide img { width: 100%; display: block; }
+    .track-nav {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 18px;
+    }
+    .track-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3);
+      color: var(--green); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .track-btn:hover { background: rgba(34,197,94,0.3); }
+    .track-dots { display: flex; gap: 8px; }
+    .tdot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .tdot.active { background: var(--green); transform: scale(1.3); }
 
-  /* ==== NOVO CÓDIGO ==== */
-  .botao-fechar {
-    z-index: 10001;
-    pointer-events: auto;
-  }
+    /* ─── CHAMADA DE VALOR ─── */
+    .valor-chamada {
+      text-align: center; margin: 32px 0;
+    }
+    .valor-chamada-box {
+      display: inline-block; padding: 20px 28px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(6px);
+    }
+    .valor-chamada-box h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(20px, 3vw, 26px); font-weight: 800;
+      color: #fff; line-height: 1.4;
+    }
 
-  /* DEIXA O TEXTO DA LISTA DE BENEFÍCIOS PRETO */
- #resultadoFixo .resultado-features ul {
-  color: #000 !important; /* Preto puro */
-}
+    /* ─── PLANOS ─── */
+    .planos-section { padding: 48px 0; }
+    .planos-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; max-width: 860px; margin: 36px auto 0;
+    }
+    .plano {
+      background: linear-gradient(135deg, #0d3c61, #082a44);
+      border-radius: 20px; padding: 32px;
+      border: 2px solid var(--green);
+      position: relative; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .plano.sem { border-color: #f87171; }
+    .plano:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .plano-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--wa); color: #fff;
+      padding: 4px 14px; border-radius: 50px;
+      font-size: 13px; font-weight: 700;
+    }
+    .plano-titulo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 900; text-align: center;
+      color: #fff; margin-bottom: 20px;
+      position: relative; padding-bottom: 14px;
+    }
+    .plano-titulo::after {
+      content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+      width: 48px; height: 3px; background: var(--green); border-radius: 3px;
+    }
+    .plano.sem .plano-titulo::after { background: #f87171; }
+    .plano-preco {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 900; color: #fff; text-align: center;
+      line-height: 1;
+    }
+    .plano-preco small { font-size: 18px; font-weight: 400; opacity: 0.7; }
+    .plano-promo {
+      text-align: center; font-size: 14px; color: #86efac;
+      margin: 8px 0 20px; font-weight: 600;
+    }
+    .plano-promo .destaque {
+      border-bottom: 1px solid currentColor;
+      animation: pisca 1.5s infinite;
+    }
+    @keyframes pisca { 0%,100%{opacity:1} 50%{opacity:0.5} }
+    .plano-desc { color: rgba(255,255,255,0.65); font-size: 14px; text-align: center; margin-bottom: 20px; }
+    .plano-list { list-style: none; margin-bottom: 24px; }
+    .plano-list li {
+      color: rgba(255,255,255,0.8); font-size: 14px;
+      padding: 7px 0 7px 22px; position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .plano-list li:last-child { border-bottom: none; }
+    .plano-list li::before { content:'✓'; position:absolute; left:0; color:var(--green); font-weight:700; }
+    .plano.sem .plano-list li::before { color: #fca5a5; }
+    .plano-obs { font-size: 12px; color: rgba(255,255,255,0.4); text-align: center; margin-top: 12px; }
+    .btn-plano {
+      display: block; text-align: center;
+      background: linear-gradient(90deg, var(--green), var(--wa));
+      color: #052b18; padding: 13px 24px; border-radius: 50px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 800;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 4px 16px rgba(34,197,94,0.3);
+    }
+    .btn-plano:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,197,94,0.45); }
 
-/* Mantém a pergunta visível e remove o fundo azul */
-.faq-item.active .faq-question {
-  background: #f9f9f9 !important; /* Mantém o fundo original */
-  color: #0d3c61 !important; /* Cor do texto (azul escuro) */
-  border-bottom: 1px solid #e0e0e0; /* Linha de separação */
-}
+    /* ─── FROTAS ─── */
+    .frota-section { padding: 48px 0; }
+    .frota-gif {
+      max-width: 760px; margin: 28px auto;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .frota-gif img { width: 100%; display: block; }
+    .frota-benefits {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 18px; margin: 32px 0;
+    }
+    .frota-benefit {
+      background: rgba(14,165,233,0.05);
+      border: 1px solid rgba(34,197,94,0.15);
+      border-radius: 14px; padding: 22px; text-align: center;
+      transition: all 0.3s;
+    }
+    .frota-benefit:hover { transform: translateY(-4px); border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.08); }
+    .frota-icon { font-size: 28px; margin-bottom: 12px; }
+    .frota-benefit h3 { font-family:'Barlow Condensed',sans-serif; font-size:17px; font-weight:800; color:#fff; margin-bottom:8px; }
+    .frota-benefit p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .frota-stats {
+      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 28px 0;
+    }
+    .frota-stat {
+      background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(34,197,94,0.3);
+      border-radius: 12px; padding: 16px 24px; text-align: center;
+    }
+    .frota-stat strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 32px; font-weight: 900; color: var(--green);
+    }
+    .frota-stat small { color: var(--muted); font-size: 13px; }
+    .frota-cta { text-align: center; margin-top: 28px; }
+    .btn-frota {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(90deg, var(--green), var(--wa));
+      color: #052b18; padding: 16px 32px; border-radius: 50px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800;
+      text-decoration: none; transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(34,197,94,0.35);
+    }
+    .btn-frota:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(34,197,94,0.5); }
+    .frota-footer-note { text-align:center; font-size:12px; color:rgba(126,153,188,0.6); margin-top:16px; }
 
-/* Ajusta o ícone (+) */
-.faq-item.active .faq-icon {
-  color: #0d3c61 !important; /* Ícone escuro */
-  transform: rotate(45deg) !important;
-}
+    /* ─── DEPOIMENTOS ─── */
+    .depo-section { padding: 48px 0; }
 
-/* Espaçamento da resposta */
-.faq-answer p {
-  padding-top: 10px;
-  margin-top: 0;
-}
+    /* ─── APP BUTTONS ─── */
+    .app-section { padding: 40px 0; }
+    .app-grid {
+      display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 28px;
+    }
+    .app-btn {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 22px; border-radius: 14px;
+      text-decoration: none; color: #fff; min-width: 210px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .app-btn:hover { transform: translateY(-3px); }
+    .app-btn.android { background: #007aff; box-shadow: 0 4px 18px rgba(0,122,255,0.3); }
+    .app-btn.ios { background: #000; box-shadow: 0 4px 18px rgba(0,0,0,0.4); }
+    .app-btn.web { background: linear-gradient(135deg,#0d3c61,#1a5a8d); box-shadow: 0 4px 18px rgba(13,60,97,0.4); }
+    .app-btn-icon {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-btn-icon img { width: 26px; height: 26px; }
+    .app-btn-text { line-height: 1.2; }
+    .app-btn-text small { font-size: 11px; opacity: 0.8; display: block; }
+    .app-btn-text strong { font-size: 17px; display: block; }
 
-/* Opcional: Aumenta o contraste do fundo se necessário */
- #resultadoFixo .resultado-features {
-  background-color: #f8f9fa; /* Cinza bem clarinho (opcional) */
-  padding: 15px;
-  border-radius: 8px;
-}
+    /* ─── FAQ ─── */
+    .faq-section { padding: 48px 0; }
+    .faq-wrap { max-width: 800px; margin: 32px auto 0; }
+    .faq-accordion { border-radius: 14px; overflow: hidden; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      width: 100%; background: rgba(255,255,255,0.03); border: none;
+      color: var(--white); font-family: 'Barlow', sans-serif;
+      font-size: 15px; font-weight: 600;
+      padding: 18px 20px; display: flex; justify-content: space-between;
+      align-items: center; cursor: pointer; gap: 16px; text-align: left;
+      transition: background 0.2s;
+    }
+    .faq-q:hover { background: rgba(255,255,255,0.06); }
+    .faq-icon {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      background: rgba(34,197,94,0.12); color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700;
+      transition: transform 0.3s;
+    }
+    .faq-item.active .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.35s ease;
+      background: rgba(255,255,255,0.02);
+    }
+    .faq-answer p {
+      padding: 14px 20px 18px;
+      color: var(--muted); font-size: 14px; line-height: 1.65;
+    }
 
-/* ===== MODIFICAÇÕES SOLICITADAS ===== */
+    /* ─── FOOTER ─── */
+    footer {
+      margin-top: 48px;
+      background: var(--card);
+      border-top: 3px solid var(--green);
+      padding: 28px 16px;
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .footer-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800; color: var(--white); margin-bottom: 4px;
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+    footer small { font-size: 12px; color: rgba(126,153,188,0.6); }
 
-/* 1. Banner inicial - Pontas mais arredondadas */
-.headline-video-container {
-  border-radius: 24px !important; /* Aumentado de 16px para 24px */
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.08);
-}
+    /* ─── WHATSAPP FLOAT ─── */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--wa); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.45);
+      text-decoration: none; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
+    .wa-float img { width: 30px; height: 30px; }
 
-/* 2. Título acima do vídeo */
-.video-title {
-  text-align: center;
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff;
-  margin: 40px 0 20px;
-  position: relative;
-  display: inline-block;
-  width: 100%;
-}
+    /* ─── FADE UP ─── */
+    .fade-up {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-.video-title:after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #22c55e, #8ad0ff);
-  border-radius: 2px;
-}
-
-/* 3. Seção de instalação - Caixas modernas */
-.instalacao-info {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin: 30px auto;
-  max-width: 1000px;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.instalacao-card {
-  background: rgba(13, 60, 97, 0.3);
-  border-radius: 16px;
-  padding: 25px;
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.instalacao-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(34, 197, 94, 0.1),
-    rgba(34, 197, 94, 0)
-  );
-  transform: rotate(30deg);
-  transition: all 0.5s ease;
-}
-
-.instalacao-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
-}
-
-.instalacao-card:hover::before {
-  left: 100%;
-}
-
-.instalacao-card h3 {
-  color: #22c55e;
-  font-size: 20px;
-  margin-top: 0;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.instalacao-card h3:after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 40px;
-  height: 3px;
-  background: #22c55e;
-  border-radius: 3px;
-}
-
-.instalacao-card p {
-  color: #d8e7ff;
-  margin: 0;
-  line-height: 1.6;
-}
-
-/* 4. Carrossel de depoimentos - Remover molduras */
-.carrossel-slide img {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* ===== NOVO BLOCO PARA FROTAS ===== */
-.frota-section {
-  background: linear-gradient(135deg, #0d3c61, #082a44);
-  border-radius: 16px;
-  padding: 40px 30px;
-  margin: 50px auto;
-  max-width: 1000px;
-  box-shadow: 0 15px 35px rgba(13, 60, 97, 0.4);
-  border: 2px solid #22c55e;
-  position: relative;
-  overflow: hidden;
-}
-
-.frota-section::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(34, 197, 94, 0.1),
-    rgba(34, 197, 94, 0)
-  );
-  transform: rotate(30deg);
-  transition: all 0.5s ease;
-  z-index: 0;
-}
-
-.frota-section:hover::before {
-  left: 100%;
-}
-
-/* ESTILOS PARA SEÇÃO DE FROTA - SEM CAIXA ENVOLTA */
-.frota-header {
-  text-align: center;
-  margin: 50px 0 30px;
-  position: relative;
-}
-
-.frota-header h2 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #fff;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.frota-header h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #22c55e, #8ad0ff);
-  border-radius: 2px;
-}
-
-.frota-header p {
-  color: #d8e7ff;
-  font-size: 18px;
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-.frota-benefits {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  margin: 40px auto;
-  padding: 0 20px;
-  max-width: 1000px;
-}
-
-.frota-benefit {
-  background: rgba(13, 60, 97, 0.3);
-  border-radius: 16px;
-  padding: 25px 20px;
-  border: 1px solid rgba(34, 197, 94, 0.2);
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.frota-benefit:hover {
-  transform: translateY(-5px);
-  background: rgba(13, 60, 97, 0.5);
-  box-shadow: 0 10px 20px rgba(34, 197, 94, 0.2);
-}
-
-.frota-icon {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(34, 197, 94, 0.2);
-  border-radius: 12px;
-  color: #22c55e;
-  font-size: 24px;
-}
-
-.frota-benefit h3 {
-  color: #fff;
-  font-size: 18px;
-  margin: 0 0 10px;
-}
-
-.frota-benefit p {
-  color: #d8e7ff;
-  font-size: 14px;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.frota-stats {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin: 30px 0;
-}
-
-.frota-stat {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  padding: 15px 25px;
-  border: 1px dashed rgba(34, 197, 94, 0.3);
-  text-align: center;
-}
-
-.frota-stat strong {
-  display: block;
-  color: #22c55e;
-  font-size: 22px;
-  font-weight: 800;
-  margin-bottom: 5px;
-}
-
-.frota-stat small {
-  color: #d8e7ff;
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.frota-cta {
-  text-align: center;
-  margin: 40px 0;
-}
-
-.frota-cta a {
-  display: inline-block;
-  background: linear-gradient(90deg, #22c55e, #25D366);
-  color: #062b1b;
-  padding: 16px 32px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 18px;
-  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
-  transition: all 0.3s ease;
-}
-
-.frota-cta a:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.5);
-}
-
-.frota-footer {
-  text-align: center;
-  margin-top: 20px;
-  font-size: 12px;
-  color: rgba(216, 231, 255, 0.6);
-}
-
-/* Estilo para o GIF da seção de frota */
-.frota-gif-container {
-  width: 100%;
-  max-width: 800px;
-  margin: 20px auto;
-  text-align: center;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-.frota-gif-container img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-}
-
-@media (max-width: 768px) {
-  .frota-header h2 {
-    font-size: 26px;
-  }
-  
-  .frota-header p {
-    font-size: 16px;
-  }
-  
-  .frota-benefits {
-    grid-template-columns: 1fr;
-  }
-  
-  .frota-stats {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-</style> <!-- NÃO APAGUE ESSE </style>! -->
-
+    /* ─── RESPONSIVO ─── */
+    @media (max-width: 900px) {
+      .planos-grid { grid-template-columns: 1fr; max-width: 460px; }
+      .frota-benefits { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .install-cards { grid-template-columns: 1fr; }
+      .frota-benefits { grid-template-columns: 1fr; }
+      .app-grid { flex-direction: column; align-items: center; }
+      .app-btn { width: 100%; max-width: 300px; }
+    }
+    @media (max-width: 480px) {
+      .form-wrap { padding: 28px 20px; }
+      .frota-stats { flex-direction: column; align-items: center; }
+    }
   </style>
 </head>
 <body>
-  <!-- Partículas ao fundo -->
-  <div id="particles-js"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="wrap nav">
-      <div class="brand"><img src="Logo/Logo1.png" alt="Logo Rastreando GPS" class="logo"><strong>Rastreando GPS</strong></div>
-      <a class="cta" href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20instalar%20meu%20rastreador." target="_blank" rel="noopener">Agendar instalação</a>
-    </div>
-  </header>
+<!-- Partículas (mantido por compatibilidade) -->
+<div id="particles-js"></div>
 
-
-<div>
-  <span class="kicker"><span class="spark"></span> Monitoramento em tempo real</span>
-
-
-
-    <!-- Carrossel de Recuperações -->
-  <h2 class="section-title">RASTREADOR + BLOQUEADOR 🔐</h2>
-  <p class="section-subtitle">Veja alguns casos reais de veículos recuperados com o sistema </strong>Rastreando GPS em todo o estado do Rio de Janeiro.</p>
-  <div class="carousel" id="carousel">
-    <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1" />
-    <img src="Recuperacao/Recuperacao2.jpg" alt="Veículo recuperado 2" />
-    <img src="Recuperacao/Recuperacao3.jpg" alt="Veículo recuperado 3" />
-    <img src="Recuperacao/Recuperacao4.jpg" alt="Veículo recuperado 4" />
-    <img src="Recuperacao/Recuperacao5.jpg" alt="Veículo recuperado 5" />
-    <img src="Recuperacao/Recuperacao6.jpg" alt="Veículo recuperado 6" />
-  </div>
-
-  <!-- Botão fixo do WhatsApp -->
-  <div class="whatsapp-fixo">
-    <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Poderia%20me%20ajudar%20com%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" rel="noopener noreferrer">
-      <img src="botao whatsapp/whatsapp.png" alt="WhatsApp" />
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="nav">
+    <a class="brand" href="#">
+      <img src="Logo/Logo1.png" alt="Rastreando GPS">
+      Rastreando GPS
+    </a>
+    <a class="nav-cta" href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20agendar%20minha%20instala%C3%A7%C3%A3o." target="_blank" rel="noopener">
+      <i class="fab fa-whatsapp"></i> Agendar instalação
     </a>
   </div>
+</header>
 
-  <!-- Formulário (mantém nomes/JS) -->
-  <div class="form-container">
-    <div class="form-box shadow">
-      <h2>📍 Consulte o valor da instalação aqui</h2>
-      <input type="text" id="bairroInput" placeholder="Digite sua cidade ou bairro no RJ" />
-      <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1" />
+<!-- ─── KICKER ─── -->
+<div class="hero-kicker">
+  <div class="container text-center">
+    <span class="kicker"><span class="spark"></span> Monitoramento em tempo real · Todo o estado do RJ</span>
+  </div>
+</div>
+
+<!-- ─── RECUPERAÇÕES ─── -->
+<section class="recovery-section">
+  <div class="container text-center">
+    <div class="tag">Casos Reais</div>
+    <h2 class="section-title">RASTREADOR + BLOQUEADOR <span class="grad">🔐</span></h2>
+    <p class="section-sub" style="max-width:600px; margin:10px auto 0;">Veículos recuperados com o sistema Rastreando GPS em todo o estado do Rio de Janeiro.</p>
+    <div class="simple-carousel" id="carousel">
+      <img src="Recuperacao/Recuperacao1.jpg" class="active" alt="Veículo recuperado 1">
+      <img src="Recuperacao/Recuperacao2.jpg" alt="Veículo recuperado 2">
+      <img src="Recuperacao/Recuperacao3.jpg" alt="Veículo recuperado 3">
+      <img src="Recuperacao/Recuperacao4.jpg" alt="Veículo recuperado 4">
+      <img src="Recuperacao/Recuperacao5.jpg" alt="Veículo recuperado 5">
+      <img src="Recuperacao/Recuperacao6.jpg" alt="Veículo recuperado 6">
+    </div>
+  </div>
+</section>
+
+<!-- ─── FORMULÁRIO ─── -->
+<section class="form-section">
+  <div class="container">
+    <div class="form-wrap">
+      <h2 class="form-title">📍 Consulte o valor da instalação</h2>
+      <input type="text" id="bairroInput" placeholder="Digite sua cidade ou bairro no RJ">
+      <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1">
       <select id="tipoRastreador">
         <option value="com">Com bloqueio</option>
         <option value="sem">Sem bloqueio</option>
       </select>
-      <button onclick="verValor()">VER VALOR</button>
-     <div id="countdownContainer" style="display:none;margin-top:14px;background:#fff;padding:12px;border-radius:12px;border-left:5px solid #000;align-items:center;justify-content:center;gap:12px;color:#000">
-  <div style="font-size:22px">⏱️</div>
-  <div>
-    <strong style="color:#000">OFERTA! GANHE 10% DE DESCONTO NA INSTALAÇÃO!</strong><br>
-    <div id="countdown" style="font-size:18px;font-weight:800;color:#000">60:00</div>
-    <small style="color:#555">Oferta válida apenas por 60 minutos</small>
-    </div>
-  </div>
-    </div>
-  </div>
-
-  <!-- Overlay + popup resultados -->
-  <div id="modalOverlay" class="modal-overlay" onclick="fecharModal()"></div>
-  <div id="popup" class="shadow">
-    <span class="botao-fechar" onclick="fecharModal()">&times;</span>
-    <div class="popup-header" id="popup-header">
-      <h3 id="popup-title">Valor da Instalação</h3>
-    </div>
-    <div class="popup-content" id="popup-content"></div>
-  </div>
-
-  <!-- Resultado fixo + caixas auxiliares (ids iguais) -->
-  <div id="botaoBairroNaoEncontrado" style="display:none; margin-top: 10px; text-align:center">
-    <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">Clique aqui se não encontrou seu bairro</a>
-  </div>
-  <div id="mensalidadeBox"></div>
-  <div id="ofertaBox"></div>
-  <div id="ofertaFixaBox"></div>
-  <div id="resultadoFixo" style="display:none; margin-top: 15px;"></div>
-  <div id="beneficiosBox"></div>
-  <div id="botaoExtraAcimaVideo" style="display:none; text-align:center; margin-top:10px;">
-    <a href="#" class="botaoZap verdeZap" target="_blank">Clique Aqui e Agende já</a>
-  </div>
-
-  <!-- Vídeo + título -->
-<h2 class="video-title" style="text-align: center;">Veja como funciona nosso aplicativo</h2>
-
-<div style="padding: 0 20px; display: flex; justify-content: center;">
-  
-  <div style="
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 9/16;
-  ">
-    
-    <iframe 
-      src="https://www.youtube.com/embed/CUF7FuE64JQ"
-      title="YouTube Shorts"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 12px;
-      ">
-    </iframe>
-
-  </div>
-
-</div>
-
- <!-- Seção de instalação (substituindo a foto Instalacao1) -->
-<div class="instalacao-info">
-  <div class="instalacao-card">
-    <h3>Instalação rápida e no local</h3>
-    <p>Nossos técnicos vão até você e realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
-  </div>
-  <div class="instalacao-card">
-    <h3>Duração média de 30 a 60 minutos</h3>
-    <p>Processo ágil e profissional, com tempo médio entre 30 e 60 minutos, sem comprometer sua rotina.</p>
-  </div>
-  <div class="instalacao-card">
-    <h3>Suporte após o serviço</h3>
-    <p>Assistência completa mesmo após a instalação, com suporte técnico especializado sempre que precisar.</p>
-  </div>
-</div>
-
-  <!-- Carrossel de instalações -->
-  <div class="instalacoes-carrossel">
-    <h2 class="section-title">🔧 Veja algumas Instalações</h2>
-    <p class="section-subtitle">Confira nosso trabalho profissional de instalação em veículos de todo o Rio de Janeiro.</p>
-    <div class="instalacoes-container">
-      <div class="instalacoes-track">
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao1.jpg" alt="Instalação 1" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao2.jpg" alt="Instalação 2" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao3.jpg" alt="Instalação 3" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao4.jpg" alt="Instalação 4" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao5.jpg" alt="Instalação 5" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao6.jpg" alt="Instalação 6" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao7.jpg" alt="Instalação 7" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao8.jpg" alt="Instalação 8" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao9.jpg" alt="Instalação 9" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao10.jpg" alt="Instalação 10" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao11.jpg" alt="Instalação 11" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao12.jpg" alt="Instalação 12" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao13.jpg" alt="Instalação 13" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao14.jpg" alt="Instalação 14" loading="lazy"></div>
-        <div class="instalacoes-slide"><img src="instalacoescarrossel/Instalacao15.jpg" alt="Instalação 15" loading="lazy"></div>
-      </div>
-    </div>
-    <div class="instalacoes-nav">
-      <button class="instalacoes-prev" aria-label="Anterior">❮</button>
-      <div class="instalacoes-dots"></div>
-      <button class="instalacoes-next" aria-label="Próximo">❯</button>
-    </div>
-  </div>
-
-
-
-<!-- Chamada de valor (abaixo do carrossel e antes dos Planos) -->
-<div style="text-align:center; margin: 30px auto; max-width: 840px;">
-  <div style="display:inline-block; padding:16px 20px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); box-shadow:0 6px 18px rgba(0,0,0,0.25); backdrop-filter:blur(6px);">
-    <h3 style="font-size:22px; font-weight:800; color:#fff; line-height:1.4; margin:0;">
-      💭 Pense bem: o valor que você<br>
-      paga por mês em segurança<br>
-      é mais barato que um lanche 🍔<br>
-      que você faz em um único dia.
-    </h3>
-  </div>
-</div>
-
-
-  <!-- Planos -->
-  <div class="planos-container">
-    <div class="plano-box com-bloqueio">
-      <div class="plano-destaque">MAIS VENDIDO</div>
-      <h3 class="plano-titulo">Rastreador com Bloqueio</h3>
-      <div class="plano-preco">R$59,90 <small>/mês</small>
-  <div class="oferta-destaque">ou <span class="valor-promo">R$54,90 até o vencimento</span></div>
-</div>
-      <p class="plano-descricao">Segurança completa com bloqueio remoto do motor</p>
-      <ul class="plano-beneficios">
-        <li>Bloqueio remoto via aplicativo</li>
-        <li>Localização em tempo real</li>
-        <li>Notificações de ignição</li>
-        <li>Histórico de rotas</li>
-        <li>Suporte humanizado</li>
-      </ul>
-      <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20contratar%20o%20rastreador%20com%20bloqueio." class="plano-botao">Contratar Agora</a>
-      <p class="plano-observacao">Instalação profissional na sua residência</p>
-    </div>
-    <div class="plano-box sem-bloqueio">
-      <h3 class="plano-titulo">Rastreador sem Bloqueio</h3>
-      <div class="plano-preco">R$39,90 <small>/mês</small></div>
-      <p class="plano-descricao">Monitoramento básico para sua segurança</p>
-      <ul class="plano-beneficios">
-        <li>Localização em tempo real</li>
-        <li>Notificações de ignição</li>
-        <li>Histórico de rotas (90 dias)</li>
-        <li>Suporte humanizado</li>
-        <li>Economia mensal</li>
-      </ul>
-      <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20contratar%20o%20rastreador%20sem%20bloqueio." class="plano-botao">Contratar Agora</a>
-      <p class="plano-observacao">Solução econômica com tecnologia 4G</p>
-    </div>
-  </div>
-
-  <!-- NOVO BLOCO PARA FROTAS - SEM CAIXA ENVOLTA -->
-<div class="wrap">
-  <div class="frota-header">
-    <h2>Solução Completa para Gestão de Frotas</h2>
-    <p>Controle total sobre seus veículos e motoristas com nossa tecnologia de rastreamento avançada</p>
-  </div>
-  
-  <!-- GIF adicionado abaixo do título e subtítulo -->
-  <div class="frota-gif-container">
-    <img src="beneficios/tela.gif" alt="Demonstração do sistema de gestão de frotas">
-  </div>
-  
-  <div class="frota-benefits">
-    <div class="frota-benefit">
-      <div class="frota-icon">👥</div>
-      <h3>Controle de Funcionários</h3>
-      <p>Visão geral dos veículos e condutores em um só lugar</p>
-    </div>
-    
-    <div class="frota-benefit">
-      <div class="frota-icon">⛽</div>
-      <h3>Economia de Combustível</h3>
-      <p>Evite perdas com desvios de rota e uso indevido</p>
-    </div>
-    
-    <div class="frota-benefit">
-      <div class="frota-icon">⏱️</div>
-      <h3>Monitoramento de Jornada</h3>
-      <p>Verifique paradas e deslocamentos com relatórios detalhados</p>
-    </div>
-    
-    <div class="frota-benefit">
-      <div class="frota-icon">🔑</div> <!-- Ícone alterado para chave -->
-      <h3>Alertas de Ignição</h3>
-      <p>Notificações em tempo real quando o veículo é ligado/desligado</p>
-    </div>
-    
-    <div class="frota-benefit">
-      <div class="frota-icon">🔒</div>
-      <h3>Bloqueio Imediato</h3>
-      <p>Desative o veículo remotamente em caso de suspeita de roubo</p>
-    </div>
-    
-    <div class="frota-benefit">
-      <div class="frota-icon">📍</div>
-      <h3>Alertas de Desvio</h3>
-      <p>Notificações quando o veículo sai da rota pré-definida</p>
-    </div>
-  </div>
-  
-  <div class="frota-stats">
-    <div class="frota-stat">
-      <strong>Até 40%*</strong>
-      <small>Redução em gastos com combustível</small>
-    </div>
-    <div class="frota-stat">
-      <strong>+80%*</strong>
-      <small>Eficiência operacional</small>
-    </div>
-    <div class="frota-stat">
-      <strong>24/7</strong>
-      <small>Sob seu controle</small>
-    </div>
-  </div>
-  
-  <div class="frota-cta">
-    <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20otimizar%20minha%20frota%20com%20o%20rastreador." target="_blank">Quero otimizar minha frota</a>
-  </div>
-  
-  <div class="frota-footer">
-    *Valores médios estimados; resultados variam por operação.
-  </div>
-</div>
-
-  <!-- Depoimentos -->
-  <div class="depoimentos-container">
-    <h2 class="section-title">💬 Depoimentos Reais</h2>
-    <p class="section-subtitle">Veja o que nossos clientes têm a dizer sobre a qualidade e eficiência do nosso serviço de rastreamento.</p>
-    <div class="depoimentos-carrossel">
-      <div class="carrossel-container">
-        <div class="carrossel-track">
-          <div class="carrossel-slide"><img src="Depoimentos/depoimento1.png" alt="Depoimento 1" loading="lazy"></div>
-          <div class="carrossel-slide"><img src="Depoimentos/depoimento2.png" alt="Depoimento 2" loading="lazy"></div>
-          <div class="carrossel-slide"><img src="Depoimentos/depoimento3.png" alt="Depoimento 3" loading="lazy"></div>
-          <div class="carrossel-slide"><img src="Depoimentos/depoimento4.png" alt="Depoimento 4" loading="lazy"></div>
+      <button class="form-btn" onclick="verValor()">
+        <i class="fas fa-search-location"></i> VER VALOR
+      </button>
+      <div class="countdown-box" id="countdownContainer">
+        <div class="countdown-emoji">⏱️</div>
+        <div>
+          <strong>OFERTA! 10% DE DESCONTO NA INSTALAÇÃO!</strong><br>
+          <div id="countdown">60:00</div>
+          <small style="color:#92400e;">Oferta válida por tempo limitado</small>
         </div>
       </div>
-      <div class="carrossel-nav">
-        <button class="carrossel-prev" aria-label="Anterior">❮</button>
-        <div class="carrossel-dots"></div>
-        <button class="carrossel-next" aria-label="Próximo">❯</button>
+    </div>
+
+    <!-- Bairro não encontrado -->
+    <div id="botaoBairroNaoEncontrado">
+      <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro.%20Pode%20me%20ajudar%3F"
+         class="btn-zap vermelho pulsando" target="_blank">
+        <i class="fab fa-whatsapp"></i> Não encontrei meu bairro — falar com atendente
+      </a>
+    </div>
+
+    <!-- Resultado fixo -->
+    <div id="resultadoFixo">
+      <div class="res-header"><h3>✅ Valor da Instalação</h3></div>
+      <div class="res-body">
+        <div class="res-price" id="resPreco"></div>
+        <div class="res-details" id="resDetalhes"></div>
+        <div style="margin-top:16px;" id="resBotao"></div>
+      </div>
+    </div>
+
+    <!-- Benefícios -->
+    <div id="beneficiosBox"></div>
+
+    <!-- Botão extra acima do vídeo -->
+    <div id="botaoExtraAcimaVideo">
+      <a href="#" class="btn-zap verde pulsando" target="_blank">
+        <i class="fab fa-whatsapp"></i> Clique aqui e agende já
+      </a>
+    </div>
+
+    <!-- Outros boxes -->
+    <div id="mensalidadeBox"></div>
+    <div id="ofertaBox"></div>
+    <div id="ofertaFixaBox"></div>
+  </div>
+</section>
+
+<!-- ─── MODAL ─── -->
+<div id="modalOverlay" class="modal-overlay" onclick="fecharModal()"></div>
+<div id="popup">
+  <div class="popup-header" id="popup-header">
+    <h3 id="popup-title">Valor da Instalação</h3>
+    <button class="btn-fechar" onclick="fecharModal()">&times;</button>
+  </div>
+  <div class="popup-body" id="popup-content"></div>
+</div>
+
+<!-- ─── VÍDEO ─── -->
+<section class="video-section">
+  <div class="container text-center">
+    <div class="tag">Veja como funciona</div>
+    <h2 class="section-title">Nosso <span class="grad">aplicativo</span></h2>
+    <div class="video-wrap">
+      <div class="video-inner">
+        <iframe src="https://www.youtube.com/embed/CUF7FuE64JQ"
+          title="Rastreando GPS App"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Botões de apps -->
-  <div class="app-download-section" style="margin: 50px auto 30px; text-align: center;">
-    <h3 class="section-title" style="margin-bottom: 30px;">📲 Baixe nosso app agora mesmo</h3>
-    <div style="display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;">
-      <a href="https://play.google.com/store/apps/details?id=com.rastreandogpsrastreamento.br" target="_blank" class="app-button" style="text-decoration:none; min-width:220px;">
-        <div style="background:#3DDC84;border-radius:16px;padding:15px 20px;box-shadow:0 4px 15px rgba(61,220,132,.3);display:flex;align-items:center;height:60px;width:100%;box-sizing:border-box;">
-          <div style="background:#fff;min-width:50px;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);flex-shrink:0;">
-            <img src="https://cdn-icons-png.flaticon.com/512/226/226770.png" alt="Android" style="width:30px;height:30px;">
-          </div>
-          <div style="text-align:left;color:#fff;white-space:nowrap">
-            <div style="font-size:12px;opacity:.9">Disponível no</div>
-            <div style="font-size:18px;font-weight:600;margin-top:-3px">Google Play</div>
-          </div>
+<!-- ─── CARDS INSTALAÇÃO ─── -->
+<section class="section">
+  <div class="container">
+    <div class="tag text-center" style="display:block; text-align:center;">Como funciona a instalação</div>
+    <h2 class="section-title text-center">Rápido, <span class="grad">profissional</span> e no seu endereço</h2>
+    <div class="install-cards">
+      <div class="install-card fade-up">
+        <div class="install-card-icon">🏠</div>
+        <h3>Instalação no local</h3>
+        <p>Nossos técnicos vão até você e realizam a instalação no local de sua preferência, sem necessidade de deslocamento.</p>
+      </div>
+      <div class="install-card fade-up">
+        <div class="install-card-icon">⏱️</div>
+        <h3>30 a 60 minutos</h3>
+        <p>Processo ágil e profissional, sem comprometer sua rotina. Em média 60 minutos de serviço completo.</p>
+      </div>
+      <div class="install-card fade-up">
+        <div class="install-card-icon">🎧</div>
+        <h3>Suporte após o serviço</h3>
+        <p>Assistência completa mesmo após a instalação, com suporte técnico especializado sempre que precisar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CARROSSEL INSTALAÇÕES ─── -->
+<section class="inst-carousel-section">
+  <div class="container text-center">
+    <div class="tag">Nosso trabalho</div>
+    <h2 class="section-title">🔧 Instalações <span class="grad">profissionais</span></h2>
+    <p class="section-sub" style="max-width:600px; margin:10px auto 0;">Confira nosso trabalho em veículos de todo o Rio de Janeiro.</p>
+    <div class="track-wrap">
+      <div class="track-container">
+        <div class="track" id="inst-track">
+          <div class="slide"><img src="instalacoescarrossel/Instalacao1.jpg" alt="Instalação 1" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao2.jpg" alt="Instalação 2" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao3.jpg" alt="Instalação 3" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao4.jpg" alt="Instalação 4" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao5.jpg" alt="Instalação 5" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao6.jpg" alt="Instalação 6" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao7.jpg" alt="Instalação 7" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao8.jpg" alt="Instalação 8" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao9.jpg" alt="Instalação 9" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao10.jpg" alt="Instalação 10" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao11.jpg" alt="Instalação 11" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao12.jpg" alt="Instalação 12" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao13.jpg" alt="Instalação 13" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao14.jpg" alt="Instalação 14" loading="lazy"></div>
+          <div class="slide"><img src="instalacoescarrossel/Instalacao15.jpg" alt="Instalação 15" loading="lazy"></div>
         </div>
+      </div>
+      <div class="track-nav">
+        <button class="track-btn" id="inst-prev">❮</button>
+        <div class="track-dots" id="inst-dots"></div>
+        <button class="track-btn" id="inst-next">❯</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CHAMADA DE VALOR ─── -->
+<div class="valor-chamada">
+  <div class="container">
+    <div class="valor-chamada-box">
+      <h3>💭 Pense bem: o valor que você paga por mês<br>em segurança é mais barato que um lanche 🍔<br>que você faz em um único dia.</h3>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PLANOS ─── -->
+<section class="planos-section">
+  <div class="container text-center">
+    <div class="tag">Nossos Planos</div>
+    <h2 class="section-title">Escolha o <span class="grad">seu plano</span></h2>
+    <div class="planos-grid">
+      <div class="plano fade-up">
+        <div class="plano-badge">MAIS VENDIDO</div>
+        <div class="plano-titulo">Rastreador com Bloqueio</div>
+        <div class="plano-preco">R$59,90 <small>/mês</small></div>
+        <div class="plano-promo">ou <span class="destaque">R$54,90 até o vencimento</span></div>
+        <p class="plano-desc">Segurança completa com bloqueio remoto do motor</p>
+        <ul class="plano-list">
+          <li>Bloqueio remoto via aplicativo</li>
+          <li>Localização em tempo real</li>
+          <li>Notificações de ignição</li>
+          <li>Histórico de rotas</li>
+          <li>Suporte humanizado</li>
+        </ul>
+        <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20contratar%20o%20rastreador%20com%20bloqueio." class="btn-plano" target="_blank">Contratar Agora</a>
+        <p class="plano-obs">Instalação profissional na sua residência</p>
+      </div>
+      <div class="plano sem fade-up">
+        <div class="plano-titulo">Rastreador sem Bloqueio</div>
+        <div class="plano-preco">R$39,90 <small>/mês</small></div>
+        <p class="plano-desc">Monitoramento eficiente para sua segurança</p>
+        <ul class="plano-list">
+          <li>Localização em tempo real</li>
+          <li>Notificações de ignição</li>
+          <li>Histórico de rotas (90 dias)</li>
+          <li>Suporte humanizado</li>
+          <li>Economia mensal</li>
+        </ul>
+        <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20contratar%20o%20rastreador%20sem%20bloqueio." class="btn-plano" target="_blank">Contratar Agora</a>
+        <p class="plano-obs">Solução econômica com tecnologia 4G</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FROTAS ─── -->
+<section class="frota-section">
+  <div class="container">
+    <div class="tag text-center" style="display:block; text-align:center;">Para Empresas</div>
+    <h2 class="section-title text-center">Gestão completa de <span class="grad">frotas</span></h2>
+    <p class="section-sub text-center" style="max-width:640px; margin:10px auto 0;">Controle total sobre seus veículos e motoristas com nossa tecnologia avançada.</p>
+
+    <div class="frota-gif">
+      <img src="beneficios/tela.gif" alt="Demonstração do sistema de gestão de frotas">
+    </div>
+
+    <div class="frota-benefits">
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">👥</div>
+        <h3>Controle de Funcionários</h3>
+        <p>Visão geral dos veículos e condutores em um só painel</p>
+      </div>
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">⛽</div>
+        <h3>Economia de Combustível</h3>
+        <p>Evite perdas com desvios de rota e uso indevido</p>
+      </div>
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">⏱️</div>
+        <h3>Monitoramento de Jornada</h3>
+        <p>Paradas e deslocamentos com relatórios detalhados</p>
+      </div>
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">🔑</div>
+        <h3>Alertas de Ignição</h3>
+        <p>Notificações em tempo real quando o veículo é ligado</p>
+      </div>
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">🔒</div>
+        <h3>Bloqueio Imediato</h3>
+        <p>Desative o veículo remotamente em caso de roubo</p>
+      </div>
+      <div class="frota-benefit fade-up">
+        <div class="frota-icon">📍</div>
+        <h3>Alertas de Desvio</h3>
+        <p>Notificações quando o veículo sai da rota definida</p>
+      </div>
+    </div>
+
+    <div class="frota-stats">
+      <div class="frota-stat"><strong>Até 40%*</strong><small>Redução em combustível</small></div>
+      <div class="frota-stat"><strong>+80%*</strong><small>Eficiência operacional</small></div>
+      <div class="frota-stat"><strong>24/7</strong><small>Sob seu controle</small></div>
+    </div>
+
+    <div class="frota-cta">
+      <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20otimizar%20minha%20frota." class="btn-frota" target="_blank">
+        <i class="fas fa-truck"></i> Quero otimizar minha frota
       </a>
-      <a href="https://apps.apple.com/br/app/rastreando-gps/id1642112039" target="_blank" class="app-button" style="text-decoration:none; min-width:220px;">
-        <div style="background:#000;border-radius:16px;padding:15px 20px;box-shadow:0 4px 15px rgba(0,0,0,.2);display:flex;align-items:center;height:60px;width:100%;box-sizing:border-box;">
-          <div style="background:#fff;min-width:50px;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);flex-shrink:0;">
-            <img src="https://cdn-icons-png.flaticon.com/512/179/179309.png" alt="iPhone" style="width:24px;height:24px;">
-          </div>
-          <div style="text-align:left;color:#fff;white-space:nowrap">
-            <div style="font-size:12px;opacity:.9">Baixe na</div>
-            <div style="font-size:18px;font-weight:600;margin-top:-3px">App Store</div>
-          </div>
+    </div>
+    <p class="frota-footer-note">*Valores médios estimados; resultados variam por operação.</p>
+  </div>
+</section>
+
+<!-- ─── DEPOIMENTOS ─── -->
+<section class="depo-section">
+  <div class="container text-center">
+    <div class="tag">Depoimentos reais</div>
+    <h2 class="section-title">💬 O que nossos <span class="grad">clientes dizem</span></h2>
+    <p class="section-sub" style="max-width:560px; margin:10px auto 0;">Veja a experiência de quem já protege seu veículo com a Rastreando GPS.</p>
+    <div class="track-wrap" style="max-width:780px;">
+      <div class="track-container">
+        <div class="track" id="depo-track">
+          <div class="slide"><img src="Depoimentos/depoimento1.png" alt="Depoimento 1" loading="lazy"></div>
+          <div class="slide"><img src="Depoimentos/depoimento2.png" alt="Depoimento 2" loading="lazy"></div>
+          <div class="slide"><img src="Depoimentos/depoimento3.png" alt="Depoimento 3" loading="lazy"></div>
+          <div class="slide"><img src="Depoimentos/depoimento4.png" alt="Depoimento 4" loading="lazy"></div>
         </div>
+      </div>
+      <div class="track-nav">
+        <button class="track-btn" id="depo-prev">❮</button>
+        <div class="track-dots" id="depo-dots"></div>
+        <button class="track-btn" id="depo-next">❯</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── APP DOWNLOAD ─── -->
+<section class="app-section">
+  <div class="container text-center">
+    <div class="tag">Acesse de qualquer lugar</div>
+    <h2 class="section-title">📲 Baixe <span class="grad">nosso app</span></h2>
+    <div class="app-grid">
+      <a href="https://play.google.com/store/apps/details?id=com.rastreandogpsrastreamento.br" class="app-btn android" target="_blank">
+        <div class="app-btn-icon"><img src="https://cdn-icons-png.flaticon.com/512/226/226770.png" alt="Android"></div>
+        <div class="app-btn-text"><small>Disponível no</small><strong>Google Play</strong></div>
       </a>
-      <a href="https://rastreamento.ong.br/index.php" target="_blank" class="app-button" style="text-decoration:none; min-width:220px;">
-        <div style="background:linear-gradient(135deg,#0d3c61,#1a5a8d);border-radius:16px;padding:15px 20px;box-shadow:0 4px 15px rgba(13,60,97,.3);display:flex;align-items:center;height:60px;width:100%;box-sizing:border-box;">
-          <div style="background:#fff;min-width:50px;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-right:15px;box-shadow:0 2px 8px rgba(0,0,0,.1);flex-shrink:0;">
-            <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="Web" style="width:26px;height:26px;">
-          </div>
-          <div style="text-align:left;color:#fff;white-space:nowrap">
-            <div style="font-size:12px;opacity:.9">Acesse pelo</div>
-            <div style="font-size:18px;font-weight:600;margin-top:-3px">Computador</div>
-          </div>
-        </div>
+      <a href="https://apps.apple.com/br/app/rastreando-gps/id1642112039" class="app-btn ios" target="_blank">
+        <div class="app-btn-icon"><img src="https://cdn-icons-png.flaticon.com/512/179/179309.png" alt="iPhone"></div>
+        <div class="app-btn-text"><small>Baixe na</small><strong>App Store</strong></div>
+      </a>
+      <a href="https://rastreamento.ong.br/index.php" class="app-btn web" target="_blank">
+        <div class="app-btn-icon"><img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="Web"></div>
+        <div class="app-btn-text"><small>Acesse pelo</small><strong>Computador</strong></div>
       </a>
     </div>
   </div>
+</section>
 
-  <!-- FAQ -->
-  <div class="faq-container">
-    <h2 class="section-title">💭 Perguntas Frequentes</h2>
-    <p class="section-subtitle">Tire suas dúvidas sobre nossos rastreadores e serviços.</p>
-    <div class="faq-accordion" id="faqRoot"></div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="wrap">
-      <div style="display:flex;gap:10px;align-items:center"><span class="dot"></span><strong>Rastreando GPS | Soluções em Rastreamento Veicular</strong></div>
-      <div style="opacity:.9">CNPJ: 29.488.621/0001-48 • Atendimento em todo o estado do RJ • Equipamentos 4G em comodato</div>
-      <div style="opacity:.8">Contato: (21) 98088-6087 / (21) 96931-2625 • E-mail: rastreandogpsbr@rastreandogps.com</div>
-      <small style="opacity:.7">© 2025 Rastreando GPS. Não somos seguradora nem cooperativa de proteção veicular.</small>
+<!-- ─── FAQ ─── -->
+<section class="faq-section">
+  <div class="container text-center">
+    <div class="tag">Tire suas dúvidas</div>
+    <h2 class="section-title">💭 Perguntas <span class="grad">frequentes</span></h2>
+    <div class="faq-wrap">
+      <div class="faq-accordion" id="faqRoot"></div>
     </div>
-  </footer>
+  </div>
+</section>
 
-  <!-- Scripts -->
-  <script>
-    function fecharModal(){
-      const p=document.getElementById('popup'),
-      o=document.getElementById('modalOverlay');
-      p.classList.remove('active');
-      o.classList.remove('active');
-      setTimeout(()=>{
-        p.style.display='none';
-        o.style.display='none';
-      },300);
-    }
-    
-    async function verValor(){
-      const bairroInput=document.getElementById('bairroInput').value.trim();
-      const quantidade=parseInt(document.getElementById('quantidadeInput').value)||1;
-      const tipo=document.getElementById('tipoRastreador').value;
-      const popup=document.getElementById('popup');
-      const overlay=document.getElementById('modalOverlay');
-      const resultadoFixo=document.getElementById('resultadoFixo');
-      const mensalidadeBox=document.getElementById('mensalidadeBox');
-      const ofertaBox=document.getElementById('ofertaBox');
-      const ofertaFixaBox=document.getElementById('ofertaFixaBox');
-      const beneficiosBox=document.getElementById('beneficiosBox');
-      const whatsapp=document.getElementById('whatsapp')||document.createElement('div');
-      const duvidas=document.getElementById('duvidas')||document.createElement('div');
-      const botaoExtraAcimaVideo=document.getElementById('botaoExtraAcimaVideo');
-      const botaoBairroNaoEncontrado=document.getElementById('botaoBairroNaoEncontrado');
-      
-      overlay.style.display='block';
-      popup.style.display='block';
-      setTimeout(()=>{
-        overlay.classList.add('active');
-        popup.classList.add('active');
-      },10);
-      
-      whatsapp.style.display='block';
-      duvidas.style.display='block';
-      mensalidadeBox.style.display='block';
-      beneficiosBox.style.display='block';
-      ofertaBox.style.display='none';
-      resultadoFixo.style.display='none';
-      
-      try{
-        const response=await fetch('https://instalacao-por-bairro-gps.vercel.app/bairros.json');
-        const data=await response.json();
-        const normalizar=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-        const resultado=data.find(e=>normalizar(e.bairro)===normalizar(bairroInput));
-        
-        if(resultado){
-          botaoBairroNaoEncontrado.style.display='none';
-          botaoExtraAcimaVideo.style.display='block';
-          
-          const valorUnitario=parseFloat(resultado.valor.toString().replace(/[^0-9,\.]/gu,'').replace(',','.'))||0;
-          const valorInstalacao=valorUnitario*quantidade;
-          let valorMensal=0;
-          let textoMensalidade='';
-          let textoMensalidadeWhats='';
-          
-          if(tipo==='com'){
-            const cheio=59.90*quantidade;
-            const desconto=54.90*quantidade;
-            valorMensal=desconto;
-            textoMensalidade=`<span class='valor-normal'>R$ ${cheio.toFixed(2).replace('.',',')}</span> <span class='valor-desconto'>(R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)</span>`;
-            textoMensalidadeWhats=`R$ ${cheio.toFixed(2).replace('.',',')} (ou R$ ${desconto.toFixed(2).replace('.',',')} até o vencimento)`;
-          } else {
-            valorMensal=39.90*quantidade;
-            textoMensalidade=`R$ ${valorMensal.toFixed(2).replace('.',',')}`;
-            textoMensalidadeWhats=textoMensalidade;
-          }
-          
-          // NOVO CÁLCULO DO VALOR DIÁRIO
-          const valorDiario = (valorMensal / 31).toFixed(2).replace('.', ',');
-          
-          const textoMensagem=`Olá! Gostaria de agendar minha instalação.\n\n📍 Endereço informado: ${bairroInput}\n🚗 Quantidade de veículos: ${quantidade}\n🛰️ Tipo de rastreador: ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}\n💰 Valor da instalação: R$ ${valorInstalacao.toFixed(2).replace('.',',')}\n📅 Mensalidade: ${textoMensalidadeWhats}\n`;
-          const textoEncoded=encodeURIComponent(textoMensagem);
-          const linkWhats=`https://wa.me/5521980886087?text=${textoEncoded}`;
-          
-          document.getElementById('popup-title').textContent='Valor da Instalação';
-          document.getElementById('popup-header').style.background='linear-gradient(135deg,#0d3c61,#22c55e)';
-          
-          document.getElementById('popup-content').innerHTML=`
-            <div class="popup-price" id="popup-price">Instalação apenas: R$ ${valorInstalacao.toFixed(2).replace('.',',')}</strong></div>
-            <div class="popup-details" id="popup-details">
-              <p>📍 Cidade: <span id="popup-address">${bairroInput}</span></p>
-              <p>🚗 Veículos: <span id="popup-vehicles">${quantidade}</span></p>
-              <p>🛰️ Tipo: <span id="popup-type">${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</span></p>
-              <p id="popup-monthly" style="margin: 15px 0; font-size: 17px;">
-                📅 <strong>Mensalidade:</strong> <span id="popup-monthly-value" style="font-size: 1.1em; font-weight: bold; color: #0d3c61;">${textoMensalidade}</span>
-              </p>
-            </div>
-            <div class="popup-features" id="popup-features">
-              <ul>
-                <li>Instalação no seu endereço</li>
-                <li>Localização em tempo real</li>
-                <li>Históricos de rotas</li>
-                <li>Baixe em até 5 telefones</li>
-              </ul>
-            </div>
-            <a href="${linkWhats}" id="popup-whatsapp" class="botaoZap verdeZap pulsando" target="_blank">Quero instalar meu rastreador!</a>
-          `;
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Rastreando GPS · Soluções em Rastreamento Veicular</div>
+    <p>CNPJ: 29.488.621/0001-48 · Atendimento em todo o estado do RJ · Equipamentos 4G</p>
+    <p>Contato: (21) 9 8088-6087 / (21) 9 6931-2625 · rastreandogpsbr@gmail.com</p>
+    <small>© 2025 Rastreando GPS. Não somos seguradora nem cooperativa de proteção veicular.</small>
+  </div>
+</footer>
 
-          document.getElementById('resultadoFixo').className='sucesso';
-          document.getElementById('resultadoFixo').innerHTML=`
-            <div class='resultado-header' style="background:linear-gradient(135deg,#0d3c61,#22c55e);color:#fff;padding:20px;text-align:center">
-              <h3>✅ Valor da Instalação</h3>
-            </div>
-            <div class='resultado-container' style="padding:25px">
-              <div class='resultado-price' style="font-size:36px;font-weight:800;color:#22c55e">R$ ${valorInstalacao.toFixed(2).replace('.',',')}</div>
-              <div class='resultado-details' style="text-align:left;margin:20px 0;line-height:1.6">
-                <p>📍 <strong>Endereço:</strong> ${bairroInput}</p>
-                <p>🚗 <strong>Veículos:</strong> ${quantidade}</p>
-                <p>🛰️ <strong>Tipo:</strong> ${tipo==='com'?'Com bloqueio':'Sem bloqueio'}</p>
-                <div class='mensalidade-container'>
-                  <span class='mensalidade-label'>📅 <strong>Mensalidade:</strong></span> 
-                  <span class='mensalidade-valores'>${textoMensalidade}</span>
-                </div>
-              </div>
-              <div class='resultado-features' style="background:#f8f9fa;border-radius:10px;padding:15px">
-                <ul>
-                  <li>Instalação no seu endereço</li>
-                  <li>Localização em tempo real</li>
-                  <li>Históricos de rotas</li>
-                  <li>Baixe em até 4 telefones</li>
-                </ul>
-              </div>
-              <div style="margin-top:20px">
-                <a href='${linkWhats}' class='botaoZap verdeZap pulsando' target='_blank'>Quero instalar meu rastreador!</a>
-              </div>
-            </div>
-          `;
-          
-          document.getElementById('resultadoFixo').style.display='block';
-          
-          beneficiosBox.innerHTML=`
-          <h3 style="font-size: clamp(18px, 4vw, 22px); font-weight: 700; color: #0d3c61; line-height: 1.4; text-align: center;">
-          Com uma instalação de apenas <span style="white-space: nowrap;">R$ ${valorInstalacao.toFixed(2).replace('.', ',')}</span> e só
-           <span style="white-space: nowrap;">R$ ${valorMensal.toFixed(2).replace('.', ',')}</span> mensal,<br>
-           <span style="white-space: nowrap;">menos de R$ ${valorDiario} por dia</span>, você garante:
-           </h3>
-            <ul>
-              <li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li>
-              <li><strong>Localização em tempo real</strong> com atualizações a cada 30 segundos</li>
-              <li><strong>Histórico completo de rotas</strong> com até 90 dias de armazenamento</li>
-              <li><strong>Compartilhamento fácil</strong> - baixe o app em até 4 dispositivos</li>
-              <li><strong>Notificações </strong> de ignição, velocidade e muito mais</li>
-              <li><strong>Suporte 24h</strong> por WhatsApp para emergência</li>
-            </ul>
-          `;
-          
-          beneficiosBox.style.display = 'block';
-          botaoExtraAcimaVideo.querySelector('a').href=linkWhats;
-        } else {
-          document.getElementById('popup-title').textContent='Bairro não encontrado';
-          document.getElementById('popup-header').style.background='#e74c3c';
-          document.getElementById('popup-content').innerHTML=`
-            <div style="font-size:60px;margin:20px 0;color:#e74c3c">❌</div>
-            <p>Este bairro não foi encontrado em nossa base de dados.</p>
-            <p>Verifique se você digitou corretamente o nome da cidade.</p>
-            <p>Exemplo: São Cristóvão, Niterói, Duque de Caxias, Nova Iguaçu</p>
-            <div style="margin-top:20px">
-              <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro%20na%20lista%20de%20instala%C3%A7%C3%A3o.%20Pode%20me%20ajudar%3F" class="botaoZap vermelhoZap pulsando" target="_blank">Clique aqui se não encontrou a cidade</a>
-            </div>
-          `;
-          
-          document.getElementById('resultadoFixo').style.display='none';
-          mensalidadeBox.style.display='none';
-          beneficiosBox.style.display='none';
-          ofertaBox.style.display='none';
-          botaoBairroNaoEncontrado.style.display='block';
-          botaoExtraAcimaVideo.style.display='none';
-        }
-      } catch(e) {
-        document.getElementById('popup-title').textContent='Erro na consulta';
-        document.getElementById('popup-header').style.background='#e74c3c';
-        document.getElementById('popup-content').innerHTML=`
-          <div style="font-size:60px;margin:20px 0;color:#e74c3c">⚠️</div>
-          <p>Ocorreu um erro ao consultar os valores.</p>
-          <p>Por favor, tente novamente mais tarde ou entre em contato conosco.</p>
-          <div style="margin-top:20px">
-            <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Tive%20um%20problema%20ao%20consultar%20o%20valor%20da%20instala%C3%A7%C3%A3o." class="botaoZap vermelhoZap pulsando" target="_blank">Falar com atendente</a>
-          </div>
-        `;
-      }
-    }
+<!-- ─── WHATSAPP FLOAT ─── -->
+<a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Poderia%20me%20ajudar%3F" class="wa-float" target="_blank" rel="noopener">
+  <img src="botao whatsapp/whatsapp.png" alt="WhatsApp">
+</a>
 
-    // Carrossel de instalações
-    const instalacoesTrack=document.addEventListener('DOMContentLoaded',()=>{
-      const track=document.querySelector('.instalacoes-track');
-      const slides=[...document.querySelectorAll('.instalacoes-slide')];
-      const dotsC=document.querySelector('.instalacoes-dots');
-      const prev=document.querySelector('.instalacoes-prev');
-      const next=document.querySelector('.instalacoes-next');
-      let idx=0,startX=0,endX=0; 
-      slides.forEach((_,i)=>{const d=document.createElement('div');d.className='instalacoes-dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsC.appendChild(d)});
-      const dots=[...document.querySelectorAll('.instalacoes-dot')];
-      function render(){track.style.transform=`translateX(-${idx*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===idx))}
-      function go(i){idx=i;render()}
-      function prevFn(){idx=idx>0?idx-1:slides.length-1;render()}
-      function nextFn(){idx=idx<slides.length-1?idx+1:0;render()}
-      prev.addEventListener('click',prevFn);next.addEventListener('click',nextFn);
-      track.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
-      track.addEventListener('touchend',e=>{endX=e.changedTouches[0].screenX;const d=startX-endX;if(d>50)nextFn();if(d<-50)prevFn()},{passive:true});
-      setInterval(nextFn,2000);
-    });
+<script>
+// ── MODAL ──
+function fecharModal() {
+  const p = document.getElementById('popup');
+  const o = document.getElementById('modalOverlay');
+  p.classList.remove('active');
+  o.classList.remove('active');
+  setTimeout(() => { p.style.display = 'none'; o.style.display = 'none'; }, 300);
+}
 
-    // Carrossel de recuperações
-    document.addEventListener('DOMContentLoaded',()=>{let i=0;const imgs=document.querySelectorAll('#carousel img');setInterval(()=>{imgs[i].classList.remove('active');i=(i+1)%imgs.length;imgs[i].classList.add('active')},2000)});
+// ── VER VALOR ──
+async function verValor() {
+  const bairroInput = document.getElementById('bairroInput').value.trim();
+  const quantidade = parseInt(document.getElementById('quantidadeInput').value) || 1;
+  const tipo = document.getElementById('tipoRastreador').value;
+  const popup = document.getElementById('popup');
+  const overlay = document.getElementById('modalOverlay');
+  const resultadoFixo = document.getElementById('resultadoFixo');
+  const beneficiosBox = document.getElementById('beneficiosBox');
+  const botaoExtra = document.getElementById('botaoExtraAcimaVideo');
+  const botaoBairro = document.getElementById('botaoBairroNaoEncontrado');
 
-    // Carrossel de depoimentos
-    document.addEventListener('DOMContentLoaded',()=>{
-      const track=document.querySelector('.carrossel-track');
-      const slides=[...document.querySelectorAll('.carrossel-slide')];
-      const dotsC=document.querySelector('.carrossel-dots');
-      const prev=document.querySelector('.carrossel-prev');
-      const next=document.querySelector('.carrossel-next');
-      let idx=0,startX=0,endX=0;
-      slides.forEach((_,i)=>{const d=document.createElement('div');d.className='carrossel-dot'+(i===0?' active':'');d.onclick=()=>go(i);dotsC.appendChild(d)});
-      const dots=[...document.querySelectorAll('.carrossel-dot')];
-      function render(){track.style.transform=`translateX(-${idx*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===idx))}
-      function go(i){idx=i;render()}
-      function prevFn(){idx=idx>0?idx-1:slides.length-1;render()}
-      function nextFn(){idx=idx<slides.length-1?idx+1:0;render()}
-      prev.addEventListener('click',prevFn);next.addEventListener('click',nextFn);
-      track.addEventListener('touchstart',e=>{startX=e.changedTouches[0].screenX},{passive:true});
-      track.addEventListener('touchend',e=>{endX=e.changedTouches[0].screenX;const d=startX-endX;if(d>50)nextFn();if(d<-50)prevFn()},{passive:true});
-    });
+  overlay.style.display = 'block';
+  popup.style.display = 'block';
+  setTimeout(() => { overlay.classList.add('active'); popup.classList.add('active'); }, 10);
 
-    // Contador regressivo
-    document.addEventListener('DOMContentLoaded',function(){
-      const saved=localStorage.getItem('countdownData');const dur=60*60;
-      if(saved){
-        const data=JSON.parse(saved);const now=Math.floor(Date.now()/1000);const rem=dur-(now-data.startTime);
-        if(rem>0){document.getElementById('countdownContainer').style.display='flex';startCountdown(rem)}
-        else {localStorage.removeItem('countdownData');showCountdownExpired()}
+  beneficiosBox.style.display = 'none';
+  resultadoFixo.style.display = 'none';
+
+  try {
+    const response = await fetch('https://instalacao-por-bairro-gps.vercel.app/bairros.json');
+    const data = await response.json();
+    const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    const resultado = data.find(e => norm(e.bairro) === norm(bairroInput));
+
+    if (resultado) {
+      botaoBairro.style.display = 'none';
+      botaoExtra.style.display = 'block';
+
+      const valorUnitario = parseFloat(resultado.valor.toString().replace(/[^0-9,.]/g, '').replace(',', '.')) || 0;
+      const valorInstalacao = valorUnitario * quantidade;
+      let valorMensal = 0;
+      let textoMensalidade = '';
+      let textoMensalidadeWhats = '';
+
+      if (tipo === 'com') {
+        const cheio = 59.90 * quantidade;
+        const desconto = 54.90 * quantidade;
+        valorMensal = desconto;
+        textoMensalidade = `R$ ${cheio.toFixed(2).replace('.', ',')} <span style="color:#16a34a;font-weight:700;">(R$ ${desconto.toFixed(2).replace('.', ',')} até o vencimento)</span>`;
+        textoMensalidadeWhats = `R$ ${cheio.toFixed(2).replace('.', ',')} (ou R$ ${desconto.toFixed(2).replace('.', ',')} até o vencimento)`;
       } else {
-        const start=Math.floor(Date.now()/1000);
-        localStorage.setItem('countdownData',JSON.stringify({startTime:start}));
-        document.getElementById('countdownContainer').style.display='flex';
-        startCountdown(dur)
+        valorMensal = 39.90 * quantidade;
+        textoMensalidade = `R$ ${valorMensal.toFixed(2).replace('.', ',')}`;
+        textoMensalidadeWhats = textoMensalidade;
+      }
+
+      const valorDiario = (valorMensal / 31).toFixed(2).replace('.', ',');
+      const textoMsg = `Olá! Gostaria de agendar minha instalação.\n\n📍 Endereço: ${bairroInput}\n🚗 Veículos: ${quantidade}\n🛰️ Tipo: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n💰 Instalação: R$ ${valorInstalacao.toFixed(2).replace('.', ',')}\n📅 Mensalidade: ${textoMensalidadeWhats}`;
+      const linkWhats = `https://wa.me/5521980886087?text=${encodeURIComponent(textoMsg)}`;
+
+      // Popup
+      document.getElementById('popup-title').textContent = 'Valor da Instalação';
+      document.getElementById('popup-header').style.background = 'linear-gradient(135deg,#0d3c61,#22c55e)';
+      document.getElementById('popup-content').innerHTML = `
+        <div class="popup-price-big">R$ ${valorInstalacao.toFixed(2).replace('.', ',')}</div>
+        <div class="popup-info">
+          <p>📍 <strong>Cidade:</strong> ${bairroInput}</p>
+          <p>🚗 <strong>Veículos:</strong> ${quantidade}</p>
+          <p>🛰️ <strong>Tipo:</strong> ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}</p>
+          <p>📅 <strong>Mensalidade:</strong> ${textoMensalidade}</p>
+        </div>
+        <ul class="popup-list">
+          <li>Instalação no seu endereço</li>
+          <li>Localização em tempo real</li>
+          <li>Histórico de rotas</li>
+          <li>App em até 5 telefones</li>
+        </ul>
+        <a href="${linkWhats}" class="btn-zap verde pulsando" target="_blank" style="margin-top:12px;">
+          <i class="fab fa-whatsapp"></i> Quero instalar meu rastreador!
+        </a>
+      `;
+
+      // Resultado fixo
+      document.getElementById('resPreco').textContent = `R$ ${valorInstalacao.toFixed(2).replace('.', ',')}`;
+      document.getElementById('resDetalhes').innerHTML = `
+        <p>📍 <strong>Endereço:</strong> ${bairroInput}</p>
+        <p>🚗 <strong>Veículos:</strong> ${quantidade}</p>
+        <p>🛰️ <strong>Tipo:</strong> ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}</p>
+        <p>📅 <strong>Mensalidade:</strong> ${textoMensalidade}</p>
+      `;
+      document.getElementById('resBotao').innerHTML = `
+        <a href="${linkWhats}" class="btn-zap verde pulsando" target="_blank">
+          <i class="fab fa-whatsapp"></i> Quero instalar meu rastreador!
+        </a>`;
+      resultadoFixo.style.display = 'block';
+
+      // Benefícios
+      beneficiosBox.innerHTML = `
+        <h3>Com instalação de R$ ${valorInstalacao.toFixed(2).replace('.', ',')} e apenas R$ ${valorDiario}/dia você garante:</h3>
+        <ul>
+          <li><strong>Instalação profissional</strong> no conforto da sua casa ou trabalho</li>
+          <li><strong>Localização em tempo real</strong> com atualizações a cada 30 segundos</li>
+          <li><strong>Histórico completo de rotas</strong> com até 90 dias de armazenamento</li>
+          <li><strong>Compartilhamento fácil</strong> — app em até 4 dispositivos</li>
+          <li><strong>Notificações</strong> de ignição, velocidade e muito mais</li>
+          <li><strong>Suporte 24h</strong> por WhatsApp para emergências</li>
+        </ul>`;
+      beneficiosBox.style.display = 'block';
+
+      botaoExtra.querySelector('a').href = linkWhats;
+
+    } else {
+      document.getElementById('popup-title').textContent = 'Bairro não encontrado';
+      document.getElementById('popup-header').style.background = '#dc2626';
+      document.getElementById('popup-content').innerHTML = `
+        <div style="font-size:52px;text-align:center;margin:16px 0;">❌</div>
+        <p style="color:#475569;text-align:center;">Bairro não encontrado. Verifique a digitação.</p>
+        <p style="color:#475569;text-align:center;font-size:13px;">Ex: São Cristóvão, Niterói, Duque de Caxias</p>
+        <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro." class="btn-zap vermelho pulsando" style="margin-top:16px;" target="_blank">
+          <i class="fab fa-whatsapp"></i> Falar com atendente
+        </a>`;
+      resultadoFixo.style.display = 'none';
+      beneficiosBox.style.display = 'none';
+      botaoBairro.style.display = 'block';
+      botaoExtra.style.display = 'none';
+    }
+  } catch(e) {
+    document.getElementById('popup-title').textContent = 'Erro na consulta';
+    document.getElementById('popup-header').style.background = '#dc2626';
+    document.getElementById('popup-content').innerHTML = `
+      <div style="font-size:52px;text-align:center;margin:16px 0;">⚠️</div>
+      <p style="color:#475569;text-align:center;">Erro ao consultar. Tente novamente.</p>
+      <a href="https://wa.me/5521980886087" class="btn-zap vermelho pulsando" style="margin-top:16px;" target="_blank">
+        <i class="fab fa-whatsapp"></i> Falar com atendente
+      </a>`;
+  }
+}
+
+// ── CARROSSEL UNIVERSAL ──
+function initTrack(trackId, dotsId, prevId, nextId, autoMs) {
+  const track = document.getElementById(trackId);
+  const slides = track.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById(dotsId);
+  let idx = 0, timer;
+
+  slides.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'tdot' + (i === 0 ? ' active' : '');
+    d.onclick = () => go(i);
+    dotsWrap.appendChild(d);
+  });
+
+  const dots = dotsWrap.querySelectorAll('.tdot');
+  function render() {
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+  function go(n) { idx = (n + slides.length) % slides.length; render(); }
+
+  document.getElementById(prevId).onclick = () => go(idx - 1);
+  document.getElementById(nextId).onclick = () => go(idx + 1);
+
+  if (autoMs) {
+    function startAuto() { timer = setInterval(() => go(idx + 1), autoMs); }
+    function stopAuto() { clearInterval(timer); }
+    track.parentElement.addEventListener('mouseenter', stopAuto);
+    track.parentElement.addEventListener('mouseleave', startAuto);
+    startAuto();
+  }
+
+  // Touch
+  let sx = 0;
+  track.addEventListener('touchstart', e => { sx = e.changedTouches[0].screenX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const d = sx - e.changedTouches[0].screenX;
+    if (d > 40) go(idx + 1);
+    if (d < -40) go(idx - 1);
+  }, { passive: true });
+}
+
+// ── CARROSSEL SIMPLES (RECUPERAÇÕES) ──
+function initSimpleCarousel(id, ms) {
+  const imgs = document.querySelectorAll(`#${id} img`);
+  let i = 0;
+  setInterval(() => {
+    imgs[i].classList.remove('active');
+    i = (i + 1) % imgs.length;
+    imgs[i].classList.add('active');
+  }, ms);
+}
+
+// ── COUNTDOWN ──
+function initCountdown() {
+  const dur = 60 * 60;
+  const saved = localStorage.getItem('countdownData');
+  const box = document.getElementById('countdownContainer');
+  let rem = dur;
+  if (saved) {
+    const data = JSON.parse(saved);
+    const now = Math.floor(Date.now() / 1000);
+    rem = dur - (now - data.startTime);
+    if (rem <= 0) { localStorage.removeItem('countdownData'); showExpired(); return; }
+  } else {
+    localStorage.setItem('countdownData', JSON.stringify({ startTime: Math.floor(Date.now() / 1000) }));
+  }
+  box.classList.add('show');
+  startCountdown(rem);
+}
+
+function startCountdown(t) {
+  let left = t;
+  const el = document.getElementById('countdown');
+  const timer = setInterval(() => {
+    const m = Math.floor(left / 60), s = Math.floor(left % 60);
+    el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    if (left <= 0) { clearInterval(timer); showExpired(); localStorage.removeItem('countdownData'); }
+    else left--;
+  }, 1000);
+}
+
+function showExpired() {
+  const el = document.getElementById('countdown');
+  if (el) el.parentElement.innerHTML = '<strong style="color:#dc2626">TEMPO ESGOTADO!</strong><br><small>Entre em contato para novas promoções</small>';
+}
+
+// ── FAQ ──
+function initFAQ() {
+  const faqs = [
+    ['Tem fidelidade ou multa pra cancelar?','❌ Não temos fidelidade. Pode cancelar quando quiser, sem multa.'],
+    ['O app funciona em Android e iPhone?','📱 Sim! Disponível para Android e iPhone.'],
+    ['Posso compartilhar o rastreador com a família?','👨‍👩‍👧‍👦 Sim! Instale o app em outro celular e use o mesmo login.'],
+    ['O rastreador funciona com o carro desligado?','✅ Sim! Mesmo com o carro parado, a localização continua sendo transmitida.'],
+    ['Tem alerta quando ligam o carro?','🚨 Sim! Você recebe notificação assim que a ignição for ligada.'],
+    ['Posso instalar em carro de aplicativo ou alugado?','🚗 Sim! Só precisa de autorização do responsável.'],
+    ['O equipamento é meu?','📦 O rastreador é em comodato (emprestado). Caso cancele, é só devolver.'],
+    ['Posso mudar o vencimento do boleto?','🗓️ Sim! Escolha entre dia 15 ou 20 para vencimento.'],
+    ['Funciona em qualquer lugar do estado do RJ?','📍 Sim! Instalamos em qualquer bairro do Rio de Janeiro.'],
+    ['Serve pra motos, vans ou caminhões?','🏍️ Sim! Instalamos em veículos de todos os portes.'],
+    ['Funciona fora do estado?','🌎 Sim! Você acompanha pelo app de qualquer lugar, desde que o carro esteja no Brasil.'],
+    ['Tem histórico de rotas?','🕒 Sim! Até 90 dias de histórico no app.'],
+    ['É possível acessar pelo computador?','💻 Sim! Use a versão web em rastreamento.ong.br'],
+    ['Interfere no carro?','🔧 Não! O rastreador é seguro e não afeta a mecânica.'],
+    ['Como recebo os boletos?','💬 Enviamos por WhatsApp com antecedência. Pode pedir por e-mail também!'],
+    ['Funciona sem internet no carro?','📶 Sim! Usa chip M2M. Você só precisa de internet no celular para usar o app.'],
+    ['A instalação é rápida?','⏱️ Em média 60 minutos, feita no local que você escolher.'],
+    ['Aceita cartão de crédito?','💳 Instalação pode ser paga no cartão. Mensalidade por boleto ou Pix.'],
+    ['Rastrear mais de um veículo?','📱 Sim! Você pode monitorar vários veículos na mesma conta.'],
+    ['O equipamento é visível?','🕵️‍♂️ Não! É discreto e instalado de forma escondida.']
+  ];
+
+  const root = document.getElementById('faqRoot');
+  faqs.forEach(([q, a]) => {
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    item.innerHTML = `
+      <button class="faq-q"><span>${q}</span><div class="faq-icon">+</div></button>
+      <div class="faq-answer"><p>${a}</p></div>`;
+    root.appendChild(item);
+  });
+
+  root.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('active');
+      root.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('active');
+        el.querySelector('.faq-answer').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('active');
+        item.querySelector('.faq-answer').style.maxHeight = item.querySelector('.faq-answer').scrollHeight + 'px';
       }
     });
-    
-    function startCountdown(t){
-      let timeLeft=t;
-      const el=document.getElementById('countdown');
-      const timer=setInterval(()=>{
-        const m=Math.floor(timeLeft/60);
-        const s=Math.floor(timeLeft%60);
-        el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-        if(timeLeft<=0){
-          clearInterval(timer);
-          showCountdownExpired();
-          localStorage.removeItem('countdownData')
-        } else {
-          timeLeft--
-        }
-      },1000)
-    }
-    
-    function showCountdownExpired(){
-      const el=document.getElementById('countdown');
-      el.parentElement.innerHTML='<strong style="color:#e74c3c;">TEMPO ESGOTADO!</strong><br><small>Entre em contato para verificar novas promoções</small>'
-    }
+  });
+}
 
-    // FAQ
-    document.addEventListener('DOMContentLoaded',function(){
-      const faqs=[
-        ['Tem fidelidade ou multa pra cancelar?','❌ Não temos fidelidade. Pode cancelar quando quiser, sem multa.'],
-        ['O app funciona em Android e iPhone?','📱 Sim! 👉 Android e 👉 iPhone'],
-        ['Posso compartilhar o rastreador com a família?','👨‍👩‍👧‍👦 Sim! Instale o app em outro celular e use o mesmo login.'],
-        ['O rastreador funciona com o carro desligado?','✅ Sim! Mesmo com o carro parado, a localização continua sendo transmitida.'],
-        ['Tem alerta quando ligam o carro?','🚨 Sim! Você recebe notificação assim que a ignição for ligada.'],
-        ['Posso instalar em carro de aplicativo ou alugado?','🚗 Sim! Só precisa de autorização do responsável.'],
-        ['O equipamento é meu?','📦 O rastreador é em comodato (emprestado). Caso cancele, é só devolver.'],
-        ['Posso mudar o vencimento do boleto?','🗓️ Sim! Escolha entre dia 15 ou 20 para vencimento.'],
-        ['Funciona em qualquer lugar do estado do RJ?','📍 Sim! Instalamos em qualquer bairro do Rio de Janeiro.'],
-        ['Serve pra motos, vans ou caminhões?','🏍️🚌🚚 Sim! Instalamos em veículos de todos os portes.'],
-        ['Funciona fora do estado ou do país?','🌎 Sim! Você acompanha pelo app de qualquer lugar, desde que o carro esteja no Brasil.'],
-        ['Tem histórico de rotas?','🕒 Sim! Você pode ver até 90 dias de histórico no app.'],
-        ['É possível acessar pelo computador?','💻 Sim! Use a versão web em Plataforma Web.'],
-        ['Interfere no carro?','🔧 Não! O rastreador é seguro e não afeta a mecânica.'],
-        ['Como recebo os boletos?','💬 Enviamos por WhatsApp com antecedência. Pode pedir por e-mail também!'],
-        ['Funciona sem internet no carro?','📶 Sim! Usa chip M2M. Você só precisa de internet no celular para usar o app.'],
-        ['Posso bloquear com o veículo em movimento?','🚫 Pode, mas recomendamos bloquear com o veículo parado por segurança.'],
-        ['Instalação em garagem?','🏠 Instalamos onde for melhor pra você: casa, trabalho, garagem ou rua.'],
-        ['A instalação é rápida?','⏱️ Em média 60 minutos, feita no local que você escolher.'],
-        ['Tem promoção ativa?','💰 Sim! Com pagamento em dia, a mensalidade com bloqueio sai por R$59,90.'],
-        ['Aceita cartão de crédito?','💳 Instalação pode ser paga no cartão. Mensalidade por boleto ou Pix.'],
-        ['Rastrear mais de um veículo?','📱 Sim! Você pode monitorar vários veículos na mesma conta.'],
-        ['Posso mover o rastreador para outro carro?','🔄 Sim! É só avisar que agendamos a troca.'],
-        ['O equipamento é visível?','🕵️‍♂️ Não! É discreto e instalado de forma escondida.']
-      ];
-      
-      const root=document.getElementById('faqRoot');
-      faqs.forEach(([q,a])=>{
-        const item=document.createElement('div');
-        item.className='faq-item';
-        item.innerHTML=`
-          <div class='faq-question'>
-            <span>${q}</span>
-            <div class='faq-icon'>+</div>
-          </div>
-          <div class='faq-answer'>
-            <p>${a}</p>
-          </div>
-        `;
-       root.appendChild(item);
-      });
+// ── FADE UP ──
+function initFadeUp() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+}
 
-      // NOVO CÓDIGO - Mantém perguntas visíveis ao expandir
-      root.querySelectorAll('.faq-question').forEach(question => {
-        question.addEventListener('click', (e) => {
-          const item = question.parentElement;
-          const isActive = item.classList.contains('active');
-          
-          // Fecha outras respostas
-          root.querySelectorAll('.faq-item').forEach(el => {
-            if (el !== item) el.classList.remove('active');
-          });
-          
-          // Alterna apenas a resposta clicada
-          item.classList.toggle('active', !isActive);
-          
-          // Evita que o evento propague (opcional)
-          e.stopPropagation();
-        });
-      });
-    });
-  </script>
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  initSimpleCarousel('carousel', 2000);
+  initTrack('inst-track', 'inst-dots', 'inst-prev', 'inst-next', 2200);
+  initTrack('depo-track', 'depo-dots', 'depo-prev', 'depo-next', 0);
+  initCountdown();
+  initFAQ();
+  initFadeUp();
+});
+</script>
 
-  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  <script>
-    particlesJS('particles-js',{
-      particles:{
-        number:{value:40},
-        color:{value:['#22c55e','#0ea5e9']},
-        shape:{type:'circle'},
-        opacity:{value:.25},
-        size:{value:3},
-        line_linked:{
-          enable:true,
-          distance:150,
-          color:'#22c55e',
-          opacity:.25,
-          width:1
-        },
-        move:{enable:true,speed:1}
+<!-- Particles.js mantido para compatibilidade -->
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+  if (typeof particlesJS !== 'undefined') {
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 30 },
+        color: { value: ['#22c55e','#0ea5e9'] },
+        shape: { type: 'circle' },
+        opacity: { value: 0.2 },
+        size: { value: 2.5 },
+        line_linked: { enable: true, distance: 150, color: '#22c55e', opacity: 0.15, width: 1 },
+        move: { enable: true, speed: 0.8 }
       },
-      interactivity:{
-        detect_on:'canvas',
-        events:{
-          onhover:{enable:false},
-          onclick:{enable:false}
-        }
-      },
-      retina_detect:true
+      interactivity: { detect_on: 'canvas', events: { onhover: { enable: false }, onclick: { enable: false } } },
+      retina_detect: true
     });
-  </script>
+  }
+</script>
+
 </body>
 </html>
