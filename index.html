@@ -296,51 +296,24 @@
       box-shadow: 0 0 0 3px rgba(34,197,94,0.12), 0 0 20px rgba(34,197,94,0.15);
     }
 
-    /* Botão neon — preenchido e claramente clicável */
+    /* Botão igual ao nav-cta do header — verde cheio */
     .form-btn {
-      width: 100%; padding: 17px 20px;
-      background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(14,165,233,0.12));
-      border: 2px solid var(--green);
-      border-radius: 12px;
+      width: 100%; padding: 15px 20px;
+      background: linear-gradient(90deg, var(--green), #39e08a);
+      border: none; border-radius: 12px;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 19px; font-weight: 900; letter-spacing: 1px;
+      font-size: 20px; font-weight: 800; letter-spacing: 0.5px;
       cursor: pointer; margin-top: 10px;
-      color: #fff;
+      color: #052b18;
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      text-shadow: 0 0 14px rgba(34,197,94,0.7);
-      box-shadow:
-        0 0 20px rgba(34,197,94,0.25),
-        0 4px 20px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-      transition: all 0.3s;
-      position: relative; overflow: hidden;
-    }
-    .form-btn .btn-icon {
-      width: 32px; height: 32px; border-radius: 8px;
-      background: rgba(34,197,94,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; flex-shrink: 0;
-      border: 1px solid rgba(34,197,94,0.35);
-    }
-    .form-btn::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.6s;
+      box-shadow: 0 4px 20px rgba(34,197,94,0.35);
+      transition: all 0.2s;
     }
     .form-btn:hover {
-      background: linear-gradient(135deg, rgba(34,197,94,0.3), rgba(14,165,233,0.2));
-      border-color: #4ade80;
-      box-shadow:
-        0 0 35px rgba(34,197,94,0.45),
-        0 0 70px rgba(34,197,94,0.15),
-        0 6px 24px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.12);
-      transform: translateY(-3px);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(34,197,94,0.5);
     }
-    .form-btn:hover::before { transform: translateX(100%); }
-    .form-btn:active { transform: translateY(-1px); }
+    .form-btn:active { transform: translateY(0px); }
 
     /* Countdown neon */
     .countdown-box {
@@ -856,8 +829,7 @@
         </div>
 
         <button class="form-btn" onclick="verValor()">
-          <span class="btn-icon"><i class="fas fa-satellite-dish"></i></span>
-          VER VALOR DA INSTALAÇÃO
+          <i class="fas fa-calculator"></i> CALCULAR VALOR DA INSTALAÇÃO
         </button>
 
         <div class="countdown-box" id="countdownContainer">
@@ -873,7 +845,7 @@
 
     <!-- Bairro não encontrado -->
     <div id="botaoBairroNaoEncontrado">
-      <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro.%20Pode%20me%20ajudar%3F"
+      <a href="https://wa.me/5521980886087?text=Ol%C3%A1%2C%20n%C3%A3o%20encontrei%20meu%20bairro.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
          class="btn-zap vermelho pulsando" target="_blank">
         <i class="fab fa-whatsapp"></i> Não encontrei meu bairro — falar com atendente
       </a>
@@ -1291,7 +1263,7 @@ async function verValor() {
         <div style="font-size:52px;text-align:center;margin:16px 0;">❌</div>
         <p style="color:#475569;text-align:center;">Bairro não encontrado. Verifique a digitação.</p>
         <p style="color:#475569;text-align:center;font-size:13px;">Ex: São Cristóvão, Niterói, Duque de Caxias</p>
-        <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20encontrei%20meu%20bairro." class="btn-zap vermelho pulsando" style="margin-top:16px;" target="_blank">
+        <a href="https://wa.me/5521980886087?text=Ol%C3%A1%2C%20n%C3%A3o%20encontrei%20meu%20bairro.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="btn-zap vermelho pulsando" style="margin-top:16px;" target="_blank">
           <i class="fab fa-whatsapp"></i> Falar com atendente
         </a>`;
       resultadoFixo.style.display = 'none';
