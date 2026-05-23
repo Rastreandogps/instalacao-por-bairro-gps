@@ -246,74 +246,101 @@
       transition: color 0.3s;
     }
 
-    .form-wrap input,
-    .form-wrap select {
+    .form-wrap input {
       width: 100%; padding: 14px 16px 14px 42px;
-      border: 1px solid rgba(34,197,94,0.2);
+      border: 1px solid rgba(34,197,94,0.25);
       border-radius: 12px; font-size: 15px;
       font-family: 'Barlow', sans-serif;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.05);
       color: var(--white);
       transition: all 0.3s;
       box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
-      -webkit-appearance: none;
+    }
+    .form-wrap input::placeholder { color: rgba(126,153,188,0.55); }
+    .form-wrap input:focus {
+      outline: none;
+      border-color: rgba(34,197,94,0.7);
+      background: rgba(34,197,94,0.06);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.12), 0 0 20px rgba(34,197,94,0.15);
+      color: #fff;
+    }
+
+    /* Select customizado com seta visível */
+    .select-wrapper {
+      position: relative; margin-bottom: 16px;
+    }
+    .select-wrapper .form-field-icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: rgba(34,197,94,0.6); font-size: 15px; z-index: 2; pointer-events: none;
+    }
+    .select-arrow {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: rgba(34,197,94,0.7); font-size: 13px; pointer-events: none; z-index: 2;
+    }
+    .form-wrap select {
+      width: 100%; padding: 14px 40px 14px 42px;
+      border: 1px solid rgba(34,197,94,0.25);
+      border-radius: 12px; font-size: 15px;
+      font-family: 'Barlow', sans-serif;
+      background: rgba(255,255,255,0.05);
+      color: var(--white);
+      transition: all 0.3s;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+      -webkit-appearance: none; appearance: none; cursor: pointer;
     }
     .form-wrap select option { background: #0c1628; color: #eaf4ff; }
-
-    .form-wrap input::placeholder { color: rgba(126,153,188,0.6); }
-
-    .form-wrap input:focus,
     .form-wrap select:focus {
       outline: none;
       border-color: rgba(34,197,94,0.7);
-      background: rgba(34,197,94,0.05);
-      box-shadow:
-        0 0 0 3px rgba(34,197,94,0.12),
-        0 0 20px rgba(34,197,94,0.15),
-        inset 0 1px 3px rgba(0,0,0,0.2);
-      color: #fff;
-    }
-    .form-wrap input:focus + .form-field-icon,
-    .form-wrap select:focus + .form-field-icon {
-      color: var(--green);
+      background: rgba(34,197,94,0.06);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.12), 0 0 20px rgba(34,197,94,0.15);
     }
 
-    /* Botão neon */
+    /* Botão neon — preenchido e claramente clicável */
     .form-btn {
-      width: 100%; padding: 17px;
-      background: transparent;
-      border: 1.5px solid rgba(34,197,94,0.7);
+      width: 100%; padding: 17px 20px;
+      background: linear-gradient(135deg, rgba(34,197,94,0.18), rgba(14,165,233,0.12));
+      border: 2px solid var(--green);
       border-radius: 12px;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 20px; font-weight: 900; letter-spacing: 1px;
-      cursor: pointer; margin-top: 8px;
-      color: var(--green);
-      text-shadow: 0 0 12px rgba(34,197,94,0.8);
+      font-size: 19px; font-weight: 900; letter-spacing: 1px;
+      cursor: pointer; margin-top: 10px;
+      color: #fff;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      text-shadow: 0 0 14px rgba(34,197,94,0.7);
       box-shadow:
-        0 0 15px rgba(34,197,94,0.2),
-        inset 0 0 15px rgba(34,197,94,0.05);
+        0 0 20px rgba(34,197,94,0.25),
+        0 4px 20px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.08);
       transition: all 0.3s;
       position: relative; overflow: hidden;
+    }
+    .form-btn .btn-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(34,197,94,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; flex-shrink: 0;
+      border: 1px solid rgba(34,197,94,0.35);
     }
     .form-btn::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
       transform: translateX(-100%);
-      transition: transform 0.5s;
+      transition: transform 0.6s;
     }
     .form-btn:hover {
-      background: rgba(34,197,94,0.12);
-      border-color: var(--green);
-      color: #fff;
-      text-shadow: 0 0 20px rgba(34,197,94,1);
+      background: linear-gradient(135deg, rgba(34,197,94,0.3), rgba(14,165,233,0.2));
+      border-color: #4ade80;
       box-shadow:
-        0 0 30px rgba(34,197,94,0.4),
-        0 0 60px rgba(34,197,94,0.15),
-        inset 0 0 20px rgba(34,197,94,0.1);
-      transform: translateY(-2px);
+        0 0 35px rgba(34,197,94,0.45),
+        0 0 70px rgba(34,197,94,0.15),
+        0 6px 24px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+      transform: translateY(-3px);
     }
     .form-btn:hover::before { transform: translateX(100%); }
+    .form-btn:active { transform: translateY(-1px); }
 
     /* Countdown neon */
     .countdown-box {
@@ -810,25 +837,27 @@
         <h2 class="form-title">📍 Consulte o valor da instalação</h2>
 
         <div class="form-field">
-          <input type="text" id="bairroInput" placeholder="Sua cidade ou bairro no RJ">
+          <input type="text" id="bairroInput" placeholder="Digite sua cidade ou bairro no RJ">
           <i class="fas fa-map-marker-alt form-field-icon"></i>
         </div>
 
         <div class="form-field">
-          <input type="number" id="quantidadeInput" placeholder="Quantidade de veículos" min="1">
+          <input type="number" id="quantidadeInput" placeholder="Digite a quantidade de veículos" min="1">
           <i class="fas fa-car form-field-icon"></i>
         </div>
 
-        <div class="form-field">
+        <div class="select-wrapper">
+          <i class="fas fa-shield-alt form-field-icon"></i>
           <select id="tipoRastreador">
             <option value="com">Com bloqueio</option>
             <option value="sem">Sem bloqueio</option>
           </select>
-          <i class="fas fa-shield-alt form-field-icon"></i>
+          <i class="fas fa-chevron-down select-arrow"></i>
         </div>
 
         <button class="form-btn" onclick="verValor()">
-          <i class="fas fa-satellite-dish"></i> &nbsp;VER VALOR DA INSTALAÇÃO
+          <span class="btn-icon"><i class="fas fa-satellite-dish"></i></span>
+          VER VALOR DA INSTALAÇÃO
         </button>
 
         <div class="countdown-box" id="countdownContainer">
