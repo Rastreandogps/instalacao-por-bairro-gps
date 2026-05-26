@@ -195,10 +195,7 @@
       position: absolute; left: 14px; bottom: 16px;
       color: rgba(34,197,94,0.6); font-size: 15px; z-index: 2;
     }
-    /* quando tem hint embaixo, o ícone precisa subir um pouco */
-    .form-field.with-hint .form-field-icon {
-      bottom: 34px;
-    }
+    .form-field.with-hint .form-field-icon { bottom: 34px; }
     .form-wrap input {
       width: 100%; padding: 14px 16px 14px 42px;
       border: 1px solid rgba(34,197,94,0.25);
@@ -272,7 +269,7 @@
     .btn-zap-help:hover { transform: translateY(-2px); }
 
     /* ─── RESULTADO ─── */
-    .resultado-section { display: none; padding: 20px 0 60px; }
+    .resultado-section { display: none; padding: 20px 0 30px; }
     .resultado-section.show { display: block; }
     .resultado-card {
       max-width: 480px; margin: 0 auto;
@@ -334,6 +331,267 @@
       cursor: pointer; transition: all 0.2s;
     }
     .voltar-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
+
+    /* ═══════════════════════════════════════════════════════════
+       📲 SEÇÃO DOWNLOAD DO APP — Cards premium
+       ═══════════════════════════════════════════════════════════ */
+    .app-download-section {
+      padding: 50px 0 30px;
+      position: relative;
+    }
+    .app-download-section::before {
+      content: '';
+      display: block;
+      width: 100%;
+      max-width: 320px;
+      height: 1px;
+      margin: 0 auto 40px;
+      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.4), transparent);
+    }
+    .app-download-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .app-download-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(14,165,233,0.08);
+      border: 1px solid rgba(14,165,233,0.3);
+      color: #7dd3fc;
+      padding: 6px 16px; border-radius: 50px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .app-download-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 900; line-height: 1.1;
+      color: #fff;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .app-download-header p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .app-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .app-card {
+      position: relative;
+      background: linear-gradient(160deg, rgba(17,29,48,0.95), rgba(7,13,24,0.95));
+      border-radius: 20px;
+      padding: 28px 24px;
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .app-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 20px;
+      padding: 1.5px;
+      background: linear-gradient(135deg, transparent, transparent);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      transition: background 0.35s;
+      pointer-events: none;
+    }
+    .app-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* Variação por tipo */
+    .app-card.android::before {
+      background: linear-gradient(135deg, #34a853, #4285f4, #34a853);
+    }
+    .app-card.android:hover { box-shadow: 0 20px 50px rgba(52,168,83,0.25); }
+    .app-card.android .app-card-icon-wrap {
+      background: linear-gradient(135deg, rgba(52,168,83,0.15), rgba(66,133,244,0.1));
+      border-color: rgba(52,168,83,0.4);
+    }
+    .app-card.android .app-card-store small { color: #86efac; }
+    .app-card.android .app-card-btn {
+      background: linear-gradient(135deg, #34a853, #2d8e47);
+      box-shadow: 0 8px 22px rgba(52,168,83,0.35);
+    }
+    .app-card.android .app-card-btn:hover { box-shadow: 0 12px 28px rgba(52,168,83,0.5); }
+
+    .app-card.iphone::before {
+      background: linear-gradient(135deg, #6b7280, #1f2937, #6b7280);
+    }
+    .app-card.iphone:hover { box-shadow: 0 20px 50px rgba(107,114,128,0.3); }
+    .app-card.iphone .app-card-icon-wrap {
+      background: linear-gradient(135deg, rgba(107,114,128,0.18), rgba(31,41,55,0.2));
+      border-color: rgba(156,163,175,0.4);
+    }
+    .app-card.iphone .app-card-store small { color: #d1d5db; }
+    .app-card.iphone .app-card-btn {
+      background: linear-gradient(135deg, #1f2937, #000);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.5);
+    }
+    .app-card.iphone .app-card-btn:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.7); }
+
+    .app-card.web::before {
+      background: linear-gradient(135deg, var(--blue), #6366f1, var(--blue));
+    }
+    .app-card.web:hover { box-shadow: 0 20px 50px rgba(14,165,233,0.3); }
+    .app-card.web .app-card-icon-wrap {
+      background: linear-gradient(135deg, rgba(14,165,233,0.18), rgba(99,102,241,0.12));
+      border-color: rgba(14,165,233,0.4);
+    }
+    .app-card.web .app-card-store small { color: #7dd3fc; }
+    .app-card.web .app-card-btn {
+      background: linear-gradient(135deg, var(--blue), #2563eb);
+      box-shadow: 0 8px 22px rgba(14,165,233,0.35);
+    }
+    .app-card.web .app-card-btn:hover { box-shadow: 0 12px 28px rgba(14,165,233,0.5); }
+
+    .app-card-icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 18px;
+      border: 1px solid;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      font-size: 36px;
+    }
+    .app-card-icon-wrap i { color: #fff; }
+    .app-card.android .app-card-icon-wrap i { color: #34a853; }
+    .app-card.iphone .app-card-icon-wrap i { color: #e5e7eb; }
+    .app-card.web .app-card-icon-wrap i { color: var(--blue); }
+
+    .app-card-store {
+      margin-bottom: 12px;
+    }
+    .app-card-store small {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .app-card-store strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .app-card-rating {
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 16px;
+    }
+    .app-card-stars {
+      color: #fbbf24;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    .app-card-rating-text {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .app-card-rating-text strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .app-card-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 22px 0;
+      flex: 1;
+    }
+    .app-card-features li {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 5px 0 5px 22px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .app-card-features li::before {
+      content: '✓';
+      position: absolute; left: 0; top: 5px;
+      color: var(--green);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .app-card-btn {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      color: #fff;
+      border-radius: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 800; letter-spacing: 0.4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: all 0.25s;
+    }
+    .app-card-btn:hover { transform: translateY(-2px); }
+    .app-card-btn i { font-size: 14px; }
+
+    /* Footer da seção */
+    .app-download-footer {
+      text-align: center;
+      margin-top: 32px;
+      padding: 18px;
+      background: rgba(34,197,94,0.04);
+      border: 1px dashed rgba(34,197,94,0.2);
+      border-radius: 12px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .app-download-footer p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .app-download-footer strong {
+      color: #d1fae5;
+    }
+
+    /* Responsivo */
+    @media (max-width: 860px) {
+      .app-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 700px;
+      }
+      .app-card.web {
+        grid-column: span 2;
+        max-width: 380px;
+        margin: 0 auto;
+        width: 100%;
+      }
+    }
+    @media (max-width: 560px) {
+      .app-cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        gap: 18px;
+      }
+      .app-card.web { grid-column: span 1; }
+      .app-card { padding: 24px 22px; }
+    }
 
     /* ─── FOOTER ─── */
     footer {
@@ -454,6 +712,100 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════════════════
+     📲 SEÇÃO DOWNLOAD DO APP — sempre visível
+     ═══════════════════════════════════════════════════════ -->
+<section class="app-download-section">
+  <div class="container">
+
+    <div class="app-download-header">
+      <div class="app-download-badge">
+        <i class="fas fa-mobile-alt"></i> Acesse de qualquer lugar
+      </div>
+      <h2>📲 Baixe o app de rastreamento</h2>
+      <p>Acompanhe seu veículo em tempo real, receba alertas e tenha o histórico de rotas na palma da sua mão.</p>
+    </div>
+
+    <div class="app-cards-grid">
+
+      <!-- ── ANDROID ── -->
+      <div class="app-card android">
+        <div class="app-card-icon-wrap">
+          <i class="fab fa-google-play"></i>
+        </div>
+        <div class="app-card-store">
+          <small>Disponível no</small>
+          <strong>Google Play</strong>
+        </div>
+        <div class="app-card-rating">
+          <span class="app-card-stars">★★★★★</span>
+          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+        </div>
+        <ul class="app-card-features">
+          <li>Localização em tempo real</li>
+          <li>Alertas de ignição</li>
+          <li>Histórico de rotas</li>
+        </ul>
+        <a href="https://play.google.com/store/apps/details?id=br.com.nobgps" target="_blank" rel="noopener" class="app-card-btn">
+          <i class="fas fa-download"></i> Baixar Grátis
+        </a>
+      </div>
+
+      <!-- ── IPHONE ── -->
+      <div class="app-card iphone">
+        <div class="app-card-icon-wrap">
+          <i class="fab fa-apple"></i>
+        </div>
+        <div class="app-card-store">
+          <small>Baixe na</small>
+          <strong>App Store</strong>
+        </div>
+        <div class="app-card-rating">
+          <span class="app-card-stars">★★★★★</span>
+          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+        </div>
+        <ul class="app-card-features">
+          <li>Localização em tempo real</li>
+          <li>Alertas de ignição</li>
+          <li>Histórico de rotas</li>
+        </ul>
+        <a href="https://apps.apple.com/br/app/nobgps-2-0/id6739852876" target="_blank" rel="noopener" class="app-card-btn">
+          <i class="fas fa-download"></i> Baixar Grátis
+        </a>
+      </div>
+
+      <!-- ── WEB ── -->
+      <div class="app-card web">
+        <div class="app-card-icon-wrap">
+          <i class="fas fa-desktop"></i>
+        </div>
+        <div class="app-card-store">
+          <small>Acesse pelo</small>
+          <strong>Computador</strong>
+        </div>
+        <div class="app-card-rating">
+          <span class="app-card-stars">★★★★★</span>
+          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+        </div>
+        <ul class="app-card-features">
+          <li>Mesmo login do app</li>
+          <li>Tela ampla com mais detalhes</li>
+          <li>Acesso 24h</li>
+        </ul>
+        <a href="http://web.nobgps.com.br" target="_blank" rel="noopener" class="app-card-btn">
+          <i class="fas fa-external-link-alt"></i> Acessar Agora
+        </a>
+      </div>
+
+    </div>
+
+    <div class="app-download-footer">
+      <p>💡 <strong>Dica:</strong> Use o mesmo login em todos os dispositivos. Pode instalar em até <strong>5 telefones</strong> diferentes da mesma família.</p>
+    </div>
+
+  </div>
+</section>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">Rastreando GPS · Soluções em Rastreamento Veicular</div>
@@ -468,25 +820,18 @@
 </a>
 
 <script>
-  // ============================================================
-  // URL do Apps Script da planilha
-  // ============================================================
   const API_URL = 'https://script.google.com/macros/s/AKfycbyfbcFd9regTffvLjLKweoA7ESZpWH0yVScBmqbndLdfrYcXOCQtcjVwoTvfofGoCBv/exec';
-  // ============================================================
 
   const docInput = document.getElementById('docInput');
   const celInput = document.getElementById('celInput');
 
-  // Máscara inteligente: aplica CPF ou CNPJ conforme a quantidade de dígitos
   docInput.addEventListener('input', e => {
     let v = e.target.value.replace(/\D/g, '').slice(0, 14);
     if (v.length <= 11) {
-      // CPF: 000.000.000-00
       v = v.replace(/(\d{3})(\d)/, '$1.$2')
            .replace(/(\d{3})(\d)/, '$1.$2')
            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     } else {
-      // CNPJ: 00.000.000/0000-00
       v = v.replace(/^(\d{2})(\d)/, '$1.$2')
            .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
            .replace(/\.(\d{3})(\d)/, '.$1/$2')
@@ -532,7 +877,6 @@
     const doc = docInput.value.replace(/\D/g, '');
     const cel = celInput.value.replace(/\D/g, '');
 
-    // Aceita CPF (11) ou CNPJ (14)
     if (doc.length !== 11 && doc.length !== 14) {
       mostrarErro('CPF ou CNPJ inválido', 'Digite os 11 dígitos do CPF ou os 14 do CNPJ.');
       return;
