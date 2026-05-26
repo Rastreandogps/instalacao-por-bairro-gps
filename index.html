@@ -71,6 +71,24 @@
       width: 36px; height: 36px; border-radius: 9px; object-fit: contain;
       filter: drop-shadow(0 0 8px rgba(34,197,94,0.4));
     }
+    .nav-actions {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .nav-area-cliente {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--white); text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.3px;
+      padding: 8px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: all 0.2s;
+    }
+    .nav-area-cliente:hover {
+      background: rgba(34,197,94,0.1);
+      border-color: rgba(34,197,94,0.5);
+      transform: translateY(-2px);
+    }
+    .nav-area-cliente i { font-size: 14px; color: var(--green); }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
       background: linear-gradient(90deg, var(--green), #39e08a);
@@ -80,6 +98,12 @@
       text-decoration: none; transition: all 0.2s;
     }
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.35); }
+
+    /* Esconde texto "Área do Cliente" em telas muito pequenas, mantém só o ícone */
+    @media (max-width: 540px) {
+      .nav-area-cliente .label-area { display: none; }
+      .nav-area-cliente { padding: 8px 12px; }
+    }
 
     /* ─── SEÇÕES BASE ─── */
     .section { padding: 64px 0; }
@@ -143,7 +167,6 @@
     .simple-carousel img.active { display: block; }
 
     /* ─── FORMULÁRIO ─── */
-    /* ── FORM NEON FLUTUANTE ── */
     .form-section { padding: 32px 0 48px; }
 
     .form-scene {
@@ -185,7 +208,6 @@
       50%       { transform: rotateX(1deg) rotateY(1deg) translateY(-8px); }
     }
 
-    /* Borda neon animada */
     .form-wrap::before {
       content: '';
       position: absolute; inset: -1px;
@@ -209,7 +231,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Reflexo de luz no topo */
     .form-wrap::after {
       content: '';
       position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
@@ -236,7 +257,6 @@
       box-shadow: 0 0 10px rgba(34,197,94,0.8), 0 0 20px rgba(34,197,94,0.4);
     }
 
-    /* Label flutuante acima dos campos */
     .form-field {
       position: relative; margin-bottom: 16px;
     }
@@ -265,7 +285,6 @@
       color: #fff;
     }
 
-    /* Select customizado com seta visível */
     .select-wrapper {
       position: relative; margin-bottom: 16px;
     }
@@ -296,7 +315,6 @@
       box-shadow: 0 0 0 3px rgba(34,197,94,0.12), 0 0 20px rgba(34,197,94,0.15);
     }
 
-    /* Botão igual ao nav-cta do header — verde cheio */
     .form-btn {
       width: 100%; padding: 15px 20px;
       background: linear-gradient(90deg, var(--green), #39e08a);
@@ -315,7 +333,6 @@
     }
     .form-btn:active { transform: translateY(0px); }
 
-    /* Countdown neon */
     .countdown-box {
       display: none; margin-top: 18px;
       background: rgba(251,191,36,0.06);
@@ -762,7 +779,6 @@
 </head>
 <body>
 
-<!-- Partículas (mantido por compatibilidade) -->
 <div id="particles-js"></div>
 
 <!-- ─── HEADER ─── -->
@@ -772,9 +788,14 @@
       <img src="Logo/Logo1.png" alt="Rastreando GPS">
       Rastreando GPS
     </a>
-    <a class="nav-cta" href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20agendar%20minha%20instala%C3%A7%C3%A3o." target="_blank" rel="noopener">
-      <i class="fab fa-whatsapp"></i> Agendar instalação
-    </a>
+    <div class="nav-actions">
+      <a class="nav-area-cliente" href="area-cliente.html" title="Área do Cliente">
+        <i class="fas fa-user-circle"></i> <span class="label-area">Área do Cliente</span>
+      </a>
+      <a class="nav-cta" href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20agendar%20minha%20instala%C3%A7%C3%A3o." target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i> Agendar instalação
+      </a>
+    </div>
   </div>
 </header>
 
@@ -843,7 +864,6 @@
       </div>
     </div>
 
-    <!-- Bairro não encontrado -->
     <div id="botaoBairroNaoEncontrado">
       <a href="https://wa.me/5521980886087?text=Ol%C3%A1%2C%20n%C3%A3o%20encontrei%20meu%20bairro.%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
          class="btn-zap vermelho pulsando" target="_blank">
@@ -851,7 +871,6 @@
       </a>
     </div>
 
-    <!-- Resultado fixo -->
     <div id="resultadoFixo">
       <div class="res-header"><h3>✅ Valor da Instalação</h3></div>
       <div class="res-body">
@@ -861,17 +880,14 @@
       </div>
     </div>
 
-    <!-- Benefícios -->
     <div id="beneficiosBox"></div>
 
-    <!-- Botão extra acima do vídeo -->
     <div id="botaoExtraAcimaVideo">
       <a href="#" class="btn-zap verde pulsando" target="_blank">
         <i class="fab fa-whatsapp"></i> Clique aqui e agende já
       </a>
     </div>
 
-    <!-- Outros boxes -->
     <div id="mensalidadeBox"></div>
     <div id="ofertaBox"></div>
     <div id="ofertaFixaBox"></div>
@@ -1145,7 +1161,6 @@
 </a>
 
 <script>
-// ── MODAL ──
 function fecharModal() {
   const p = document.getElementById('popup');
   const o = document.getElementById('modalOverlay');
@@ -1154,7 +1169,6 @@ function fecharModal() {
   setTimeout(() => { p.style.display = 'none'; o.style.display = 'none'; }, 300);
 }
 
-// ── VER VALOR ──
 async function verValor() {
   const bairroInput = document.getElementById('bairroInput').value.trim();
   const quantidade = parseInt(document.getElementById('quantidadeInput').value) || 1;
@@ -1205,7 +1219,6 @@ async function verValor() {
       const textoMsg = `Olá! Gostaria de agendar minha instalação.\n\n📍 Endereço: ${bairroInput}\n🚗 Veículos: ${quantidade}\n🛰️ Tipo: ${tipo === 'com' ? 'Com bloqueio' : 'Sem bloqueio'}\n💰 Instalação: R$ ${valorInstalacao.toFixed(2).replace('.', ',')}\n📅 Mensalidade: ${textoMensalidadeWhats}`;
       const linkWhats = `https://wa.me/5521980886087?text=${encodeURIComponent(textoMsg)}`;
 
-      // Popup
       document.getElementById('popup-title').textContent = 'Valor da Instalação';
       document.getElementById('popup-header').style.background = 'linear-gradient(135deg,#0d3c61,#22c55e)';
       document.getElementById('popup-content').innerHTML = `
@@ -1227,7 +1240,6 @@ async function verValor() {
         </a>
       `;
 
-      // Resultado fixo
       document.getElementById('resPreco').textContent = `R$ ${valorInstalacao.toFixed(2).replace('.', ',')}`;
       document.getElementById('resDetalhes').innerHTML = `
         <p>📍 <strong>Endereço:</strong> ${bairroInput}</p>
@@ -1241,7 +1253,6 @@ async function verValor() {
         </a>`;
       resultadoFixo.style.display = 'block';
 
-      // Benefícios
       beneficiosBox.innerHTML = `
         <h3>Com instalação de R$ ${valorInstalacao.toFixed(2).replace('.', ',')} e apenas R$ ${valorDiario}/dia você garante:</h3>
         <ul>
@@ -1283,7 +1294,6 @@ async function verValor() {
   }
 }
 
-// ── CARROSSEL UNIVERSAL ──
 function initTrack(trackId, dotsId, prevId, nextId, autoMs) {
   const track = document.getElementById(trackId);
   const slides = track.querySelectorAll('.slide');
@@ -1315,7 +1325,6 @@ function initTrack(trackId, dotsId, prevId, nextId, autoMs) {
     startAuto();
   }
 
-  // Touch
   let sx = 0;
   track.addEventListener('touchstart', e => { sx = e.changedTouches[0].screenX; }, { passive: true });
   track.addEventListener('touchend', e => {
@@ -1325,7 +1334,6 @@ function initTrack(trackId, dotsId, prevId, nextId, autoMs) {
   }, { passive: true });
 }
 
-// ── CARROSSEL SIMPLES (RECUPERAÇÕES) ──
 function initSimpleCarousel(id, ms) {
   const imgs = document.querySelectorAll(`#${id} img`);
   let i = 0;
@@ -1336,7 +1344,6 @@ function initSimpleCarousel(id, ms) {
   }, ms);
 }
 
-// ── COUNTDOWN ──
 function initCountdown() {
   const dur = 60 * 60;
   const saved = localStorage.getItem('countdownData');
@@ -1370,7 +1377,6 @@ function showExpired() {
   if (el) el.parentElement.innerHTML = '<strong style="color:#dc2626">TEMPO ESGOTADO!</strong><br><small>Entre em contato para novas promoções</small>';
 }
 
-// ── FAQ ──
 function initFAQ() {
   const faqs = [
     ['Tem fidelidade ou multa pra cancelar?','❌ Não temos fidelidade. Pode cancelar quando quiser, sem multa.'],
@@ -1421,7 +1427,6 @@ function initFAQ() {
   });
 }
 
-// ── FADE UP ──
 function initFadeUp() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
@@ -1429,7 +1434,6 @@ function initFadeUp() {
   document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 }
 
-// ── INIT ──
 document.addEventListener('DOMContentLoaded', () => {
   initSimpleCarousel('carousel', 2000);
   initTrack('inst-track', 'inst-dots', 'inst-prev', 'inst-next', 2200);
@@ -1440,7 +1444,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<!-- Particles.js mantido para compatibilidade -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 <script>
   if (typeof particlesJS !== 'undefined') {
