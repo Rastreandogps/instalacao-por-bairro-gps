@@ -51,16 +51,19 @@
     .nav {
       height: 64px; display: flex; align-items: center; justify-content: space-between;
       width: min(1100px, 94vw); margin: 0 auto; padding: 0 16px;
+      gap: 10px;
     }
     .brand {
       display: flex; align-items: center; gap: 10px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 21px; font-weight: 800; color: var(--white);
       text-decoration: none; letter-spacing: 0.3px;
+      white-space: nowrap;
     }
     .brand img {
       width: 36px; height: 36px; border-radius: 9px; object-fit: contain;
       filter: drop-shadow(0 0 8px rgba(34,197,94,0.4));
+      flex-shrink: 0;
     }
     .nav-cta {
       display: inline-flex; align-items: center; gap: 8px;
@@ -69,8 +72,19 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 15px; font-weight: 800; letter-spacing: 0.3px;
       text-decoration: none; transition: all 0.2s;
+      white-space: nowrap;
     }
     .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(34,197,94,0.35); }
+
+    @media (max-width: 640px) {
+      .nav { padding: 0 12px; height: 60px; }
+      .brand { font-size: 16px; gap: 8px; }
+      .brand img { width: 30px; height: 30px; }
+      .nav-cta { padding: 8px 14px; font-size: 13px; }
+    }
+    @media (max-width: 400px) {
+      .brand { font-size: 14px; }
+    }
 
     /* ─── HERO ─── */
     .hero { padding: 50px 0 30px; text-align: center; }
@@ -172,9 +186,18 @@
       font-weight: 600; margin-bottom: 6px; letter-spacing: 0.4px;
       text-transform: uppercase;
     }
+    .form-field .hint {
+      display: block; font-size: 11px; color: rgba(126,153,188,0.6);
+      margin-top: 5px; padding-left: 4px;
+      font-style: italic;
+    }
     .form-field-icon {
       position: absolute; left: 14px; bottom: 16px;
       color: rgba(34,197,94,0.6); font-size: 15px; z-index: 2;
+    }
+    /* quando tem hint embaixo, o ícone precisa subir um pouco */
+    .form-field.with-hint .form-field-icon {
+      bottom: 34px;
     }
     .form-wrap input {
       width: 100%; padding: 14px 16px 14px 42px;
@@ -251,7 +274,6 @@
     /* ─── RESULTADO ─── */
     .resultado-section { display: none; padding: 20px 0 60px; }
     .resultado-section.show { display: block; }
-
     .resultado-card {
       max-width: 480px; margin: 0 auto;
       background: linear-gradient(145deg, rgba(8,18,38,0.97), rgba(5,12,28,0.99));
@@ -350,7 +372,6 @@
 </head>
 <body>
 
-<!-- ─── HEADER ─── -->
 <header>
   <div class="nav">
     <a class="brand" href="index.html">
@@ -363,26 +384,25 @@
   </div>
 </header>
 
-<!-- ─── HERO ─── -->
 <section class="hero">
   <div class="container">
     <span class="kicker"><span class="spark"></span> Área exclusiva do cliente</span>
     <h1>Sua <span class="grad">Fatura</span> em 1 clique</h1>
-    <p>Informe seu CPF e celular para acessar a sua fatura. Pague via Pix, boleto ou cartão.</p>
+    <p>Informe seu CPF (ou CNPJ) e celular para acessar a sua fatura. Pague via Pix, boleto ou cartão.</p>
   </div>
 </section>
 
-<!-- ─── FORMULÁRIO LOGIN ─── -->
 <section class="form-section" id="loginSection">
   <div class="container">
     <div class="form-scene">
       <div class="form-wrap">
         <h2 class="form-title">🔐 Acesso à sua fatura</h2>
 
-        <div class="form-field">
-          <label>CPF do titular</label>
-          <input type="text" id="cpfInput" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" autocomplete="off">
+        <div class="form-field with-hint">
+          <label>CPF ou CNPJ do titular</label>
+          <input type="text" id="docInput" placeholder="000.000.000-00  ou  00.000.000/0000-00" maxlength="18" inputmode="numeric" autocomplete="off">
           <i class="fas fa-id-card form-field-icon"></i>
+          <small class="hint">Pessoa física: 11 dígitos · Empresa: 14 dígitos</small>
         </div>
 
         <div class="form-field">
@@ -405,7 +425,7 @@
     <div class="error-box" id="errorBox">
       <div class="error-icon-big">❌</div>
       <h4 id="errorTitle">Dados não conferem</h4>
-      <p id="errorMsg">Verifique se o CPF e o celular estão corretos.</p>
+      <p id="errorMsg">Verifique se o CPF/CNPJ e o celular estão corretos.</p>
       <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20N%C3%A3o%20consegui%20acessar%20minha%20fatura%20pelo%20site." class="btn-zap-help" target="_blank">
         <i class="fab fa-whatsapp"></i> Falar com atendente
       </a>
@@ -413,7 +433,6 @@
   </div>
 </section>
 
-<!-- ─── RESULTADO ─── -->
 <section class="resultado-section" id="resultadoSection">
   <div class="container">
     <div class="resultado-card">
@@ -430,12 +449,11 @@
         Você poderá pagar via <strong>Pix, boleto ou cartão</strong>.
       </p>
 
-      <button class="voltar-btn" onclick="voltar()">← Consultar outro CPF</button>
+      <button class="voltar-btn" onclick="voltar()">← Consultar outro CPF/CNPJ</button>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">Rastreando GPS · Soluções em Rastreamento Veicular</div>
@@ -451,26 +469,32 @@
 
 <script>
   // ============================================================
-  // CONFIGURAÇÃO — Cole aqui a URL do seu Apps Script depois de publicar
+  // URL do Apps Script da planilha
   // ============================================================
   const API_URL = 'https://script.google.com/macros/s/AKfycbyfbcFd9regTffvLjLKweoA7ESZpWH0yVScBmqbndLdfrYcXOCQtcjVwoTvfofGoCBv/exec';
-  // Vai ser algo tipo:
-  // https://script.google.com/macros/s/AKfycbxxxxxxxxxxxxxx/exec
   // ============================================================
 
-  const cpfInput = document.getElementById('cpfInput');
+  const docInput = document.getElementById('docInput');
   const celInput = document.getElementById('celInput');
 
-  // Máscara CPF
-  cpfInput.addEventListener('input', e => {
-    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
-    v = v.replace(/(\d{3})(\d)/, '$1.$2')
-         .replace(/(\d{3})(\d)/, '$1.$2')
-         .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+  // Máscara inteligente: aplica CPF ou CNPJ conforme a quantidade de dígitos
+  docInput.addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 14);
+    if (v.length <= 11) {
+      // CPF: 000.000.000-00
+      v = v.replace(/(\d{3})(\d)/, '$1.$2')
+           .replace(/(\d{3})(\d)/, '$1.$2')
+           .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    } else {
+      // CNPJ: 00.000.000/0000-00
+      v = v.replace(/^(\d{2})(\d)/, '$1.$2')
+           .replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3')
+           .replace(/\.(\d{3})(\d)/, '.$1/$2')
+           .replace(/(\d{4})(\d)/, '$1-$2');
+    }
     e.target.value = v;
   });
 
-  // Máscara celular
   celInput.addEventListener('input', e => {
     let v = e.target.value.replace(/\D/g, '').slice(0, 11);
     if (v.length > 10) {
@@ -483,7 +507,7 @@
     e.target.value = v;
   });
 
-  [cpfInput, celInput].forEach(el => {
+  [docInput, celInput].forEach(el => {
     el.addEventListener('keypress', e => {
       if (e.key === 'Enter') consultarFatura();
     });
@@ -505,11 +529,12 @@
 
   async function consultarFatura() {
     ocultarErro();
-    const cpf = cpfInput.value.replace(/\D/g, '');
+    const doc = docInput.value.replace(/\D/g, '');
     const cel = celInput.value.replace(/\D/g, '');
 
-    if (cpf.length !== 11) {
-      mostrarErro('CPF inválido', 'Digite os 11 dígitos do seu CPF.');
+    // Aceita CPF (11) ou CNPJ (14)
+    if (doc.length !== 11 && doc.length !== 14) {
+      mostrarErro('CPF ou CNPJ inválido', 'Digite os 11 dígitos do CPF ou os 14 do CNPJ.');
       return;
     }
     if (cel.length < 10) {
@@ -522,18 +547,20 @@
     try {
       const resp = await fetch(API_URL, {
         method: 'POST',
-        body: JSON.stringify({ cpf, celular: cel })
-        // Não usamos Content-Type: application/json pra evitar preflight CORS no Apps Script
+        body: JSON.stringify({ cpf: doc, celular: cel })
       });
 
       const data = await resp.json();
       setLoading(false);
 
       if (data.error) {
-        if (data.code === 'CPF_NAO_ENCONTRADO') {
-          mostrarErro('Cliente não encontrado', 'Não encontramos um cadastro com esse CPF. Se você é cliente, fale conosco pelo WhatsApp.');
+        if (data.code === 'DOC_NAO_ENCONTRADO' || data.code === 'CPF_NAO_ENCONTRADO') {
+          const tipo = doc.length === 14 ? 'CNPJ' : 'CPF';
+          mostrarErro('Cliente não encontrado', `Não encontramos um cadastro com esse ${tipo}. Se você é cliente, fale conosco pelo WhatsApp.`);
         } else if (data.code === 'CELULAR_NAO_CONFERE') {
-          mostrarErro('Celular não confere', 'O número informado não corresponde ao CPF. Verifique e tente novamente.');
+          mostrarErro('Celular não confere', 'O número informado não corresponde ao CPF/CNPJ. Verifique e tente novamente.');
+        } else if (data.code === 'TUDO_PAGO') {
+          mostrarErro('Tudo em dia! 🎉', 'Você não tem faturas em aberto no momento. Obrigado por estar com a gente!');
         } else if (data.code === 'SEM_LINK') {
           mostrarErro('Fatura indisponível', data.error);
         } else {
@@ -542,7 +569,6 @@
         return;
       }
 
-      // Sucesso
       mostrarResultado(data);
 
     } catch (e) {
@@ -563,9 +589,9 @@
   function voltar() {
     document.getElementById('resultadoSection').classList.remove('show');
     document.getElementById('loginSection').style.display = 'block';
-    cpfInput.value = '';
+    docInput.value = '';
     celInput.value = '';
-    cpfInput.focus();
+    docInput.focus();
   }
 </script>
 
