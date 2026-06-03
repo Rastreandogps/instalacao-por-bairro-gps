@@ -619,7 +619,7 @@
       position: relative;
       background: linear-gradient(160deg, rgba(17,29,48,0.95), rgba(7,13,24,0.95));
       border-radius: 20px;
-      padding: 28px 24px;
+      padding: 20px 22px;
       border: 1px solid rgba(255,255,255,0.08);
       transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
       overflow: hidden;
@@ -689,13 +689,17 @@
     }
     .app-card.web .app-card-btn:hover { box-shadow: 0 12px 28px rgba(14,165,233,0.5); }
 
+    .app-card-top {
+      display: flex; align-items: center; gap: 13px;
+      margin-bottom: 14px;
+    }
     .app-card-icon-wrap {
-      width: 72px; height: 72px;
-      border-radius: 18px;
+      width: 50px; height: 50px;
+      border-radius: 13px;
       border: 1px solid;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 18px;
-      font-size: 36px;
+      font-size: 24px;
+      flex-shrink: 0;
     }
     .app-card-icon-wrap i { color: #fff; }
     .app-card.android .app-card-icon-wrap i { color: #34a853; }
@@ -703,7 +707,7 @@
     .app-card.web .app-card-icon-wrap i { color: var(--blue); }
 
     .app-card-store {
-      margin-bottom: 12px;
+      margin-bottom: 0;
     }
     .app-card-store small {
       font-size: 11px;
@@ -716,7 +720,7 @@
     .app-card-store strong {
       display: block;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px;
+      font-size: 21px;
       font-weight: 800;
       color: #fff;
       line-height: 1.1;
@@ -1000,11 +1004,11 @@
       <div class="app-cards-grid">
         <!-- Android -->
         <div class="app-card android">
-          <div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
           <div class="app-card-store">
             <small>Disponível no</small>
             <strong>Google Play</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
@@ -1016,11 +1020,11 @@
 
         <!-- iPhone -->
         <div class="app-card iphone">
-          <div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
           <div class="app-card-store">
             <small>Baixe na</small>
             <strong>App Store</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
@@ -1032,11 +1036,11 @@
 
         <!-- Web -->
         <div class="app-card web">
-          <div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
           <div class="app-card-store">
             <small>Acesse pelo</small>
             <strong>Computador</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
@@ -1065,11 +1069,11 @@
       <div class="app-cards-grid">
         <!-- Android -->
         <div class="app-card android">
-          <div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
           <div class="app-card-store">
             <small>Disponível no</small>
             <strong>Google Play</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
@@ -1081,11 +1085,11 @@
 
         <!-- iPhone -->
         <div class="app-card iphone">
-          <div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
           <div class="app-card-store">
             <small>Baixe na</small>
             <strong>App Store</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
@@ -1097,11 +1101,11 @@
 
         <!-- Web -->
         <div class="app-card web">
-          <div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
+          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
           <div class="app-card-store">
             <small>Acesse pelo</small>
             <strong>Computador</strong>
-          </div>
+          </div></div>
           <div class="app-card-rating">
             <span class="app-card-stars">★★★★★</span>
             <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
