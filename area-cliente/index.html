@@ -118,7 +118,7 @@
     .hero p { color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 520px; margin: 12px auto 0; }
 
     /* ─── FORM NEON ─── */
-    .form-section { padding: 24px 0 48px; }
+    .form-section { padding: 24px 0 28px; }
     .form-scene { perspective: 1200px; max-width: 460px; margin: 0 auto; }
     .form-wrap {
       position: relative;
@@ -250,7 +250,33 @@
       flex-shrink: 0;
     }
 
-    /* ─── LOADING (mantido para fallback, mas não usado mais) ─── */
+    /* ─── AVISO "ACESSE SUA FATURA E PAGUE" (dentro dos cards) ─── */
+    .pago-notice {
+      display: none;
+      align-items: center; justify-content: center;
+      gap: 10px;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.4);
+      border-radius: 12px;
+      padding: 13px 15px;
+      margin-bottom: 22px;
+      font-size: 13.5px;
+      color: #d1fae5;
+      line-height: 1.45;
+      text-align: center;
+      animation: fadeUp 0.4s ease;
+    }
+    .pago-notice.show { display: flex; }
+    .pago-notice i { color: var(--green); font-size: 18px; flex-shrink: 0; }
+
+    /* destaque temporário no card ativo */
+    .destaque { animation: flashRing 0.85s ease-in-out 3; }
+    @keyframes flashRing {
+      0%, 100% { outline: 2px solid rgba(34,197,94,0); outline-offset: 8px; }
+      50%      { outline: 2px solid rgba(34,197,94,0.9); outline-offset: 5px; }
+    }
+
+    /* ─── LOADING (fallback) ─── */
     .loading { display: none; text-align: center; padding: 28px; }
     .loading.show { display: block; }
     .spinner {
@@ -290,7 +316,7 @@
     .btn-zap-help:hover { transform: translateY(-2px); }
 
     /* ─── RESULTADO ─── */
-    .resultado-section { display: none; padding: 20px 0 30px; }
+    .resultado-section { display: none; padding: 20px 0 28px; }
     .resultado-section.show { display: block; }
     .resultado-card {
       max-width: 480px; margin: 0 auto;
@@ -354,10 +380,111 @@
     .voltar-btn:hover { background: rgba(255,255,255,0.05); color: #fff; }
 
     /* ═══════════════════════════════════════════════════════════
-       📲 SEÇÃO DOWNLOAD DO APP — Cards premium
+       🔓 BOX LIBERAR ACESSO
+       ═══════════════════════════════════════════════════════════ */
+    .liberar-section { padding: 4px 0 10px; }
+    .liberar-box {
+      max-width: 480px; margin: 0 auto;
+      background: linear-gradient(145deg, rgba(8,18,38,0.95), rgba(5,12,28,0.97));
+      border: 1px solid rgba(14,165,233,0.32);
+      border-radius: 18px;
+      padding: 28px 28px;
+      text-align: center;
+      box-shadow: 0 14px 44px rgba(0,0,0,0.4), 0 0 30px rgba(14,165,233,0.06);
+    }
+    .liberar-icon {
+      width: 58px; height: 58px; border-radius: 16px; margin: 0 auto 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 27px; color: #052b18;
+      background: linear-gradient(135deg, var(--green), #39e08a);
+      box-shadow: 0 8px 24px rgba(34,197,94,0.4);
+    }
+    .liberar-box h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 24px; font-weight: 900; color: #fff;
+      margin-bottom: 6px; letter-spacing: 0.3px;
+    }
+    .liberar-box p { color: var(--muted); font-size: 14px; line-height: 1.55; margin-bottom: 20px; }
+    .btn-liberar {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--blue), #38bdf8);
+      color: #042131; padding: 15px 22px; border: none; border-radius: 12px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px; font-weight: 800; letter-spacing: 0.4px; cursor: pointer;
+      box-shadow: 0 8px 24px rgba(14,165,233,0.35); transition: all 0.2s;
+    }
+    .btn-liberar:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(14,165,233,0.55); }
+
+    /* ─── MODAL / POPUP ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(3,7,15,0.82);
+      backdrop-filter: blur(6px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.show { display: flex; animation: overlayIn 0.25s ease; }
+    @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
+    .modal-box {
+      position: relative;
+      width: 100%; max-width: 430px;
+      background: linear-gradient(155deg, rgba(12,22,42,0.99), rgba(6,13,28,1));
+      border: 1px solid rgba(34,197,94,0.4);
+      border-radius: 22px;
+      padding: 36px 28px 28px;
+      text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.7), 0 0 50px rgba(34,197,94,0.12);
+      animation: modalPop 0.35s cubic-bezier(0.2,0.9,0.3,1.25);
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: translateY(22px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute; top: 12px; right: 16px;
+      background: none; border: none; color: var(--muted);
+      font-size: 26px; cursor: pointer; line-height: 1; transition: color 0.2s;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-icon {
+      width: 66px; height: 66px; border-radius: 18px; margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 31px; color: #052b18;
+      background: linear-gradient(135deg, var(--green), #39e08a);
+      box-shadow: 0 10px 28px rgba(34,197,94,0.4);
+    }
+    .modal-box h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 25px; font-weight: 900; color: #fff;
+      margin-bottom: 10px; line-height: 1.15; letter-spacing: 0.3px;
+    }
+    .modal-box p { color: var(--muted); font-size: 15px; line-height: 1.55; margin-bottom: 24px; }
+    .modal-actions { display: flex; flex-direction: column; gap: 12px; }
+    .modal-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 15px 20px; border-radius: 12px; border: none; cursor: pointer;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 17px; font-weight: 800; letter-spacing: 0.3px; transition: all 0.2s;
+      text-decoration: none;
+    }
+    .modal-btn.sim {
+      background: linear-gradient(90deg, var(--green), #39e08a);
+      color: #052b18; box-shadow: 0 8px 22px rgba(34,197,94,0.35);
+    }
+    .modal-btn.sim:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(34,197,94,0.5); }
+    .modal-btn.nao {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .modal-btn.nao:hover { background: rgba(255,255,255,0.09); color: #fff; }
+
+    /* ═══════════════════════════════════════════════════════════
+       📲 SEÇÃO DOWNLOAD DOS APPS
        ═══════════════════════════════════════════════════════════ */
     .app-download-section {
-      padding: 50px 0 30px;
+      padding: 44px 0 30px;
       position: relative;
     }
     .app-download-section::before {
@@ -371,7 +498,7 @@
     }
     .app-download-header {
       text-align: center;
-      margin-bottom: 36px;
+      margin-bottom: 26px;
     }
     .app-download-badge {
       display: inline-flex; align-items: center; gap: 8px;
@@ -398,6 +525,52 @@
       max-width: 500px;
       margin: 0 auto;
       line-height: 1.5;
+    }
+
+    /* aviso "dois apps" */
+    .app-which {
+      display: flex; align-items: flex-start; gap: 12px;
+      max-width: 680px; margin: 0 auto 40px;
+      background: rgba(14,165,233,0.06);
+      border: 1px solid rgba(14,165,233,0.25);
+      border-radius: 14px;
+      padding: 16px 18px;
+    }
+    .app-which i { color: var(--blue); font-size: 20px; margin-top: 2px; flex-shrink: 0; }
+    .app-which p { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0; }
+    .app-which strong { color: #d1fae5; }
+    .app-which a { color: var(--green); font-weight: 700; text-decoration: none; }
+    .app-which a:hover { text-decoration: underline; }
+
+    /* bloco de cada app */
+    .app-block { margin-bottom: 46px; }
+    .app-block:last-of-type { margin-bottom: 0; }
+    .app-block-head {
+      display: flex; align-items: center; gap: 14px; justify-content: center;
+      margin-bottom: 26px;
+    }
+    .app-block-logo {
+      width: 54px; height: 54px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0; border: 1px solid;
+    }
+    .app-block-logo.nob {
+      background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(99,102,241,0.12));
+      border-color: rgba(14,165,233,0.4); color: #7dd3fc;
+    }
+    .app-block-logo.rast {
+      background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(14,165,233,0.12));
+      border-color: rgba(34,197,94,0.4); color: #6ee7a8;
+    }
+    .app-block-title strong {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 25px; font-weight: 900;
+      color: #fff; line-height: 1; letter-spacing: 0.3px;
+    }
+    .app-block-title span {
+      display: block; font-size: 12px; color: var(--muted);
+      margin-top: 4px; letter-spacing: 0.3px;
     }
 
     .app-cards-grid {
@@ -573,7 +746,7 @@
     /* Footer da seção */
     .app-download-footer {
       text-align: center;
-      margin-top: 32px;
+      margin-top: 36px;
       padding: 18px;
       background: rgba(34,197,94,0.04);
       border: 1px dashed rgba(34,197,94,0.2);
@@ -646,6 +819,8 @@
       .form-wrap { padding: 28px 22px; animation: none; transform: none; }
       .form-scene { perspective: none; }
       .resultado-card { padding: 28px 22px; }
+      .liberar-box { padding: 24px 20px; }
+      .modal-box { padding: 32px 22px 24px; }
     }
   </style>
 </head>
@@ -676,6 +851,12 @@
     <div class="form-scene">
       <div class="form-wrap">
         <h2 class="form-title">🔐 Acesso à sua fatura</h2>
+
+        <!-- aviso exibido quando o cliente clica em "ainda não paguei" -->
+        <div class="pago-notice" id="notaForm">
+          <i class="fas fa-circle-info"></i>
+          <span>Acesse a sua fatura abaixo e efetue o pagamento. Depois é só voltar e liberar seu acesso. 👍</span>
+        </div>
 
         <div class="form-field with-hint">
           <label>CPF ou CNPJ do titular</label>
@@ -714,6 +895,12 @@
       <div class="saudacao">Olá, <span class="nome" id="nomeCliente">cliente</span>!</div>
       <p class="saudacao-sub">Tudo pronto pra você acessar sua fatura. Clique no botão abaixo para abrir a sua área de pagamento.</p>
 
+      <!-- aviso exibido quando o cliente clica em "ainda não paguei" -->
+      <div class="pago-notice" id="notaResultado">
+        <i class="fas fa-circle-info"></i>
+        <span>Acesse a sua fatura no botão abaixo e efetue o pagamento. Depois é só liberar seu acesso. 👍</span>
+      </div>
+
       <a id="btnPagar" href="#" target="_blank" class="btn-pagar">
         <i class="fas fa-external-link-alt"></i> ACESSAR MINHA FATURA
       </a>
@@ -729,7 +916,23 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     📲 SEÇÃO DOWNLOAD DO APP — sempre visível
+     🔓 BOX LIBERAR MEU ACESSO — sempre visível
+     ═══════════════════════════════════════════════════════ -->
+<section class="liberar-section">
+  <div class="container">
+    <div class="liberar-box">
+      <div class="liberar-icon"><i class="fas fa-unlock-keyhole"></i></div>
+      <h3>Já efetuou o pagamento?</h3>
+      <p>Se você já pagou a sua fatura, libere o seu acesso ao rastreamento agora mesmo falando com a gente no WhatsApp.</p>
+      <button class="btn-liberar" onclick="abrirModalLiberar()">
+        <i class="fas fa-unlock"></i> QUERO LIBERAR MEU ACESSO
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     📲 SEÇÃO DOWNLOAD DOS APPS — sempre visível
      ═══════════════════════════════════════════════════════ -->
 <section class="app-download-section">
   <div class="container">
@@ -742,77 +945,162 @@
       <p>Acompanhe seu veículo em tempo real, receba alertas e tenha o histórico de rotas na palma da sua mão.</p>
     </div>
 
-    <div class="app-cards-grid">
+    <!-- aviso: dois aplicativos -->
+    <div class="app-which">
+      <i class="fas fa-circle-info"></i>
+      <p>Trabalhamos com <strong>dois aplicativos</strong>. Baixe o que foi configurado no seu rastreador. <strong>Não sabe qual é o seu?</strong> <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20saber%20qual%20app%20%C3%A9%20o%20do%20meu%20rastreador." target="_blank" rel="noopener">Fale com o suporte</a>.</p>
+    </div>
 
-      <!-- ── ANDROID ── -->
-      <div class="app-card android">
-        <div class="app-card-icon-wrap">
-          <i class="fab fa-google-play"></i>
+    <!-- ──────── APP 1: NobGPS ──────── -->
+    <div class="app-block">
+      <div class="app-block-head">
+        <div class="app-block-logo nob"><i class="fas fa-satellite-dish"></i></div>
+        <div class="app-block-title">
+          <strong>NobGPS</strong>
+          <span>App de rastreamento veicular</span>
         </div>
-        <div class="app-card-store">
-          <small>Disponível no</small>
-          <strong>Google Play</strong>
-        </div>
-        <div class="app-card-rating">
-          <span class="app-card-stars">★★★★★</span>
-          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-        </div>
-        <ul class="app-card-features">
-          <li>Localização em tempo real</li>
-          <li>Alertas de ignição</li>
-          <li>Histórico de rotas</li>
-        </ul>
-        <a href="https://play.google.com/store/apps/details?id=br.com.nobgps" target="_blank" rel="noopener" class="app-card-btn">
-          <i class="fas fa-download"></i> Baixar Grátis
-        </a>
       </div>
 
-      <!-- ── IPHONE ── -->
-      <div class="app-card iphone">
-        <div class="app-card-icon-wrap">
-          <i class="fab fa-apple"></i>
+      <div class="app-cards-grid">
+        <!-- Android -->
+        <div class="app-card android">
+          <div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
+          <div class="app-card-store">
+            <small>Disponível no</small>
+            <strong>Google Play</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Localização em tempo real</li>
+            <li>Alertas de ignição</li>
+            <li>Histórico de rotas</li>
+          </ul>
+          <a href="https://play.google.com/store/apps/details?id=br.com.nobgps" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-download"></i> Baixar Grátis
+          </a>
         </div>
-        <div class="app-card-store">
-          <small>Baixe na</small>
-          <strong>App Store</strong>
+
+        <!-- iPhone -->
+        <div class="app-card iphone">
+          <div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
+          <div class="app-card-store">
+            <small>Baixe na</small>
+            <strong>App Store</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Localização em tempo real</li>
+            <li>Alertas de ignição</li>
+            <li>Histórico de rotas</li>
+          </ul>
+          <a href="https://apps.apple.com/br/app/nobgps-2-0/id6739852876" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-download"></i> Baixar Grátis
+          </a>
         </div>
-        <div class="app-card-rating">
-          <span class="app-card-stars">★★★★★</span>
-          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+
+        <!-- Web -->
+        <div class="app-card web">
+          <div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
+          <div class="app-card-store">
+            <small>Acesse pelo</small>
+            <strong>Computador</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Mesmo login do app</li>
+            <li>Tela ampla com mais detalhes</li>
+            <li>Acesso 24h</li>
+          </ul>
+          <a href="http://web.nobgps.com.br" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-external-link-alt"></i> Acessar Agora
+          </a>
         </div>
-        <ul class="app-card-features">
-          <li>Localização em tempo real</li>
-          <li>Alertas de ignição</li>
-          <li>Histórico de rotas</li>
-        </ul>
-        <a href="https://apps.apple.com/br/app/nobgps-2-0/id6739852876" target="_blank" rel="noopener" class="app-card-btn">
-          <i class="fas fa-download"></i> Baixar Grátis
-        </a>
+      </div>
+    </div>
+
+    <!-- ──────── APP 2: Rastreando GPS ──────── -->
+    <div class="app-block">
+      <div class="app-block-head">
+        <div class="app-block-logo rast"><i class="fas fa-location-crosshairs"></i></div>
+        <div class="app-block-title">
+          <strong>Rastreando GPS</strong>
+          <span>App de rastreamento veicular</span>
+        </div>
       </div>
 
-      <!-- ── WEB ── -->
-      <div class="app-card web">
-        <div class="app-card-icon-wrap">
-          <i class="fas fa-desktop"></i>
+      <div class="app-cards-grid">
+        <!-- Android -->
+        <div class="app-card android">
+          <div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
+          <div class="app-card-store">
+            <small>Disponível no</small>
+            <strong>Google Play</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Localização em tempo real</li>
+            <li>Alertas de ignição</li>
+            <li>Histórico de rotas</li>
+          </ul>
+          <a href="https://play.google.com/store/apps/details?id=com.rastreandogpsrastreamento.br" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-download"></i> Baixar Grátis
+          </a>
         </div>
-        <div class="app-card-store">
-          <small>Acesse pelo</small>
-          <strong>Computador</strong>
-        </div>
-        <div class="app-card-rating">
-          <span class="app-card-stars">★★★★★</span>
-          <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-        </div>
-        <ul class="app-card-features">
-          <li>Mesmo login do app</li>
-          <li>Tela ampla com mais detalhes</li>
-          <li>Acesso 24h</li>
-        </ul>
-        <a href="http://web.nobgps.com.br" target="_blank" rel="noopener" class="app-card-btn">
-          <i class="fas fa-external-link-alt"></i> Acessar Agora
-        </a>
-      </div>
 
+        <!-- iPhone -->
+        <div class="app-card iphone">
+          <div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
+          <div class="app-card-store">
+            <small>Baixe na</small>
+            <strong>App Store</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Localização em tempo real</li>
+            <li>Alertas de ignição</li>
+            <li>Histórico de rotas</li>
+          </ul>
+          <a href="https://apps.apple.com/br/app/rastreando-gps/id1642112039" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-download"></i> Baixar Grátis
+          </a>
+        </div>
+
+        <!-- Web -->
+        <div class="app-card web">
+          <div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
+          <div class="app-card-store">
+            <small>Acesse pelo</small>
+            <strong>Computador</strong>
+          </div>
+          <div class="app-card-rating">
+            <span class="app-card-stars">★★★★★</span>
+            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
+          </div>
+          <ul class="app-card-features">
+            <li>Mesmo login do app</li>
+            <li>Tela ampla com mais detalhes</li>
+            <li>Acesso 24h</li>
+          </ul>
+          <a href="https://rastreamento.ong.br/index.php" target="_blank" rel="noopener" class="app-card-btn">
+            <i class="fas fa-external-link-alt"></i> Acessar Agora
+          </a>
+        </div>
+      </div>
     </div>
 
     <div class="app-download-footer">
@@ -831,12 +1119,35 @@
   </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════
+     🔓 POPUP DE CONFIRMAÇÃO DE PAGAMENTO
+     ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalLiberar">
+  <div class="modal-box">
+    <button class="modal-close" onclick="fecharModalLiberar()" aria-label="Fechar">&times;</button>
+    <div class="modal-icon"><i class="fas fa-circle-question"></i></div>
+    <h3>Confirmação de pagamento</h3>
+    <p>Para liberar o seu acesso, é necessário que o pagamento da sua fatura já esteja efetuado.<br><strong style="color:#d1fae5;">Você já efetuou o pagamento?</strong></p>
+    <div class="modal-actions">
+      <button class="modal-btn sim" onclick="confirmarPagamento()">
+        <i class="fas fa-check-circle"></i> Sim, já efetuei o pagamento
+      </button>
+      <button class="modal-btn nao" onclick="naoPagou()">
+        <i class="fas fa-clock"></i> Ainda não efetuei
+      </button>
+    </div>
+  </div>
+</div>
+
 <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Poderia%20me%20ajudar%3F" class="wa-float" target="_blank" rel="noopener">
   <i class="fab fa-whatsapp"></i>
 </a>
 
 <script>
   const API_URL = 'https://script.google.com/macros/s/AKfycbyfbcFd9regTffvLjLKweoA7ESZpWH0yVScBmqbndLdfrYcXOCQtcjVwoTvfofGoCBv/exec';
+
+  // WhatsApp para liberar acesso (frase já pronta)
+  const WA_LIBERAR = 'https://wa.me/5521980886087?text=Oi%2C%20quero%20liberar%20meu%20acesso.';
 
   const docInput = document.getElementById('docInput');
   const celInput = document.getElementById('celInput');
@@ -883,6 +1194,10 @@
   function ocultarErro() {
     document.getElementById('errorBox').classList.remove('show');
   }
+  function ocultarNotas() {
+    document.getElementById('notaForm').classList.remove('show');
+    document.getElementById('notaResultado').classList.remove('show');
+  }
   function setLoading(on) {
     const btn = document.getElementById('btnConsultar');
     btn.disabled = on;
@@ -896,6 +1211,7 @@
 
   async function consultarFatura() {
     ocultarErro();
+    ocultarNotas();
     const doc = docInput.value.replace(/\D/g, '');
     const cel = celInput.value.replace(/\D/g, '');
 
@@ -955,10 +1271,57 @@
   function voltar() {
     document.getElementById('resultadoSection').classList.remove('show');
     document.getElementById('loginSection').style.display = 'block';
+    ocultarNotas();
     docInput.value = '';
     celInput.value = '';
     docInput.focus();
   }
+
+  /* ═══════════════ LIBERAR ACESSO ═══════════════ */
+  function abrirModalLiberar() {
+    document.getElementById('modalLiberar').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharModalLiberar() {
+    document.getElementById('modalLiberar').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  // CLIENTE DISSE QUE JÁ PAGOU → vai pro WhatsApp
+  function confirmarPagamento() {
+    fecharModalLiberar();
+    window.open(WA_LIBERAR, '_blank');
+  }
+
+  // CLIENTE DISSE QUE AINDA NÃO PAGOU → fecha popup e devolve o card da fatura
+  function naoPagou() {
+    fecharModalLiberar();
+
+    // mostra o aviso explicando que precisa acessar a fatura e pagar
+    document.getElementById('notaForm').classList.add('show');
+    document.getElementById('notaResultado').classList.add('show');
+
+    // destaca o card que está visível no momento
+    const resultadoVisivel = document.getElementById('resultadoSection').classList.contains('show');
+    const alvo = resultadoVisivel
+      ? document.querySelector('#resultadoSection .resultado-card')
+      : document.querySelector('#loginSection .form-wrap');
+
+    if (alvo) {
+      alvo.classList.add('destaque');
+      setTimeout(() => alvo.classList.remove('destaque'), 2600);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // fechar o popup clicando fora dele ou no ESC
+  document.getElementById('modalLiberar').addEventListener('click', e => {
+    if (e.target.id === 'modalLiberar') fecharModalLiberar();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharModalLiberar();
+  });
 </script>
 
 </body>
