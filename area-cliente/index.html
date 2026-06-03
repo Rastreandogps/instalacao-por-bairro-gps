@@ -542,17 +542,32 @@
     .app-which a { color: var(--green); font-weight: 700; text-decoration: none; }
     .app-which a:hover { text-decoration: underline; }
 
-    /* bloco de cada app */
-    .app-block { margin-bottom: 46px; }
-    .app-block:last-of-type { margin-bottom: 0; }
-    .app-block-head {
-      display: flex; align-items: center; gap: 14px; justify-content: center;
-      margin-bottom: 26px;
+    /* ── GAVETA (accordion) de cada app ── */
+    .app-block {
+      max-width: 820px; margin: 0 auto 16px;
+      background: linear-gradient(160deg, rgba(17,29,48,0.6), rgba(7,13,24,0.6));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
+    .app-block:last-of-type { margin-bottom: 0; }
+    .app-block.open {
+      border-color: rgba(34,197,94,0.35);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+    }
+    .app-block-head {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 22px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.25s;
+    }
+    .app-block-head:hover { background: rgba(255,255,255,0.03); }
     .app-block-logo {
-      width: 54px; height: 54px; border-radius: 15px;
+      width: 52px; height: 52px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 26px; flex-shrink: 0; border: 1px solid;
+      font-size: 25px; flex-shrink: 0; border: 1px solid;
     }
     .app-block-logo.nob {
       background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(99,102,241,0.12));
@@ -562,16 +577,29 @@
       background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(14,165,233,0.12));
       border-color: rgba(34,197,94,0.4); color: #6ee7a8;
     }
+    .app-block-title { flex: 1; text-align: left; min-width: 0; }
     .app-block-title strong {
       display: block;
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 25px; font-weight: 900;
-      color: #fff; line-height: 1; letter-spacing: 0.3px;
+      font-size: 23px; font-weight: 900;
+      color: #fff; line-height: 1.05; letter-spacing: 0.3px;
     }
     .app-block-title span {
       display: block; font-size: 12px; color: var(--muted);
       margin-top: 4px; letter-spacing: 0.3px;
     }
+    .app-block-chevron {
+      color: var(--muted); font-size: 17px; flex-shrink: 0;
+      transition: transform 0.35s ease, color 0.3s;
+    }
+    .app-block.open .app-block-chevron { transform: rotate(180deg); color: var(--green); }
+    .app-acc-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .app-block.open .app-acc-body { max-height: 2000px; }
+    .app-acc-inner { padding: 2px 22px 26px; }
+    .app-acc-inner .app-cards-grid { max-width: 100%; gap: 18px; }
 
     .app-cards-grid {
       display: grid;
@@ -952,15 +980,17 @@
     </div>
 
     <!-- ──────── APP 1: NobGPS ──────── -->
-    <div class="app-block">
-      <div class="app-block-head">
+    <div class="app-block" id="appNob">
+      <div class="app-block-head" onclick="toggleApp('appNob')">
         <div class="app-block-logo nob"><i class="fas fa-satellite-dish"></i></div>
         <div class="app-block-title">
           <strong>NobGPS</strong>
-          <span>App de rastreamento veicular</span>
+          <span>Toque para abrir · Android, iPhone e Web</span>
         </div>
+        <i class="fas fa-chevron-down app-block-chevron"></i>
       </div>
-
+      <div class="app-acc-body">
+       <div class="app-acc-inner">
       <div class="app-cards-grid">
         <!-- Android -->
         <div class="app-card android">
@@ -1025,18 +1055,22 @@
           </a>
         </div>
       </div>
+        </div>
+      </div>
     </div>
 
     <!-- ──────── APP 2: Rastreando GPS ──────── -->
-    <div class="app-block">
-      <div class="app-block-head">
+    <div class="app-block" id="appRast">
+      <div class="app-block-head" onclick="toggleApp('appRast')">
         <div class="app-block-logo rast"><i class="fas fa-location-crosshairs"></i></div>
         <div class="app-block-title">
           <strong>Rastreando GPS</strong>
-          <span>App de rastreamento veicular</span>
+          <span>Toque para abrir · Android, iPhone e Web</span>
         </div>
+        <i class="fas fa-chevron-down app-block-chevron"></i>
       </div>
-
+      <div class="app-acc-body">
+       <div class="app-acc-inner">
       <div class="app-cards-grid">
         <!-- Android -->
         <div class="app-card android">
@@ -1099,6 +1133,8 @@
           <a href="https://rastreamento.ong.br/index.php" target="_blank" rel="noopener" class="app-card-btn">
             <i class="fas fa-external-link-alt"></i> Acessar Agora
           </a>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -1275,6 +1311,11 @@
     docInput.value = '';
     celInput.value = '';
     docInput.focus();
+  }
+
+  /* ═══════════════ GAVETAS DOS APPS ═══════════════ */
+  function toggleApp(id) {
+    document.getElementById(id).classList.toggle('open');
   }
 
   /* ═══════════════ LIBERAR ACESSO ═══════════════ */
