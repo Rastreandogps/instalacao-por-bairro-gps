@@ -142,6 +142,13 @@
       0%, 100% { transform: rotateX(2deg) rotateY(-1deg) translateY(0px); }
       50%       { transform: rotateX(1deg) rotateY(1deg) translateY(-8px); }
     }
+    /* versão mais suave (sem giro 3D) para celular */
+    @keyframes floatCardSoft {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+    /* pausa o balanço enquanto o cliente digita em algum campo */
+    .form-wrap:focus-within { animation-play-state: paused; }
     .form-wrap::before {
       content: '';
       position: absolute; inset: -1px;
@@ -880,7 +887,7 @@
     .wa-float i { color: #fff; font-size: 28px; }
 
     @media (max-width: 480px) {
-      .form-wrap { padding: 28px 22px; animation: none; transform: none; }
+      .form-wrap { padding: 28px 22px; transform: none; animation: floatCardSoft 5s ease-in-out infinite; }
       .form-scene { perspective: none; }
       .resultado-card { padding: 28px 22px; }
       .liberar-box { padding: 24px 20px; }
