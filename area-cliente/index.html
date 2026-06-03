@@ -568,6 +568,7 @@
       width: 52px; height: 52px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-size: 25px; flex-shrink: 0; border: 1px solid;
+      overflow: hidden;
     }
     .app-block-logo.nob {
       background: linear-gradient(135deg, rgba(14,165,233,0.2), rgba(99,102,241,0.12));
@@ -576,6 +577,11 @@
     .app-block-logo.rast {
       background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(14,165,233,0.12));
       border-color: rgba(34,197,94,0.4); color: #6ee7a8;
+    }
+    .app-block-logo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .app-block-title { flex: 1; text-align: left; min-width: 0; }
     .app-block-title strong {
@@ -982,7 +988,7 @@
     <!-- ──────── APP 1: NobGPS ──────── -->
     <div class="app-block" id="appNob">
       <div class="app-block-head" onclick="toggleApp('appNob')">
-        <div class="app-block-logo nob"><i class="fas fa-satellite-dish"></i></div>
+        <div class="app-block-logo nob"><img src="../Logo/nobgps.jpeg" alt="NobGPS"></div>
         <div class="app-block-title">
           <strong>NobGPS</strong>
           <span>Toque para abrir · Android, iPhone e Web</span>
@@ -1062,7 +1068,7 @@
     <!-- ──────── APP 2: Rastreando GPS ──────── -->
     <div class="app-block" id="appRast">
       <div class="app-block-head" onclick="toggleApp('appRast')">
-        <div class="app-block-logo rast"><i class="fas fa-location-crosshairs"></i></div>
+        <div class="app-block-logo rast"><img src="../Logo/Logo1.png" alt="Rastreando GPS"></div>
         <div class="app-block-title">
           <strong>Rastreando GPS</strong>
           <span>Toque para abrir · Android, iPhone e Web</span>
