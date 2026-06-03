@@ -1430,10 +1430,8 @@
   }
 
   (function iniciarDica() {
-    const hoje = new Date();
-    const inicioAno = new Date(hoje.getFullYear(), 0, 0);
-    const diaDoAno = Math.floor((hoje - inicioAno) / 86400000); // dia do ano (1..366)
-    const idx = ((diaDoAno % dicas.length) + dicas.length) % dicas.length;
+    // sorteia uma dica diferente a cada carregamento da página
+    const idx = Math.floor(Math.random() * dicas.length);
     const d = dicas[idx];
     document.getElementById('dicaTitulo').textContent = d.titulo;
     document.getElementById('dicaTexto').textContent = d.texto;
