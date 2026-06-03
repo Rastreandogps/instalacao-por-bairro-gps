@@ -480,6 +480,32 @@
     }
     .modal-btn.nao:hover { background: rgba(255,255,255,0.09); color: #fff; }
 
+    /* ── POPUP DICA DO DIA ── */
+    .dica-icon {
+      width: 66px; height: 66px; border-radius: 18px; margin: 0 auto 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 31px; color: #3a2a00;
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+      box-shadow: 0 10px 28px rgba(245,158,11,0.4);
+    }
+    .dica-badge {
+      display: inline-block;
+      background: rgba(251,191,36,0.12);
+      border: 1px solid rgba(251,191,36,0.35);
+      color: #fcd34d;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      padding: 5px 15px; border-radius: 50px; margin-bottom: 12px;
+    }
+    .dica-box { border-color: rgba(251,191,36,0.4) !important; }
+    .dica-box h3 { margin-bottom: 10px; }
+    .dica-box p { margin-bottom: 22px; }
+    .dica-box .modal-btn.sim {
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      color: #3a2a00; box-shadow: 0 8px 22px rgba(245,158,11,0.35);
+    }
+    .dica-box .modal-btn.sim:hover { box-shadow: 0 12px 28px rgba(245,158,11,0.5); }
+
     /* ═══════════════════════════════════════════════════════════
        📲 SEÇÃO DOWNLOAD DOS APPS
        ═══════════════════════════════════════════════════════════ */
@@ -1155,6 +1181,22 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════
+     💡 POPUP DICA DO DIA
+     ═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalDica">
+  <div class="modal-box dica-box">
+    <button class="modal-close" onclick="fecharDica()" aria-label="Fechar">&times;</button>
+    <div class="dica-icon"><i class="fas fa-lightbulb"></i></div>
+    <span class="dica-badge">💡 Dica do dia</span>
+    <h3 id="dicaTitulo">Dica</h3>
+    <p id="dicaTexto">Carregando dica...</p>
+    <button class="modal-btn sim" onclick="fecharDica()">
+      <i class="fas fa-check"></i> Entendi!
+    </button>
+  </div>
+</div>
+
 <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Poderia%20me%20ajudar%3F" class="wa-float" target="_blank" rel="noopener">
   <i class="fab fa-whatsapp"></i>
 </a>
@@ -1342,6 +1384,67 @@
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') fecharModalLiberar();
+  });
+
+  /* ═══════════════ DICA DO DIA (30 dicas, muda a cada dia) ═══════════════ */
+  const dicas = [
+    { titulo: "🚗 Recorra a multas com o histórico", texto: "O histórico de rotas registra por onde e quando seu veículo passou. Em alguns casos, esses dados ajudam a contestar multas de trânsito aplicadas indevidamente." },
+    { titulo: "🔒 O bloqueio é para emergências", texto: "A função de bloqueio foi feita para situações emergenciais, como furto ou roubo, ajudando a dificultar a fuga e a recuperação do veículo." },
+    { titulo: "📍 Localização em tempo real", texto: "Você pode ver onde seu veículo está a qualquer momento, direto pelo app. Ideal para emergências e para acompanhar quem está dirigindo." },
+    { titulo: "🚨 Alerta de ignição", texto: "Receba um aviso sempre que o veículo for ligado. É uma forma simples de perceber qualquer movimentação fora do normal." },
+    { titulo: "🧭 Cerca virtual (geofencing)", texto: "Você pode definir uma área no mapa e ser avisado caso o veículo entre ou saia dela. Ótimo para monitorar regiões de risco." },
+    { titulo: "⚡ Velocidade sob controle", texto: "O rastreador pode registrar a velocidade do veículo, ajudando a manter uma direção mais segura e econômica." },
+    { titulo: "⛽ Economize combustível", texto: "Acompanhando os trajetos, dá pra identificar caminhos mais curtos e evitar desvios desnecessários, reduzindo o gasto de combustível." },
+    { titulo: "👨‍👩‍👧 Acompanhe a família", texto: "Emprestou o carro para um familiar? Pelo rastreador você acompanha o trajeto e fica mais tranquilo até a volta." },
+    { titulo: "🛡️ Ajuda com o seguro", texto: "O histórico de localização pode servir como comprovação em casos de sinistro, acidente ou disputa com a seguradora." },
+    { titulo: "📞 Roubo? Acione a polícia primeiro", texto: "Em caso de roubo, ligue para o 190 e avise nossa central. O rastreador é uma ferramenta de apoio à recuperação, nunca para confronto." },
+    { titulo: "🔧 Manutenção em dia", texto: "Acompanhando o uso e a quilometragem pelo rastreador, fica mais fácil lembrar das revisões e cuidar melhor do veículo." },
+    { titulo: "🅿️ Ache o carro no estacionamento", texto: "Esqueceu onde estacionou em um shopping ou evento grande? A localização em tempo real mostra exatamente onde o veículo está." },
+    { titulo: "💻 Use também no computador", texto: "Além do celular, você acessa o rastreamento pelo computador, com uma tela maior e mais detalhes do trajeto." },
+    { titulo: "🔋 Fique de olho na alimentação", texto: "O rastreador precisa de energia para funcionar. Se notar que ele parou de atualizar, entre em contato para verificarmos." },
+    { titulo: "📅 Pagamento em dia, serviço ativo", texto: "Manter a mensalidade em dia garante que o rastreamento continue funcionando sem interrupções quando você mais precisar." },
+    { titulo: "🕵️ Identifique uso indevido", texto: "Desconfia que o veículo está sendo usado em horários ou locais estranhos? O histórico mostra todos os trajetos realizados." },
+    { titulo: "🚚 Gestão de frota", texto: "Tem mais de um veículo? Dá pra acompanhar todos em um só painel, controlando trajetos, paradas e jornada dos motoristas." },
+    { titulo: "⏱️ Controle de jornada", texto: "O rastreamento ajuda a registrar horários de saída, paradas e chegada, útil para quem usa o veículo a trabalho." },
+    { titulo: "📲 Mantenha seu cadastro atualizado", texto: "Se mudar de celular ou telefone, avise a gente. Assim você não perde acesso à sua área do cliente nem aos alertas." },
+    { titulo: "🧪 Teste de vez em quando", texto: "Abra o app de tempos em tempos e confira se a localização está atualizando. Detectar um problema cedo evita dor de cabeça depois." },
+    { titulo: "🌙 Alerta de movimento", texto: "Com o veículo parado, o sistema pode avisar caso ele se mova, ajudando a perceber rapidamente um possível furto." },
+    { titulo: "🗺️ Pontos de parada", texto: "O histórico mostra onde e por quanto tempo o veículo ficou parado, útil para conferir trajetos e comprovar deslocamentos." },
+    { titulo: "📦 Rastreador portátil", texto: "Troca de veículo com frequência? O modelo portátil acompanha você e pode ser usado em diferentes carros, motos ou cargas." },
+    { titulo: "💰 Comprove a quilometragem", texto: "Usa o carro a trabalho e precisa de reembolso de combustível? O histórico de rotas comprova os trajetos percorridos." },
+    { titulo: "🤝 Tranquilidade para emprestar", texto: "Vai emprestar o veículo? Você acompanha o trajeto em tempo real e recebe alertas, sem precisar ficar ligando." },
+    { titulo: "🚦 Direção mais segura", texto: "Acompanhar velocidade e trajetos incentiva uma condução mais responsável, o que reduz riscos e o desgaste do veículo." },
+    { titulo: "🔐 Não dependa só do bloqueio", texto: "O bloqueio dificulta a ação do criminoso, mas em caso de roubo o mais importante é registrar o B.O. e acionar as autoridades." },
+    { titulo: "📈 Histórico que rende", texto: "Os dados de trajeto ficam guardados e podem ser consultados depois, ajudando em comprovações, recursos e organização." },
+    { titulo: "🛰️ Como funciona o sinal", texto: "O rastreamento usa GPS e internet móvel. Em locais muito fechados, como garagens subterrâneas, o sinal pode oscilar por instantes." },
+    { titulo: "❤️ Conte com a gente", texto: "Ficou com dúvida sobre qualquer função do seu rastreador? Fale com a Rastreando GPS pelo WhatsApp. Estamos aqui para ajudar!" }
+  ];
+
+  function abrirDica() {
+    document.getElementById('modalDica').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharDica() {
+    document.getElementById('modalDica').classList.remove('show');
+    document.body.style.overflow = '';
+  }
+
+  (function iniciarDica() {
+    const hoje = new Date();
+    const inicioAno = new Date(hoje.getFullYear(), 0, 0);
+    const diaDoAno = Math.floor((hoje - inicioAno) / 86400000); // dia do ano (1..366)
+    const idx = ((diaDoAno % dicas.length) + dicas.length) % dicas.length;
+    const d = dicas[idx];
+    document.getElementById('dicaTitulo').textContent = d.titulo;
+    document.getElementById('dicaTexto').textContent = d.texto;
+    setTimeout(abrirDica, 900); // abre logo após carregar a página
+  })();
+
+  document.getElementById('modalDica').addEventListener('click', e => {
+    if (e.target.id === 'modalDica') fecharDica();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') fecharDica();
   });
 </script>
 
