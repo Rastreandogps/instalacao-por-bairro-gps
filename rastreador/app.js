@@ -225,6 +225,9 @@ var CONFIG = {
     ifr.allowFullscreen = true;
     ifr.title = v.getAttribute("aria-label") || "Vídeo";
     v.appendChild(ifr);
+    var vb = v.querySelector(".vbarra");
+    if (!vb) { vb = document.createElement("span"); vb.className = "vbarra"; vb.innerHTML = "<i></i>"; v.appendChild(vb); }
+    vb.firstChild.style.width = "0%";
     v.classList.add("tocando");
   });
 
@@ -239,8 +242,13 @@ var CONFIG = {
     if (d.event === "ready") {
       ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "ended" }), "https://player.vimeo.com");
       ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "finish" }), "https://player.vimeo.com");
+      ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "playProgress" }), "https://player.vimeo.com");
+    } else if ((d.event === "playProgress" || d.event === "timeupdate") && d.data) {
+      var bx = ifr.parentNode && ifr.parentNode.querySelector(".vbarra i");
+      var pc = d.data.percent != null ? d.data.percent : (d.data.duration ? d.data.seconds / d.data.duration : 0);
+      if (bx) bx.style.width = Math.min(100, pc * 100).toFixed(2) + "%";
     } else if (d.event === "ended" || d.event === "finish") {
-      var box = ifr.parentNode; ifr.remove(); if (box) box.classList.remove("tocando");
+      var box = ifr.parentNode; ifr.remove(); if (box) { box.classList.remove("tocando"); var b0 = box.querySelector(".vbarra i"); if (b0) b0.style.width = "0%"; }
     }
   });
 
@@ -276,7 +284,7 @@ var CONFIG = {
     } else { nfcV.preload = "auto"; tocar(); }
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
-      if (!nfcV.muted) { nfcV.currentTime = 0; tocar(); }
+      if (!nfcV.muted) { tocar(); }   // continua de onde estava
       nfcSom.textContent = nfcV.muted ? "🔇 Toque para ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
       posSom();
@@ -305,6 +313,23 @@ var CONFIG = {
       }, { threshold: 0.35 }).observe(appV);
     } else { appV.preload = "auto"; tocarApp(); }
   }
+
+  /* ---------- Barra de progresso nos vídeos do site (pedido do dono, 30/10) ---------- */
+  [["bloq-video", "video-topo"], ["nfc-video", null], ["app-video", null]].forEach(function (par) {
+    var vid = document.getElementById(par[0]); if (!vid) return;
+    var caixa = par[1] ? document.getElementById(par[1]) : vid.parentNode; if (!caixa) return;
+    var b = document.createElement("span"); b.className = "vbarra"; b.innerHTML = "<i></i>"; caixa.appendChild(b);
+    var fill = b.firstChild, rodando = false;
+    var pinta = function () {
+      fill.style.width = vid.duration ? Math.min(100, vid.currentTime / vid.duration * 100).toFixed(2) + "%" : "0%";
+      if (rodando) requestAnimationFrame(pinta);
+    };
+    vid.addEventListener("play", function () { if (!rodando) { rodando = true; requestAnimationFrame(pinta); } });
+    vid.addEventListener("pause", function () { rodando = false; pinta(); });
+    vid.addEventListener("ended", function () { rodando = false; pinta(); });
+    vid.addEventListener("seeked", pinta);
+    vid.addEventListener("emptied", function () { fill.style.width = "0%"; });
+  });
 
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");

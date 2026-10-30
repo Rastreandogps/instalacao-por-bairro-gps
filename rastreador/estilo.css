@@ -282,3 +282,10 @@ p{margin:0}
 .res__mens{display:flex;justify-content:space-between;align-items:baseline;gap:12px;background:#eef6ff;border:1.5px solid #cfe0ff;border-radius:12px;padding:.7em .9em;margin:10px 0 6px;font-weight:700;color:var(--tx)}
 .res__mens b{font-size:1.35rem;font-weight:800;color:var(--navy,#0b1a33)}
 .res__mens small{font-size:.8rem;font-weight:600;color:var(--mut);margin-left:2px}
+
+/* Barra de progresso dos vídeos (30/10) */
+.vbarra{position:absolute;left:14px;right:14px;bottom:7px;height:4px;border-radius:99px;background:rgba(255,255,255,.28);overflow:hidden;z-index:3;pointer-events:none}
+.vbarra i{display:block;height:100%;width:0;background:#fff;border-radius:99px;box-shadow:0 0 6px rgba(255,255,255,.6)}
+.video:not(.tocando) .vbarra{opacity:0}
+#video-topo .vbarra{bottom:4px}
+.app-demo__vid{position:relative}
