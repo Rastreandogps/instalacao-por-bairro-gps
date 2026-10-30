@@ -16,7 +16,8 @@
 <link rel="icon" type="image/png" href="/rastreador/img/favicon-48.png">
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=5">
+<link rel="preload" as="image" href="/rastreador/img/bloqueio-capa.webp">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -92,11 +93,13 @@
       </div>
 
       <div class="hero__video">
-        <a class="video" href="https://vimeo.com/1238128315" target="_blank" rel="noopener" data-vimeo="1238128315" aria-label="Assistir ao vídeo: bloqueio pelo celular na prática">
-          <img src="https://i.vimeocdn.com/video/2215154959-9c1c42460d1bba08e13217e9e4eab7ba692bba30b98017f01576c6c3c0194897-d_540x960" width="540" height="960" alt="Cliente bloqueando o veículo pelo celular" fetchpriority="high">
-          <span class="video__play"><svg class="ic"><use href="#i-play"/></svg></span>
+        <div class="video video--local" id="video-topo">
+          <video id="bloq-video" playsinline preload="none" poster="/rastreador/img/bloqueio-capa.webp" width="540" height="960" aria-label="Vídeo: cliente bloqueando o veículo pelo celular">
+            <source src="/rastreador/img/bloqueio.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="video__play" id="bloq-play" aria-label="Assistir ao vídeo do bloqueio, com som"><svg class="ic"><use href="#i-play"/></svg></button>
           <span class="video__leg">Veja o bloqueio na prática <small>com som</small></span>
-        </a>
+        </div>
       </div>
     </div>
   </section>
@@ -387,6 +390,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=15" defer></script>
+<script src="/rastreador/app.js?v=16" defer></script>
 </body>
 </html>

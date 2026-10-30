@@ -247,3 +247,9 @@ p{margin:0}
 .nfc__video{display:block;width:100%;height:100%;object-fit:cover;border-radius:22px;background:#000}
 .nfc__som{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);border:0;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;font:inherit;font-size:.82rem;font-weight:700;padding:.5em 1em;cursor:pointer;white-space:nowrap}
 .nfc__som.ligado{opacity:.75}
+
+/* Vídeo do topo no próprio site (30/10): capa + play com som */
+.video--local video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.video--local .video__play{border:0;cursor:pointer;padding:0}
+.video--local{cursor:pointer}
+.video--local.tocando{cursor:default}

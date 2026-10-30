@@ -243,6 +243,25 @@ var CONFIG = {
     }
   });
 
+  /* ---------- Vídeo do topo (no site): capa + play; toca com som; no fim volta para a capa ---------- */
+  var bloqV = document.getElementById("bloq-video");
+  var bloqBox = document.getElementById("video-topo");
+  if (bloqV && bloqBox) {
+    var iniciar = function () {
+      if (bloqBox.classList.contains("tocando")) return;
+      // pausa o vídeo da Fita se estiver com som
+      var nv = document.getElementById("nfc-video"); if (nv && !nv.muted) { nv.muted = true; }
+      bloqBox.classList.add("tocando");
+      bloqV.controls = true; bloqV.muted = false; bloqV.preload = "auto";
+      var p = bloqV.play(); if (p && p.catch) p.catch(function () {});
+    };
+    bloqBox.addEventListener("click", function (ev) { if (!bloqBox.classList.contains("tocando")) { ev.preventDefault(); iniciar(); } });
+    bloqV.addEventListener("ended", function () {
+      bloqV.controls = false; bloqBox.classList.remove("tocando");
+      bloqV.currentTime = 0; bloqV.load();   // volta a mostrar a capa
+    });
+  }
+
   /* ---------- Vídeo da Fita NFC: toca sozinho (sem som) quando aparece na tela ---------- */
   var nfcV = document.getElementById("nfc-video");
   var nfcSom = document.getElementById("nfc-som");
