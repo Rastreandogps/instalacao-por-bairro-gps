@@ -14,6 +14,11 @@ var CONFIG = {
     { ateKm: 60, regiao: 4, valor: 180.00 },
     { ateKm: 99999, regiao: null, valor: null }
   ],
+  // Cidades da serra: sempre "Consultar" (pedágio/subida), mesmo dentro dos km
+  serra: ["petropolis", "teresopolis", "nova friburgo", "miguel pereira", "paty do alferes",
+    "sao jose do vale do rio preto", "areal", "tres rios", "paraiba do sul", "vassouras",
+    "mendes", "engenheiro paulo de frontin", "sumidouro", "bom jardim", "duas barras", "sapucaia",
+    "itaipava", "corrêas", "correas", "secretario", "pedro do rio", "araras"],
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
   googleAdsId: "",
   googleAdsRotuloWhatsApp: ""
@@ -21,6 +26,11 @@ var CONFIG = {
 
 (function () {
   "use strict";
+  function semAcento(s) { return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
+  function ehSerra(texto) {
+    var t = " " + semAcento(texto).replace(/[^a-z0-9]+/g, " ") + " ";
+    return CONFIG.serra.some(function (c) { return t.indexOf(" " + semAcento(c) + " ") >= 0; });
+  }
   function brl(v) { return "R$ " + v.toFixed(2).replace(".", ","); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function waLink(texto) { return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(texto); }
@@ -62,8 +72,12 @@ var CONFIG = {
       var rt = j.routes && j.routes[0];
       if (!rt || !rt.distanceMeters) return { naoAchou: true };
       // Endereço vago demais (ex.: só "RJ" ou "Brasil"): pede para detalhar
-      var tipos = (j.geocodingResults && j.geocodingResults.destination && j.geocodingResults.destination.type) || [];
+      var geo = (j.geocodingResults && j.geocodingResults.destination) || {};
+      var tipos = geo.type || [];
       if (tipos.indexOf("country") >= 0 || tipos.indexOf("administrative_area_level_1") >= 0) return { naoAchou: true };
+      // Google não entendeu o texto e "chutou" uma cidade inteira: trata como não encontrado
+      var grosso = tipos.indexOf("locality") >= 0 || tipos.some(function (t) { return t.indexOf("administrative_area") === 0; });
+      if (geo.partialMatch && grosso) return { naoAchou: true };
       var fimLL = rt.legs && rt.legs[0] && rt.legs[0].endLocation && rt.legs[0].endLocation.latLng;
       var noRJ = !fimLL || (fimLL.latitude > -23.45 && fimLL.latitude < -20.7 && fimLL.longitude > -44.95 && fimLL.longitude < -40.9);
       return { km: rt.distanceMeters / 1000, noRJ: noRJ };
@@ -103,6 +117,7 @@ var CONFIG = {
 
   function calcular(endTxt, r) {
     if (r.naoAchou) return naoAchou(endTxt);
+    if (ehSerra(endTxt)) return resultadoConsultar(endTxt, "Na região serrana o valor depende do trajeto (pedágio e subida). Fale com a gente.");
     if (!r.noRJ) return resultadoConsultar(endTxt, "Esse endereço fica fora do estado do Rio. Fale com a gente para ver se atendemos.");
     for (var i = 0; i < CONFIG.faixas.length; i++) {
       var f = CONFIG.faixas[i];
