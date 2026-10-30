@@ -188,6 +188,21 @@ var CONFIG = {
     v.classList.add("tocando");
   });
 
+  /* Quando o vídeo termina, volta a capa com o play (em vez da tela "Mais de..." do Vimeo) */
+  window.addEventListener("message", function (ev) {
+    if (!/^https:\/\/player\.vimeo\.com$/.test(ev.origin)) return;
+    var d = ev.data; if (typeof d === "string") { try { d = JSON.parse(d); } catch (e) { return; } }
+    if (!d) return;
+    var ifr = null;
+    document.querySelectorAll(".video.tocando iframe").forEach(function (f) { if (f.contentWindow === ev.source) ifr = f; });
+    if (!ifr) return;
+    if (d.event === "ready") {
+      ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "ended" }), "https://player.vimeo.com");
+    } else if (d.event === "ended") {
+      var box = ifr.parentNode; ifr.remove(); if (box) box.classList.remove("tocando");
+    }
+  });
+
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");
   var hero = document.querySelector(".hero");
