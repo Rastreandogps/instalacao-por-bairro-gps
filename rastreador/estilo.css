@@ -74,6 +74,8 @@ p{margin:0}
 .video img,.video iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .video::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.65));pointer-events:none}
 .video.tocando::after{display:none}
+.video.tocando .video__play,.video.tocando .video__leg,.video.tocando img{display:none}
+.video.tocando iframe{z-index:5} /* depois de tocar, o play e a legenda somem e o vídeo recebe os toques (pausar, tela cheia) */
 .video__play{position:absolute;left:50%;top:50%;width:68px;height:68px;margin:-34px 0 0 -34px;border-radius:50%;background:rgba(255,255,255,.95);color:var(--navy);display:grid;place-items:center;z-index:2;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:transform .2s ease}
 .video__play .ic{width:30px;height:30px;margin-left:4px}
 .video:hover .video__play{transform:scale(1.07)}
