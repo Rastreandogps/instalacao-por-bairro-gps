@@ -149,7 +149,8 @@ var CONFIG = {
       " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
       '<p class="res__val">' + brl(faixa.valor) + ' <small>instalação</small></p>' +
-      '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade</p>' +
+      '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small></b></p>' +
+      '<p class="res__det">Sem fidelidade.</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Agendar pelo WhatsApp</a></div>');
   }
 
@@ -276,11 +277,20 @@ var CONFIG = {
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
       if (!nfcV.muted) { nfcV.currentTime = 0; tocar(); }
-      nfcSom.textContent = nfcV.muted ? "🔇 Toque para ouvir" : "🔊 Som ligado";
+      nfcSom.textContent = nfcV.muted ? "🔇 Toque para ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
+      posSom();
       nfcSom.setAttribute("aria-label", nfcV.muted ? "Ligar o som do vídeo" : "Desligar o som do vídeo");
     };
-    if (nfcSom) nfcSom.addEventListener("click", alternarSom);
+    // Sem som: o botão aparece grande no meio quando a animação (3 s) passa para o vídeo
+    var posSom = function () {
+      if (!nfcSom) return;
+      var noMeio = nfcV.muted && nfcV.currentTime >= 2.7;
+      nfcSom.classList.toggle("nfc__som--centro", noMeio);
+      nfcSom.classList.toggle("escondido", nfcV.muted && !noMeio);
+    };
+    nfcV.addEventListener("timeupdate", posSom); nfcV.addEventListener("seeked", posSom);
+    if (nfcSom) nfcSom.addEventListener("click", function (ev) { ev.stopPropagation(); alternarSom(); });
     nfcV.addEventListener("click", alternarSom);
   }
 
