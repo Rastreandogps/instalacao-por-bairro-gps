@@ -8,7 +8,7 @@ var CONFIG = {
   googleRotasChave: "AIzaSyDBA1qcNcAgZ3XB5smm67o09m8fQpfNz-k",
   // Preço da instalação por KM DE ESTRADA a partir da base. valor null = "Consultar pelo WhatsApp"
   faixas: [
-    { ateKm: 40, regiao: 1, valor: 89.90 },
+    { ateKm: 42, regiao: 1, valor: 89.90 },
     { ateKm: 50, regiao: 2, valor: 120.00 },
     { ateKm: 55, regiao: 3, valor: 150.00 },
     { ateKm: 60, regiao: 4, valor: 180.00 },
