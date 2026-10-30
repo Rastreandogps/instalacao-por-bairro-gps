@@ -28,7 +28,10 @@ var CONFIG = {
   "use strict";
   function semAcento(s) { return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
   function ehSerra(texto) {
-    var t = " " + semAcento(texto).replace(/[^a-z0-9]+/g, " ") + " ";
+    // Olha só a cidade: o último pedaço do endereço (ignorando "RJ", "Brasil" e o CEP)
+    var partes = semAcento(texto).replace(/\(cep[^)]*\)/g, "").split(/[,\-]/).map(function (p) { return p.trim(); })
+      .filter(function (p) { return p && !/^(rj|brasil|rio de janeiro estado|\d[\d .]*)$/.test(p); });
+    var t = " " + (partes.length ? partes[partes.length - 1] : "").replace(/[^a-z0-9]+/g, " ") + " ";
     return CONFIG.serra.some(function (c) { return t.indexOf(" " + semAcento(c) + " ") >= 0; });
   }
   function brl(v) { return "R$ " + v.toFixed(2).replace(".", ","); }
