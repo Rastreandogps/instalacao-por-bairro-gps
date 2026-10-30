@@ -16,7 +16,7 @@
 <link rel="icon" type="image/png" href="/rastreador/img/favicon-48.png">
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=2">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=3">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -65,8 +65,8 @@
 
         <div class="preco">
           <div class="preco__item">
-            <span class="preco__rot">Instalação a partir de</span>
-            <span class="preco__val">R$ 89,90</span>
+            <span class="preco__rot">Instalação</span>
+            <span class="preco__val"><span class="preco__ap">A partir de</span>R$ 89,90<sup>*</sup></span>
           </div>
           <div class="preco__div" aria-hidden="true"></div>
           <div class="preco__item">
@@ -74,6 +74,7 @@
             <span class="preco__val">R$ 59,90</span>
           </div>
           <span class="preco__fid">Sem fidelidade</span>
+          <span class="preco__nota">* O valor da instalação muda conforme a região. <a href="#preco">Veja o do seu endereço</a></span>
         </div>
 
         <div class="hero__acoes">
@@ -118,9 +119,10 @@
       </noscript>
 
       <ul class="faixas">
-        <li><b>R$ 89,90</b> Rio, Baixada e Niterói</li>
-        <li><b>R$ 120 a R$ 150</b> São Gonçalo e regiões mais distantes</li>
-        <li><b>Consultar</b> região serrana e acima de 50 km</li>
+        <li><span>Região 1</span><b>R$ 89,90</b></li>
+        <li><span>Região 2</span><b>R$ 120,00</b></li>
+        <li><span>Região 3</span><b>R$ 150,00</b></li>
+        <li><span>Fora das regiões</span><b>Consultar</b></li>
       </ul>
       <p class="nota">Mensalidade de <b>R$ 59,90</b> igual para carro, moto e caminhão. Instalação em cerca de 1 hora, no mesmo dia ou no dia seguinte.</p>
     </div>
@@ -301,7 +303,7 @@
         </details>
         <details>
           <summary>Quanto custa?</summary>
-          <p>A instalação é a partir de R$ 89,90 e varia com a distância (veja o valor no seu endereço acima). A mensalidade é R$ 59,90, igual para carro, moto e caminhão.</p>
+          <p>A instalação é <b>a partir de R$ 89,90</b> e muda conforme a região (veja o valor do seu endereço acima). A mensalidade é R$ 59,90, igual para carro, moto e caminhão.</p>
         </details>
         <details>
           <summary>O bloqueio está incluso?</summary>
@@ -329,7 +331,7 @@
         </details>
         <details>
           <summary>Quais regiões vocês atendem?</summary>
-          <p>Rio de Janeiro (capital), Baixada Fluminense, Niterói e São Gonçalo. Para lugares mais distantes ou na região serrana, consulte pelo WhatsApp.</p>
+          <p>Rio de Janeiro (capital), Baixada Fluminense, Niterói e São Gonçalo, divididos em 3 regiões de preço. Para lugares fora dessas regiões ou na região serrana, consulte pelo WhatsApp.</p>
         </details>
         <details>
           <summary>Qual o horário de atendimento?</summary>
@@ -343,7 +345,7 @@
   <section class="final">
     <div class="wrap final__in">
       <h2>Proteja seu veículo hoje</h2>
-      <p>Instalação a partir de R$ 89,90 · Mensalidade R$ 59,90 · Sem fidelidade</p>
+      <p>Instalação <b class="destaque-ap">a partir de</b> R$ 89,90 · Mensalidade R$ 59,90 · Sem fidelidade</p>
       <a class="btn btn--wa btn--lg" data-wa href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Vi%20o%20an%C3%BAncio%20no%20Google%20e%20quero%20saber%20sobre%20o%20rastreador." target="_blank" rel="noopener">
         <svg class="ic"><use href="#i-wa"/></svg> Falar no WhatsApp
       </a>
@@ -388,6 +390,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=4" defer></script>
+<script src="/rastreador/app.js?v=5" defer></script>
 </body>
 </html>

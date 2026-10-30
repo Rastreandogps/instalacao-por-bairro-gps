@@ -115,8 +115,8 @@ p{margin:0}
 @keyframes gira{to{transform:rotate(360deg)}}
 .aviso{background:var(--cinza);border-radius:12px;padding:14px}
 .faixas{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:8px}
-.faixas li{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px;padding:12px 14px;border-radius:12px;background:var(--cinza);font-size:.93rem;color:var(--mut)}
-.faixas b{color:var(--tx);min-width:7.5em}
+.faixas li{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px 14px;border-radius:12px;background:var(--cinza);font-size:.95rem;color:var(--mut)}
+.faixas b{color:var(--tx)}
 
 /* 3. fita NFC */
 .sec--escuro{background:var(--navy);color:#fff}
@@ -228,3 +228,11 @@ p{margin:0}
 .doc ul{padding-left:1.2em}
 .doc .data{color:var(--mut);font-size:.9rem}
 .voltar{display:inline-block;margin-bottom:18px;font-weight:600;text-decoration:none}
+
+/* destaque do "a partir de" (opção B, 30/10) */
+.preco__ap{display:block;font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#ffd23f;line-height:1;margin-bottom:3px}
+.preco__val sup{font-size:.6em;color:#ffd23f}
+.preco__nota{flex-basis:100%;font-size:.82rem;color:#c9d3e6;border-top:1px dashed rgba(255,255,255,.18);padding-top:8px}
+.preco__nota a{color:#ffd23f;font-weight:700}
+.destaque-ap{color:#ffd23f;text-transform:uppercase;letter-spacing:.04em;font-size:.92em}
+.res__reg{display:inline-block;font-size:.8rem;font-weight:800;letter-spacing:.04em;color:var(--azul);background:#eaf0ff;border-radius:999px;padding:.25em .7em;margin-top:8px}

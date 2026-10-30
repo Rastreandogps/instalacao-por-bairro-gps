@@ -4,19 +4,21 @@ var CONFIG = {
   whatsapp: "5521980886087",
   // Base da equipe (Jardim 25 de Agosto, Duque de Caxias) — coordenada arredondada
   base: { lat: -22.787, lon: -43.308 },
-  // Faixas por distância em linha reta (km). valor null = "Consultar pelo WhatsApp"
+  // Preço da instalação por região
+  regioes: { 1: 89.90, 2: 120.00, 3: 150.00 },
+  // Região por distância em linha reta da base (km). regiao null = "Consultar pelo WhatsApp"
   faixas: [
-    { ateKm: 30, valor: 89.90 },
-    { ateKm: 35, valor: 120.00 },
-    { ateKm: 50, valor: 150.00 },
-    { ateKm: 9999, valor: null }
+    { ateKm: 30, regiao: 1 },
+    { ateKm: 35, regiao: 2 },
+    { ateKm: 50, regiao: 3 },
+    { ateKm: 9999, regiao: null }
   ],
   // Cidades da serra: sempre "Consultar" (pedágio/distância)
   serra: ["petropolis", "teresopolis", "nova friburgo", "miguel pereira", "paty do alferes",
     "sao jose do vale do rio preto", "areal", "tres rios", "paraiba do sul", "vassouras",
     "mendes", "engenheiro paulo de frontin", "sumidouro", "bom jardim", "duas barras", "sapucaia"],
-  // Cidades com preço fixo de instalação (vale mais que a distância)
-  precoPorCidade: { "sao goncalo": 150.00 },
+  // Cidades com região fixa (vale mais que a distância)
+  regiaoPorCidade: { "sao goncalo": 3 },
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
   googleAdsId: "",
   googleAdsRotuloWhatsApp: ""
@@ -70,11 +72,13 @@ var CONFIG = {
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Consultar pelo WhatsApp</a></div>');
   }
 
-  function resultadoPreco(endTxt, km, valor) {
-    var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt + ". Valor informado no site: " + brl(valor) + ".";
+  function resultadoPreco(endTxt, regiao) {
+    var valor = CONFIG.regioes[regiao];
+    var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt + " (Região " + regiao + "). Valor informado no site: " + brl(valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
+      '<span class="res__reg">Seu endereço fica na Região ' + regiao + '</span>' +
       '<p class="res__val">' + brl(valor) + ' <small>instalação</small></p>' +
-      '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade · ' + (km < 1 ? 'menos de 1 km' : 'cerca de ' + Math.round(km) + ' km') + ' da nossa base</p>' +
+      '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Agendar pelo WhatsApp</a></div>');
   }
 
@@ -94,11 +98,11 @@ var CONFIG = {
       return resultadoConsultar(endTxt, "Na região serrana o valor depende do trajeto (pedágio e distância).");
     }
     var km = distKm(CONFIG.base, { lat: parseFloat(achado.lat), lon: parseFloat(achado.lon) });
-    if (c && CONFIG.precoPorCidade.hasOwnProperty(c)) return resultadoPreco(endTxt, km, CONFIG.precoPorCidade[c]);
+    if (c && CONFIG.regiaoPorCidade.hasOwnProperty(c)) return resultadoPreco(endTxt, CONFIG.regiaoPorCidade[c]);
     for (var i = 0; i < CONFIG.faixas.length; i++) {
       if (km <= CONFIG.faixas[i].ateKm) {
-        if (CONFIG.faixas[i].valor == null) return resultadoConsultar(endTxt, "Endereço a mais de 50 km da nossa base. Fale com a gente para ver o valor.");
-        return resultadoPreco(endTxt, km, CONFIG.faixas[i].valor);
+        if (CONFIG.faixas[i].regiao == null) return resultadoConsultar(endTxt, "Endereço fora das nossas regiões de atendimento. Fale com a gente para ver o valor.");
+        return resultadoPreco(endTxt, CONFIG.faixas[i].regiao);
       }
     }
   }
