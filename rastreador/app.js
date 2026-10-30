@@ -284,6 +284,18 @@ var CONFIG = {
     nfcV.addEventListener("click", alternarSom);
   }
 
+  /* ---------- Vídeo do app: toca sozinho (sem som) quando aparece na tela ---------- */
+  var appV = document.getElementById("app-video");
+  if (appV) {
+    var tocarApp = function () { var p = appV.play(); if (p && p.catch) p.catch(function () {}); };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { if (appV.preload !== "auto") { appV.preload = "auto"; } tocarApp(); }
+        else appV.pause();
+      }, { threshold: 0.35 }).observe(appV);
+    } else { appV.preload = "auto"; tocarApp(); }
+  }
+
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");
   var hero = document.querySelector(".hero");
