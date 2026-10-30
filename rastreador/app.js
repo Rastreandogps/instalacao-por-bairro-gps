@@ -15,6 +15,8 @@ var CONFIG = {
   serra: ["petropolis", "teresopolis", "nova friburgo", "miguel pereira", "paty do alferes",
     "sao jose do vale do rio preto", "areal", "tres rios", "paraiba do sul", "vassouras",
     "mendes", "engenheiro paulo de frontin", "sumidouro", "bom jardim", "duas barras", "sapucaia"],
+  // Cidades com preço fixo de instalação (vale mais que a distância)
+  precoPorCidade: { "sao goncalo": 150.00 },
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
   googleAdsId: "",
   googleAdsRotuloWhatsApp: ""
@@ -92,6 +94,7 @@ var CONFIG = {
       return resultadoConsultar(endTxt, "Na região serrana o valor depende do trajeto (pedágio e distância).");
     }
     var km = distKm(CONFIG.base, { lat: parseFloat(achado.lat), lon: parseFloat(achado.lon) });
+    if (c && CONFIG.precoPorCidade.hasOwnProperty(c)) return resultadoPreco(endTxt, km, CONFIG.precoPorCidade[c]);
     for (var i = 0; i < CONFIG.faixas.length; i++) {
       if (km <= CONFIG.faixas[i].ateKm) {
         if (CONFIG.faixas[i].valor == null) return resultadoConsultar(endTxt, "Endereço a mais de 50 km da nossa base. Fale com a gente para ver o valor.");
