@@ -97,7 +97,7 @@ var CONFIG = {
   }
 
   // Pede ao Google a rota de carro da base até o endereço. Devolve {km} ou {naoAchou:true}.
-  function rotaGoogle(endereco) {
+  function rotaGoogle(endereco, aceitaCidade) {
     return fetch("https://routes.googleapis.com/directions/v2:computeRoutes", {
       method: "POST",
       headers: {
@@ -127,7 +127,7 @@ var CONFIG = {
       if (tipos.indexOf("country") >= 0 || tipos.indexOf("administrative_area_level_1") >= 0) return { naoAchou: true };
       // Google não entendeu o texto e "chutou" uma cidade inteira: trata como não encontrado
       var grosso = tipos.indexOf("locality") >= 0 || tipos.some(function (t) { return t.indexOf("administrative_area") === 0; });
-      if (geo.partialMatch && grosso) return { naoAchou: true };
+      if (geo.partialMatch && grosso && !aceitaCidade) return { naoAchou: true };
       var fimLL = rt.legs && rt.legs[0] && rt.legs[0].endLocation && rt.legs[0].endLocation.latLng;
       var noRJ = !fimLL || (fimLL.latitude > -23.45 && fimLL.latitude < -20.7 && fimLL.longitude > -44.95 && fimLL.longitude < -40.9);
       return { km: rt.distanceMeters / 1000, noRJ: noRJ, ll: fimLL };
@@ -196,7 +196,7 @@ var CONFIG = {
         var endTxt = [c.logradouro, c.bairro, c.localidade].filter(Boolean).join(", ") + " (CEP " + c.cep + ")";
         if (c.uf !== "RJ") return { endTxt: endTxt, r: { km: 0, noRJ: false } };
         var dest = [c.logradouro, c.bairro, c.localidade, "RJ", c.cep, "Brasil"].filter(Boolean).join(", ");
-        return rotaGoogle(dest).then(function (r) { return { endTxt: endTxt, r: r }; });
+        return rotaGoogle(dest, true).then(function (r) { return { endTxt: endTxt, r: r }; });
       });
     } else {
       var dest = /(\brj\b|rio de janeiro|brasil)/i.test(q) ? q + ", Brasil" : q + ", RJ, Brasil";
