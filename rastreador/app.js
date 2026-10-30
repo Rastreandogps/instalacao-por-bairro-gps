@@ -243,6 +243,28 @@ var CONFIG = {
     }
   });
 
+  /* ---------- Vídeo da Fita NFC: toca sozinho (sem som) quando aparece na tela ---------- */
+  var nfcV = document.getElementById("nfc-video");
+  var nfcSom = document.getElementById("nfc-som");
+  if (nfcV) {
+    var tocar = function () { var p = nfcV.play(); if (p && p.catch) p.catch(function () {}); };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { if (nfcV.preload !== "auto") { nfcV.preload = "auto"; } tocar(); }
+        else nfcV.pause();
+      }, { threshold: 0.35 }).observe(nfcV);
+    } else { nfcV.preload = "auto"; tocar(); }
+    var alternarSom = function () {
+      nfcV.muted = !nfcV.muted;
+      if (!nfcV.muted) { nfcV.currentTime = 0; tocar(); }
+      nfcSom.textContent = nfcV.muted ? "🔇 Toque para ouvir" : "🔊 Som ligado";
+      nfcSom.classList.toggle("ligado", !nfcV.muted);
+      nfcSom.setAttribute("aria-label", nfcV.muted ? "Ligar o som do vídeo" : "Desligar o som do vídeo");
+    };
+    if (nfcSom) nfcSom.addEventListener("click", alternarSom);
+    nfcV.addEventListener("click", alternarSom);
+  }
+
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");
   var hero = document.querySelector(".hero");

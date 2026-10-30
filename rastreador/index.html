@@ -16,7 +16,7 @@
 <link rel="icon" type="image/png" href="/rastreador/img/favicon-48.png">
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=4">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=5">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -125,8 +125,11 @@
   <!-- 3. FITA NFC -->
   <section class="sec sec--escuro" id="fita">
     <div class="wrap nfc">
-      <div class="nfc__img">
-        <img src="/rastreador/img/fita-nfc.webp" width="640" height="483" alt="Fitas NFC de Emergência da Rastreando GPS" loading="lazy">
+      <div class="nfc__img nfc__img--video">
+        <video id="nfc-video" class="nfc__video" muted loop playsinline preload="none" poster="/rastreador/img/fita-nfc-capa.webp" width="480" height="854" aria-label="Vídeo: a Fita NFC de Emergência funcionando">
+          <source src="/rastreador/img/fita-nfc.mp4" type="video/mp4">
+        </video>
+        <button type="button" class="nfc__som" id="nfc-som" aria-label="Ligar o som do vídeo">🔇 Toque para ouvir</button>
         <span class="nfc__selo">2 grátis</span>
       </div>
       <div class="nfc__txt">
@@ -384,6 +387,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=14" defer></script>
+<script src="/rastreador/app.js?v=15" defer></script>
 </body>
 </html>

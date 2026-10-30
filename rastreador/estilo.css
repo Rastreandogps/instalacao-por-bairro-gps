@@ -241,3 +241,9 @@ p{margin:0}
 @keyframes pulsaAp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.06)}}
 .preco__ap{transform-origin:left center;animation:pulsaAp 1.6s ease-in-out infinite}
 .destaque-ap{display:inline-block;animation:pulsaAp 1.6s ease-in-out infinite}
+
+/* Fita NFC em vídeo (30/10): toca sozinho, sem som, em repetição */
+.nfc__img--video{background:#000;padding:0;max-width:300px;border-radius:22px;aspect-ratio:9/16;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.nfc__video{display:block;width:100%;height:100%;object-fit:cover;border-radius:22px;background:#000}
+.nfc__som{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);border:0;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;font:inherit;font-size:.82rem;font-weight:700;padding:.5em 1em;cursor:pointer;white-space:nowrap}
+.nfc__som.ligado{opacity:.75}
