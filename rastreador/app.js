@@ -42,8 +42,8 @@ var CONFIG = {
     ]
   },
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
-  googleAdsId: "",
-  googleAdsRotuloWhatsApp: ""
+  googleAdsId: "AW-16522124473",
+  googleAdsRotuloWhatsApp: "7qkoCIG7j68dELm5rsY9"
 };
 
 (function () {
