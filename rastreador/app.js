@@ -76,7 +76,6 @@ var CONFIG = {
     var valor = CONFIG.regioes[regiao];
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt + " (Região " + regiao + "). Valor informado no site: " + brl(valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
-      '<span class="res__reg">Seu endereço fica na Região ' + regiao + '</span>' +
       '<p class="res__val">' + brl(valor) + ' <small>instalação</small></p>' +
       '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Agendar pelo WhatsApp</a></div>');

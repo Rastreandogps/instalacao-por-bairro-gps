@@ -236,3 +236,8 @@ p{margin:0}
 .preco__nota a{color:#ffd23f;font-weight:700}
 .destaque-ap{color:#ffd23f;text-transform:uppercase;letter-spacing:.04em;font-size:.92em}
 .res__reg{display:inline-block;font-size:.8rem;font-weight:800;letter-spacing:.04em;color:var(--azul);background:#eaf0ff;border-radius:999px;padding:.25em .7em;margin-top:8px}
+
+/* "A partir de" pulsando (pedido do dono, 30/10) */
+@keyframes pulsaAp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.06)}}
+.preco__ap{transform-origin:left center;animation:pulsaAp 1.6s ease-in-out infinite}
+.destaque-ap{display:inline-block;animation:pulsaAp 1.6s ease-in-out infinite}
