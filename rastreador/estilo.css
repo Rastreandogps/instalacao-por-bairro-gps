@@ -1,7 +1,7 @@
 /* Rastreando GPS — página /rastreador (Google Ads) */
 :root{
-  --navy:#0b1730; --navy2:#13244a; --ciano:#17b8c9; --ciano-escuro:#0e8f9e;
-  --verm:#e0261c; --verde:#1fa855; --verde2:#178c46;
+  --navy:#0b1730; --navy2:#13244a; --ciano:#17b8c9; --ciano-escuro:#0b6f7a;
+  --verm:#e0261c; --verde:#128040; --verde2:#0e6b35;
   --azul:#1b4fd8; --azul2:#1640b3;
   --tx:#0f172a; --mut:#5b6475; --linha:#e5e8ef; --cinza:#f4f6f9; --branco:#fff;
   --r:16px; --sombra:0 1px 2px rgba(15,23,42,.06),0 8px 24px rgba(15,23,42,.06);
@@ -26,7 +26,7 @@ p{margin:0}
 .btn:active{transform:scale(.98)}
 .btn--lg{font-size:1.06rem;padding:1em 1.6em}
 .btn--sm{font-size:.9rem;padding:.6em 1.1em}
-.btn--wa{background:var(--verde);color:#fff;box-shadow:0 6px 18px rgba(31,168,85,.28)}
+.btn--wa{background:var(--verde);color:#fff;box-shadow:0 6px 18px rgba(18,128,64,.28)}
 .btn--wa:hover{background:var(--verde2)}
 .btn--azul{background:var(--azul);color:#fff}
 .btn--azul:hover{background:var(--azul2)}
