@@ -32,7 +32,7 @@ var CONFIG = {
       { nome: "buzios", lat: -22.7469, lon: -41.8817, sim: true },
       { nome: "rio das ostras", lat: -22.5269, lon: -41.9450, sim: true },
       { nome: "macae", lat: -22.3768, lon: -41.7869, sim: true },
-      { nome: "cabo frio", lat: -22.8894, lon: -42.0286, sim: false },
+      { nome: "cabo frio", lat: -22.8894, lon: -42.0286, sim: true },
       { nome: "arraial do cabo", lat: -22.9661, lon: -42.0278, sim: true },
       { nome: "unamar", lat: -22.6460, lon: -42.0040, sim: false },
       { nome: "tamoios", lat: -22.6460, lon: -42.0040, sim: false },
