@@ -43,11 +43,24 @@ var CONFIG = {
   },
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
   googleAdsId: "AW-16522124473",
-  googleAdsRotuloWhatsApp: "7qkoCIG7j68dELm5rsY9"
+  googleAdsRotuloWhatsApp: "7qkoCIG7j68dELm5rsY9",
+  // Medição (30/10): Google Analytics 4 e Microsoft Clarity — só carregam com o aceite dos cookies
+  ga4Id: "G-2HEF1MKTG3",
+  clarityId: "z6211xuz4x"
 };
 
 (function () {
   "use strict";
+
+  /* ---------- Medição: guarda os eventos até a pessoa aceitar os cookies ---------- */
+  var filaMedir = [], medindo = false;
+  function medir(nome, params) {
+    if (!medindo) { if (filaMedir.length < 60) filaMedir.push([nome, params || {}]); return; }
+    try {
+      if (CONFIG.ga4Id && window.gtag) window.gtag("event", nome, Object.assign({ send_to: CONFIG.ga4Id }, params || {}));
+      if (window.clarity) window.clarity("event", nome);
+    } catch (e) {}
+  }
   function semAcento(s) { return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
   // Último pedaço do endereço (a cidade), ignorando "RJ", "Brasil" e o CEP
   function cidadeDoTexto(texto) {
@@ -137,6 +150,7 @@ var CONFIG = {
   function mostrar(html) { res.innerHTML = html; }
 
   function resultadoConsultar(endTxt, motivo) {
+    medir("busca_preco", { resultado: "consultar" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + endTxt;
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
       '<p class="res__val">Consultar</p><p class="res__det">' + esc(motivo) + '</p>' +
@@ -144,6 +158,7 @@ var CONFIG = {
   }
 
   function resultadoPreco(endTxt, faixa, km) {
+    medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: faixa.valor });
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt +
       " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
@@ -155,6 +170,7 @@ var CONFIG = {
   }
 
   function naoAchou(q) {
+    medir("busca_preco", { resultado: "nao_encontrado" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
     mostrar('<div class="res"><p class="res__err">Não encontramos esse endereço. Tente com <b>rua, número, bairro e cidade</b>, ou o <b>CEP</b>.</p>' +
       '<p class="res__det" style="margin-top:8px">Se preferir, mande o endereço no WhatsApp e respondemos o valor.</p>' +
@@ -162,6 +178,7 @@ var CONFIG = {
   }
 
   function falhou(q) {
+    medir("busca_preco", { resultado: "erro" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
     mostrar('<div class="res"><p class="res__err">Não conseguimos calcular agora.</p><p class="res__det" style="margin-top:8px">Mande o endereço no WhatsApp e respondemos o valor.</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Mandar no WhatsApp</a></div>');
@@ -247,6 +264,7 @@ var CONFIG = {
       var bx = ifr.parentNode && ifr.parentNode.querySelector(".vbarra i");
       var pc = d.data.percent != null ? d.data.percent : (d.data.duration ? d.data.seconds / d.data.duration : 0);
       if (bx) bx.style.width = Math.min(100, pc * 100).toFixed(2) + "%";
+      marcoVideo("vimeo_" + (ifr.parentNode.getAttribute("data-vimeo") || "?"), pc * 100);
     } else if (d.event === "ended" || d.event === "finish") {
       var box = ifr.parentNode; ifr.remove(); if (box) { box.classList.remove("tocando"); var b0 = box.querySelector(".vbarra i"); if (b0) b0.style.width = "0%"; }
     }
@@ -284,7 +302,7 @@ var CONFIG = {
     } else { nfcV.preload = "auto"; tocar(); }
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
-      if (!nfcV.muted) { tocar(); }   // continua de onde estava
+      if (!nfcV.muted) { tocar(); medir("fita_som_ligado", { segundo: Math.round(nfcV.currentTime) }); }   // continua de onde estava
       nfcSom.textContent = nfcV.muted ? "🔇 Toque para ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
       posSom();
@@ -331,6 +349,38 @@ var CONFIG = {
     vid.addEventListener("emptied", function () { fill.style.width = "0%"; });
   });
 
+  /* ---------- Medição dos vídeos, das seções e dos cliques ---------- */
+  var marcosFeitos = {};
+  function marcoVideo(nome, pct) {
+    [[1, "inicio"], [25, "25"], [50, "50"], [75, "75"], [95, "fim"]].forEach(function (m) {
+      var k = nome + "|" + m[1];
+      if (pct >= m[0] && !marcosFeitos[k]) { marcosFeitos[k] = 1; medir(m[1] === "inicio" ? "video_inicio" : "video_progresso", { video: nome, marco: m[1] }); }
+    });
+  }
+  [["bloq-video", "bloqueio_topo"], ["nfc-video", "fita_nfc"], ["app-video", "app"]].forEach(function (par) {
+    var vid = document.getElementById(par[0]); if (!vid) return;
+    vid.addEventListener("timeupdate", function () { if (vid.duration) marcoVideo(par[1], vid.currentTime / vid.duration * 100); });
+  });
+  if ("IntersectionObserver" in window) {
+    var secVistas = {};
+    var obsSec = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var nome = e.target.id || (e.target.className || "").split(" ")[0] || e.target.tagName.toLowerCase();
+        if (secVistas[nome]) return; secVistas[nome] = 1;
+        medir(nome === "rodape" ? "fim_da_pagina" : "secao_vista", { secao: nome });
+        obsSec.unobserve(e.target);
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll("main > section, body > section, .hero, .app-demo, .final, footer.rodape").forEach(function (s) { obsSec.observe(s); });
+  }
+  document.addEventListener("click", function (ev) {
+    var a = ev.target.closest && ev.target.closest("[data-wa]");
+    if (!a) return;
+    var sec = a.closest("section, footer");
+    medir("clique_whatsapp", { local: a.classList.contains("wa-fixo") ? "botao_fixo" : (sec ? (sec.id || (sec.className || "").split(" ")[0]) : "outro") });
+  });
+
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");
   var hero = document.querySelector(".hero");
@@ -352,9 +402,20 @@ var CONFIG = {
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag("js", new Date());
     window.gtag("config", CONFIG.googleAdsId);
+    if (CONFIG.ga4Id) window.gtag("config", CONFIG.ga4Id);
     var s = document.createElement("script");
-    s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.googleAdsId);
+    s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.ga4Id || CONFIG.googleAdsId);
     document.head.appendChild(s);
+    if (CONFIG.clarityId) {
+      (function (c, l, a, r, i, t, y) {
+        c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
+        t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", CONFIG.clarityId);
+      window.clarity("consent");
+    }
+    medindo = true;
+    filaMedir.splice(0).forEach(function (x) { medir(x[0], x[1]); });
   }
   if (CONFIG.googleAdsId) {
     if (abrir) abrir.hidden = false;
