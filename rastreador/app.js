@@ -72,7 +72,7 @@ var CONFIG = {
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt + ". Valor informado no site: " + brl(valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
       '<p class="res__val">' + brl(valor) + ' <small>instalação</small></p>' +
-      '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade · cerca de ' + Math.round(km) + ' km da nossa base</p>' +
+      '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade · ' + (km < 1 ? 'menos de 1 km' : 'cerca de ' + Math.round(km) + ' km') + ' da nossa base</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Agendar pelo WhatsApp</a></div>');
   }
 
@@ -98,6 +98,11 @@ var CONFIG = {
         return resultadoPreco(endTxt, km, CONFIG.faixas[i].valor);
       }
     }
+  }
+
+  function cidadeDigitadaDoResultado(a) {
+    var ad = (a && a.address) || {};
+    return ad.city || ad.town || ad.municipality || ad.village || "";
   }
 
   function textoEndereco(a, fallback) {
@@ -129,7 +134,21 @@ var CONFIG = {
       });
     } else {
       p = tentar([q, q + ", RJ"]).then(function (a) {
-        if (a) return { a: a, endTxt: textoEndereco(a, q), cidade: (a.address || {}).city || (a.address || {}).town || (a.address || {}).municipality || "", uf: (a.address || {}).state || "" };
+        if (a) {
+          // Se a pessoa digitou a cidade (último pedaço depois da vírgula) e o mapa
+          // devolveu outra cidade (ex.: "Centro, Itaboraí" virando uma rua em Niterói),
+          // usa o centro da cidade digitada em vez do resultado errado.
+          var pedacos = q.split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+          var cidadeDig = pedacos.length >= 2 ? semAcento(pedacos[pedacos.length - 1]).replace(/\s*-?\s*rj$/, "").trim() : "";
+          var cidadeRes = semAcento(cidadeDigitadaDoResultado(a));
+          if (cidadeDig && cidadeRes && cidadeDig.indexOf(cidadeRes) < 0 && cidadeRes.indexOf(cidadeDig) < 0) {
+            return nominatim(pedacos[pedacos.length - 1] + ", RJ", true).then(function (c) {
+              if (!c) return { nada: true, q: q };
+              return { a: c, endTxt: q, cidade: cidadeDigitadaDoResultado(c), uf: (c.address || {}).state || "" };
+            });
+          }
+          return { a: a, endTxt: textoEndereco(a, q), cidade: cidadeDigitadaDoResultado(a), uf: (a.address || {}).state || "" };
+        }
         return nominatim(q, false).then(function (b) {
           if (!b) return { nada: true, q: q };
           return { a: b, endTxt: textoEndereco(b, q), cidade: (b.address || {}).city || (b.address || {}).town || "", uf: (b.address || {}).state || "" };
