@@ -19,6 +19,28 @@ var CONFIG = {
     "sao jose do vale do rio preto", "areal", "tres rios", "paraiba do sul", "vassouras",
     "mendes", "engenheiro paulo de frontin", "sumidouro", "bom jardim", "duas barras", "sapucaia",
     "itaipava", "corrêas", "correas", "secretario", "pedro do rio", "araras"],
+  // Região dos Lagos (técnico em Rio das Ostras): preço fixo, vale mais que o km.
+  // "sim" = atende por esse preço; "nao" = Consultar (cidades no meio que ficam de fora).
+  lagos: {
+    valor: 150.00,
+    cidades: [
+      { nome: "saquarema", lat: -22.9292, lon: -42.5099, sim: true },
+      { nome: "araruama", lat: -22.8728, lon: -42.3428, sim: true },
+      { nome: "iguaba grande", lat: -22.8392, lon: -42.2289, sim: true },
+      { nome: "sao pedro da aldeia", lat: -22.8392, lon: -42.1026, sim: true },
+      { nome: "armacao dos buzios", lat: -22.7469, lon: -41.8817, sim: true },
+      { nome: "buzios", lat: -22.7469, lon: -41.8817, sim: true },
+      { nome: "rio das ostras", lat: -22.5269, lon: -41.9450, sim: true },
+      { nome: "macae", lat: -22.3768, lon: -41.7869, sim: true },
+      { nome: "cabo frio", lat: -22.8894, lon: -42.0286, sim: false },
+      { nome: "arraial do cabo", lat: -22.9661, lon: -42.0278, sim: false },
+      { nome: "unamar", lat: -22.6460, lon: -42.0040, sim: false },
+      { nome: "tamoios", lat: -22.6460, lon: -42.0040, sim: false },
+      { nome: "casimiro de abreu", lat: -22.4812, lon: -42.2042, sim: false },
+      { nome: "barra de sao joao", lat: -22.5960, lon: -41.9930, sim: false },
+      { nome: "silva jardim", lat: -22.6510, lon: -42.3920, sim: false }
+    ]
+  },
   // Google Ads: preencher quando tiver (ex.: "AW-123456789" e o rótulo da conversão)
   googleAdsId: "",
   googleAdsRotuloWhatsApp: ""
@@ -27,11 +49,36 @@ var CONFIG = {
 (function () {
   "use strict";
   function semAcento(s) { return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase(); }
-  function ehSerra(texto) {
-    // Olha só a cidade: o último pedaço do endereço (ignorando "RJ", "Brasil" e o CEP)
+  // Último pedaço do endereço (a cidade), ignorando "RJ", "Brasil" e o CEP
+  function cidadeDoTexto(texto) {
     var partes = semAcento(texto).replace(/\(cep[^)]*\)/g, "").split(/[,\-]/).map(function (p) { return p.trim(); })
       .filter(function (p) { return p && !/^(rj|brasil|rio de janeiro estado|\d[\d .]*)$/.test(p); });
-    var t = " " + (partes.length ? partes[partes.length - 1] : "").replace(/[^a-z0-9]+/g, " ") + " ";
+    return " " + (partes.length ? partes[partes.length - 1] : "").replace(/[^a-z0-9]+/g, " ") + " ";
+  }
+  function distLinhaKm(aLat, aLon, bLat, bLon) {
+    var R = 6371, r = Math.PI / 180, dLa = (bLat - aLat) * r, dLo = (bLon - aLon) * r;
+    var x = Math.sin(dLa / 2) * Math.sin(dLa / 2) + Math.cos(aLat * r) * Math.cos(bLat * r) * Math.sin(dLo / 2) * Math.sin(dLo / 2);
+    return 2 * R * Math.asin(Math.sqrt(x));
+  }
+  // Região dos Lagos: devolve true (R$ 150), false (Consultar) ou null (não é Lagos)
+  function lagos(texto, ll) {
+    var t = cidadeDoTexto(texto), c, i;
+    for (i = 0; i < CONFIG.lagos.cidades.length; i++) {
+      c = CONFIG.lagos.cidades[i];
+      if (t.indexOf(" " + c.nome + " ") >= 0) return c.sim;
+    }
+    // Sem a cidade escrita: usa a cidade mais perto do ponto (só a leste de Maricá)
+    if (!ll || ll.longitude < -42.65) return null;
+    var melhor = null, dMelhor = 15;
+    for (i = 0; i < CONFIG.lagos.cidades.length; i++) {
+      c = CONFIG.lagos.cidades[i];
+      var d = distLinhaKm(ll.latitude, ll.longitude, c.lat, c.lon);
+      if (d < dMelhor) { dMelhor = d; melhor = c; }
+    }
+    return melhor ? melhor.sim : null;
+  }
+  function ehSerra(texto) {
+    var t = cidadeDoTexto(texto);
     return CONFIG.serra.some(function (c) { return t.indexOf(" " + semAcento(c) + " ") >= 0; });
   }
   function brl(v) { return "R$ " + v.toFixed(2).replace(".", ","); }
@@ -83,7 +130,7 @@ var CONFIG = {
       if (geo.partialMatch && grosso) return { naoAchou: true };
       var fimLL = rt.legs && rt.legs[0] && rt.legs[0].endLocation && rt.legs[0].endLocation.latLng;
       var noRJ = !fimLL || (fimLL.latitude > -23.45 && fimLL.latitude < -20.7 && fimLL.longitude > -44.95 && fimLL.longitude < -40.9);
-      return { km: rt.distanceMeters / 1000, noRJ: noRJ };
+      return { km: rt.distanceMeters / 1000, noRJ: noRJ, ll: fimLL };
     });
   }
 
@@ -97,8 +144,9 @@ var CONFIG = {
   }
 
   function resultadoPreco(endTxt, faixa, km) {
+    var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt +
-      " (Região " + faixa.regiao + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
+      " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
       '<p class="res__val">' + brl(faixa.valor) + ' <small>instalação</small></p>' +
       '<p class="res__det">+ mensalidade de R$ 59,90 · sem fidelidade</p>' +
@@ -121,6 +169,9 @@ var CONFIG = {
   function calcular(endTxt, r) {
     if (r.naoAchou) return naoAchou(endTxt);
     if (ehSerra(endTxt)) return resultadoConsultar(endTxt, "Na região serrana o valor depende do trajeto (pedágio e subida). Fale com a gente.");
+    var lg = lagos(endTxt, r.ll);
+    if (lg === true) return resultadoPreco(endTxt, { regiao: "Região dos Lagos", valor: CONFIG.lagos.valor }, r.km);
+    if (lg === false) return resultadoConsultar(endTxt, "Fale com a gente para ver o valor da instalação nesse endereço.");
     if (!r.noRJ) return resultadoConsultar(endTxt, "Esse endereço fica fora do estado do Rio. Fale com a gente para ver se atendemos.");
     for (var i = 0; i < CONFIG.faixas.length; i++) {
       var f = CONFIG.faixas[i];
