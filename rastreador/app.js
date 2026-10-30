@@ -198,7 +198,8 @@ var CONFIG = {
     if (!ifr) return;
     if (d.event === "ready") {
       ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "ended" }), "https://player.vimeo.com");
-    } else if (d.event === "ended") {
+      ifr.contentWindow.postMessage(JSON.stringify({ method: "addEventListener", value: "finish" }), "https://player.vimeo.com");
+    } else if (d.event === "ended" || d.event === "finish") {
       var box = ifr.parentNode; ifr.remove(); if (box) box.classList.remove("tocando");
     }
   });
