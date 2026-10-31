@@ -234,7 +234,7 @@ var CONFIG = {
   function mapa() {
     if (!pinLL || pinLL.latitude == null) return "";
     var ll = pinLL.latitude.toFixed(6) + "," + pinLL.longitude.toFixed(6);
-    var src = "https://maps.googleapis.com/maps/api/staticmap?center=" + ll + "&zoom=15&size=600x200&scale=2" +
+    var src = "https://maps.googleapis.com/maps/api/staticmap?center=" + ll + "&zoom=12&size=600x200&scale=2" +
       "&markers=color:red%7C" + ll + "&language=pt-BR&region=BR&key=" + CONFIG.googleRotasChave;
     return '<div class="res__mapa"><img src="' + src + '" alt="Mapa com o endereço pesquisado" width="600" height="200" onerror="this.parentNode.remove()"></div>';
   }
