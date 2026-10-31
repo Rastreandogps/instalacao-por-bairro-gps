@@ -177,10 +177,27 @@ var CONFIG = {
 
   function mostrar(html) { res.innerHTML = html; }
 
+  // Mapinha com a agulha no endereço encontrado, para o cliente conferir
+  var pinLL = null;
+  function mapa() {
+    if (!pinLL || pinLL.latitude == null) return "";
+    var ll = pinLL.latitude.toFixed(6) + "," + pinLL.longitude.toFixed(6);
+    var src = "https://maps.googleapis.com/maps/api/staticmap?center=" + ll + "&zoom=15&size=600x200&scale=2" +
+      "&markers=color:red%7C" + ll + "&language=pt-BR&region=BR&key=" + CONFIG.googleRotasChave;
+    return '<div class="res__mapa"><img src="' + src + '" alt="Mapa com o endereço pesquisado" width="600" height="200" onerror="this.parentNode.remove()">' +
+      '<button type="button" class="res__corrigir" data-corrigir>Não é aqui? Corrigir o endereço</button></div>';
+  }
+  if (res) res.addEventListener("click", function (ev) {
+    if (!ev.target.closest("[data-corrigir]")) return;
+    medir("corrigir_endereco");
+    campo.scrollIntoView({ behavior: "smooth", block: "center" });
+    campo.focus(); campo.select();
+  });
+
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + endTxt;
-    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
+    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
       '<p class="res__val">Consultar</p><p class="res__det">' + esc(motivo) + '</p>' +
       '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Consultar pelo WhatsApp</a></div>');
   }
@@ -190,7 +207,7 @@ var CONFIG = {
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt +
       " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
-    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' +
+    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
       '<p class="res__val">' + brl(faixa.valor) + ' <small>instalação</small></p>' +
       '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small></b></p>' +
       '<p class="res__det">Sem fidelidade.</p>' +
@@ -213,6 +230,7 @@ var CONFIG = {
   }
 
   function calcular(endTxt, r) {
+    pinLL = r.ll || null;
     if (r.naoAchou) return naoAchou(endTxt);
     if (ehSerra(endTxt)) return resultadoConsultar(endTxt, "Na região serrana o valor depende do trajeto (pedágio e subida). Fale com a gente.");
     var lg = lagos(endTxt, r.ll);

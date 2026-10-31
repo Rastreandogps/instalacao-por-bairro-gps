@@ -297,3 +297,6 @@ p{margin:0}
   .busca input{flex-basis:100%;padding:.75em .4em}
   .busca .btn{flex:1 1 100%;margin-left:-36px;border-radius:12px;padding:.85em 1.2em}
 }
+.res__mapa{margin:10px 0 6px}
+.res__mapa img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;border-radius:12px;background:#e9eef3;border:1px solid #dde5ee}
+.res__corrigir{background:none;border:0;padding:6px 0 0;font:inherit;font-size:.85rem;color:var(--azul);text-decoration:underline;cursor:pointer}
