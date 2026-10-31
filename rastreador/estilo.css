@@ -365,3 +365,34 @@ html.orc-trava,html.orc-trava body{overflow:hidden}
 .orc-barra__wa .ic{width:18px;height:18px}
 html.tem-orc .wa-fixo{display:none}
 html.tem-orc body{padding-bottom:90px}
+/* 30/10 23h40: janela menor, flutuando no meio da tela (cara de janela, não de página) */
+.orc{align-items:center;padding:16px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}
+.orc__caixa{max-width:400px;border-radius:20px;padding:16px 16px 14px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);transform:scale(.94);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.orc.aberto .orc__caixa{transform:none}
+@media (min-width:620px){.orc__caixa{padding:18px 18px 16px}}
+.orc__x{top:10px;right:10px;width:32px;height:32px;font-size:20px}
+.orc .res{font-size:14px}
+.orc .res__tit{font-size:1.1em;gap:8px;padding-right:40px;margin:0}
+.orc .res__tit .ic{width:20px;height:20px}
+.orc .res__para{font-size:.9em;margin:2px 0 10px}
+.orc .res__lbl{font-size:.8em}
+.orc .res__val{font-size:1.9em;margin:0 0 8px}
+.orc .res__val small{font-size:.42em}
+.orc .res__mens{font-size:.9em;padding:.55em .8em;margin:0;border-radius:10px}
+.orc .res__mens b{font-size:1.3em}
+.orc .res__ok{font-size:.86em;margin:9px 0 0;gap:6px}
+.orc .res__ok .ic{width:16px;height:16px}
+.orc .res__det,.orc .res__err{font-size:.88em}
+.orc .res__div{margin:12px 0}
+.orc .res__local{gap:8px}
+.orc .res__local>.ic{width:18px;height:18px}
+.orc .res__local b{font-size:.9em}
+.orc .res__local p{font-size:.84em;margin:2px 0 0}
+.orc .res__corrigir{font-size:.8em}
+.orc .res__local + .res__mapa{margin:8px 0 0}
+.orc .res__mapa img{border-radius:10px}
+.orc .res__pergunta{font-size:.9em;margin:12px 0 8px}
+.orc .res .btn{min-height:44px;font-size:.95em;padding:.65em 1em}
+.orc .res .btn--wa .ic{width:18px;height:18px}
+.orc .res__rod{font-size:.74em;margin:7px 0 0}
+.orc .carregando{min-height:90px;font-size:.92em}
