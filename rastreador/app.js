@@ -185,15 +185,20 @@ var CONFIG = {
   if (caixaModelo) caixaModelo.hidden = false;
   if (campoModelo) {
     campoModelo.addEventListener("input", function () {
-      if (campoModelo.value.trim().length >= 2) { campoModelo.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true; }
+      if (campoModelo.value.trim().length >= 2) { campoModelo.parentNode.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true; }
     });
     campoModelo.addEventListener("keydown", function (ev) { if (ev.key === "Enter") { ev.preventDefault(); campo.focus(); } });
   }
-  function comVeiculo(txt) { return modeloAtual ? txt.replace(" Endereço: ", " Veículo: " + modeloAtual + ". Endereço: ") : txt; }
-  function botaoWa(txt, rotulo) {
-    return '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(comVeiculo(txt))) + '">' + rotulo + '</a>';
+  // Mensagem do WhatsApp organizada em linhas (o *texto* sai em negrito no WhatsApp)
+  function mensagem(intro, endereco, extras) {
+    var l = ["Olá! 👋 " + intro, ""];
+    if (modeloAtual) l.push("🚗 *Veículo:* " + modeloAtual);
+    l.push("📍 *Endereço:* " + endereco);
+    return l.concat(extras || []).join("\n");
   }
-  function paraVeiculo(fim) { return modeloAtual ? '<p class="res__para">Para o veículo <b>' + esc(modeloAtual) + '</b>' + fim + '</p>' : ""; }
+  function botaoWa(txt, rotulo) {
+    return '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> ' + rotulo + '</a>';
+  }
 
   // Mapinha com a agulha no endereço encontrado, para o cliente conferir
   var pinLL = null;
@@ -202,8 +207,14 @@ var CONFIG = {
     var ll = pinLL.latitude.toFixed(6) + "," + pinLL.longitude.toFixed(6);
     var src = "https://maps.googleapis.com/maps/api/staticmap?center=" + ll + "&zoom=15&size=600x200&scale=2" +
       "&markers=color:red%7C" + ll + "&language=pt-BR&region=BR&key=" + CONFIG.googleRotasChave;
-    return '<div class="res__mapa"><img src="' + src + '" alt="Mapa com o endereço pesquisado" width="600" height="200" onerror="this.parentNode.remove()">' +
-      '<button type="button" class="res__corrigir" data-corrigir>Não é aqui? Corrigir o endereço</button></div>';
+    return '<div class="res__mapa"><img src="' + src + '" alt="Mapa com o endereço pesquisado" width="600" height="200" onerror="this.parentNode.remove()"></div>';
+  }
+  var IC_OK = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.2 2.9 2.9 5.6-5.8"/></g></svg>';
+  // Bloco "Local da instalação": endereço, corrigir e mapinha
+  function local(endTxt) {
+    return '<div class="res__div"></div><div class="res__local"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><div>' +
+      '<b>Local da instalação</b><p>' + esc(endTxt) + '</p>' +
+      '<button type="button" class="res__corrigir" data-corrigir>Não é aqui? Corrigir o endereço</button></div></div>' + mapa();
   }
   if (res) res.addEventListener("click", function (ev) {
     if (!ev.target.closest("[data-corrigir]")) return;
@@ -214,29 +225,42 @@ var CONFIG = {
 
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
-    var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + endTxt;
-    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
-      paraVeiculo(":") + '<p class="res__val">Consultar</p><p class="res__det">' + esc(motivo) + '</p>' +
+    var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
+    mostrar('<div class="res">' +
+      (modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '') +
+      '<p class="res__lbl">Valor da instalação</p><p class="res__val">Consultar</p>' +
+      '<p class="res__det">' + esc(motivo) + '</p>' +
+      local(endTxt) +
       botaoWa(txt, "Consultar pelo WhatsApp") + '</div>');
   }
 
   function resultadoPreco(endTxt, faixa, km) {
     medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: faixa.valor });
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
-    var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt +
-      " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
-    mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
-      paraVeiculo(", a instalação fica:") +
-      '<p class="res__val">' + brl(faixa.valor) + ' <small>instalação</small></p>' +
+    var txt = mensagem("Vi o anúncio no Google e quero agendar a instalação do rastreador.", endTxt, [
+      "🗺️ *Região:* " + nomeReg + " (" + Math.round(km) + " km)",
+      "",
+      "💰 *Valor informado no site:*",
+      "Instalação: " + brl(faixa.valor),
+      "Mensalidade: R$ 59,90/mês"
+    ]);
+    mostrar('<div class="res">' +
+      '<p class="res__tit">' + IC_OK + ' Seu orçamento está pronto!</p>' +
+      (modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '') +
+      '<p class="res__lbl">Valor da instalação</p>' +
+      '<p class="res__val">' + brl(faixa.valor) + ' <small>pagamento único</small></p>' +
       '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small></b></p>' +
-      '<p class="res__det">Sem fidelidade.</p>' +
+      '<p class="res__ok">' + IC_OK + ' Sem contrato de fidelidade</p>' +
+      local(endTxt) +
       '<p class="res__pergunta">Deseja agendar sua instalação?</p>' +
-      botaoWa(txt, "Agendar pelo WhatsApp") + '</div>');
+      botaoWa(txt, "Agendar pelo WhatsApp") +
+      '<p class="res__rod"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></g></svg> Agendamento rápido pelo WhatsApp</p>' +
+      '</div>');
   }
 
   function naoAchou(q) {
     medir("busca_preco", { resultado: "nao_encontrado" });
-    var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
+    var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", q);
     mostrar('<div class="res"><p class="res__err">Não encontramos esse endereço. Tente com <b>rua, número, bairro e cidade</b>, ou o <b>CEP</b>.</p>' +
       '<p class="res__det" style="margin-top:8px">Se preferir, mande o endereço no WhatsApp e respondemos o valor.</p>' +
       botaoWa(txt, "Mandar no WhatsApp") + '</div>');
@@ -244,7 +268,7 @@ var CONFIG = {
 
   function falhou(q) {
     medir("busca_preco", { resultado: "erro" });
-    var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
+    var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", q);
     mostrar('<div class="res"><p class="res__err">Não conseguimos calcular agora.</p><p class="res__det" style="margin-top:8px">Mande o endereço no WhatsApp e respondemos o valor.</p>' +
       botaoWa(txt, "Mandar no WhatsApp") + '</div>');
   }
@@ -272,7 +296,7 @@ var CONFIG = {
     if (campoModelo) {
       modeloAtual = campoModelo.value.trim().replace(/\s+/g, " ");
       if (modeloAtual.length < 2) {
-        campoModelo.classList.add("erro"); if (avisoModelo) avisoModelo.hidden = false;
+        campoModelo.parentNode.classList.add("erro"); if (avisoModelo) avisoModelo.hidden = false;
         campoModelo.focus(); return;
       }
     }

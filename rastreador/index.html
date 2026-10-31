@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-capa.webp?v=2">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=14">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=16">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -110,25 +110,36 @@
   <section class="sec" id="preco">
     <div class="wrap estreito">
       <h2>Quanto custa no seu endereço</h2>
-      <p class="sec__sub">A nossa equipe vai até você. Digite o modelo do veículo e o endereço ou CEP onde ele vai estar na instalação.</p>
+      <p class="sec__sub">A nossa equipe vai até você. Informe o veículo e o local da instalação.</p>
 
-      <div class="modelo-campo" id="modelo-campo" hidden>
-        <label for="busca-modelo">Qual é o modelo do seu veículo?</label>
-        <input id="busca-modelo" type="text" maxlength="60" placeholder="Ex.: Onix, CG 160, Bongo" autocomplete="off" enterkeyhint="next">
-        <p class="modelo-campo__aviso" id="modelo-aviso" hidden>Escreva o modelo do veículo para ver o preço.</p>
+      <div class="consulta" id="modelo-campo" hidden>
+        <p class="consulta__mens">Mensalidade fixa: <b>R$ 59,90</b> para qualquer veículo</p>
+        <form id="busca" autocomplete="off" novalidate>
+          <label for="busca-modelo">Qual é o modelo do seu veículo?</label>
+          <div class="consulta__campo">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 16.5V12l2-5h13l2 5v4.5z"/><path d="M3.5 12h17M7 14.3h1.6M15.4 14.3H17M5.5 16.5v2M18.5 16.5v2"/></g></svg>
+            <input id="busca-modelo" type="text" maxlength="60" placeholder="Ex.: Onix, CG 160, Bongo" autocomplete="off" enterkeyhint="next">
+          </div>
+          <p class="consulta__aviso" id="modelo-aviso" hidden>Escreva o modelo do veículo para ver o preço.</p>
+          <label for="busca-q">Onde será feita a instalação?</label>
+          <div class="consulta__campo">
+            <svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>
+            <input id="busca-q" name="q" type="text" inputmode="text" placeholder="Digite seu CEP ou endereço" enterkeyhint="search">
+          </div>
+          <button class="btn btn--azul consulta__btn" type="submit">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4.5 4.5"/></g></svg>
+            Ver preço da instalação
+          </button>
+        </form>
+        <p class="consulta__seg"><span>✓</span> Consulta gratuita e sem compromisso</p>
       </div>
-      <form class="busca" id="busca" autocomplete="off" hidden>
-        <label class="sr" for="busca-q">Endereço ou CEP</label>
-        <input id="busca-q" name="q" type="text" inputmode="text" placeholder="Digite seu CEP ou endereço" required>
-        <button class="btn btn--azul" type="submit">Ver preço</button>
-      </form>
       <div class="resultado" id="resultado" aria-live="polite"></div>
 
       <noscript>
         <p class="aviso">Para saber o valor da instalação no seu endereço, <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Vi%20o%20an%C3%BAncio%20no%20Google%20e%20quero%20saber%20o%20valor%20da%20instala%C3%A7%C3%A3o.">chame no WhatsApp</a>.</p>
       </noscript>
 
-      <p class="nota">Mensalidade de <b>R$ 59,90</b> igual para carro, moto e caminhão. Instalação em cerca de 1 hora. O dia é combinado pelo WhatsApp e pode ser no mesmo dia ou no dia seguinte, conforme a agenda.</p>
+      <p class="nota">Instalação em cerca de 1 hora. O dia é combinado pelo WhatsApp e pode ser no mesmo dia ou no dia seguinte, conforme a agenda.</p>
     </div>
   </section>
 
@@ -412,6 +423,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=26" defer></script>
+<script src="/rastreador/app.js?v=29" defer></script>
 </body>
 </html>
