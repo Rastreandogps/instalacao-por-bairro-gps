@@ -408,3 +408,10 @@ html.tem-orc body{padding-bottom:90px}
 .res__extras{font-size:.82rem;color:var(--mut);margin:-4px 0 10px}
 .orc .res__extras{font-size:.78em}
 .res__mens span small{display:block;font-size:.75em;font-weight:500;color:var(--mut)}
+/* 31/10 00h: "verificar valor" e "por veículo" visível */
+.res__cons{font-size:1.25rem;font-weight:800;color:var(--tx);line-height:1.25;margin:2px 0 6px}
+.orc .res__cons{font-size:1.2em}
+.res__mens b{text-align:right}
+.res__porv{display:block;font-style:normal;font-size:.62em;font-weight:700;color:var(--azul);margin-top:2px}
+.res__mapa + .btn,.res__local + .btn{margin-top:14px}
+.res__porv{font-size:.7em}

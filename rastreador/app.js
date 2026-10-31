@@ -319,7 +319,7 @@ var CONFIG = {
     return modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '';
   }
   function mensBloco() {
-    return '<p class="res__mens"><span>Mensalidade' + (qtdAtual > 1 ? ' <small>por veículo</small>' : '') + '</span><b>R$ 59,90<small>/mês</small></b></p>';
+    return '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small>' + (qtdAtual > 1 ? '<em class="res__porv">por veículo</em>' : '') + '</b></p>';
   }
 
   // 5 ou mais veículos: atendimento de frota
@@ -339,14 +339,14 @@ var CONFIG = {
 
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
-    barraInfo = "Instalação a consultar";
+    barraInfo = "Verificar valor com o atendente";
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
     mostrar('<div class="res">' +
       linhaPara() +
-      '<p class="res__lbl">Valor da instalação</p><p class="res__val">Consultar</p>' +
+      '<p class="res__lbl">Valor da instalação</p><p class="res__cons">Verificar valor com o atendente para a sua região</p>' +
       '<p class="res__det">' + esc(motivo) + '</p>' +
       local(endTxt) +
-      botaoWa(txt, "Consultar pelo WhatsApp") + '</div>');
+      botaoWa(txt, "Verificar valor pelo WhatsApp") + '</div>');
   }
 
   function resultadoPreco(endTxt, faixa, km) {
