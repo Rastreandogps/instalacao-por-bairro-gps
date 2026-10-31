@@ -396,3 +396,5 @@ html.tem-orc body{padding-bottom:90px}
 .orc .res .btn--wa .ic{width:18px;height:18px}
 .orc .res__rod{font-size:.74em;margin:7px 0 0}
 .orc .carregando{min-height:90px;font-size:.92em}
+.orc-barra__info small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.orc-barra__info small i{font-style:normal;font-weight:700;opacity:1;color:#fff}

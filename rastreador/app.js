@@ -260,7 +260,7 @@ var CONFIG = {
   }
   function mostrarBarra() {
     var a = res.querySelector("a[data-wa]");
-    orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>Seu orçamento · toque para ver</small><b>' + barraInfo + '</b></button>' +
+    orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>' + (modeloAtual ? '🚗 <i>' + esc(modeloAtual) + '</i> · ' : 'Seu orçamento · ') + 'toque para ver</small><b>' + barraInfo + '</b></button>' +
       (a ? '<a class="orc-barra__wa" data-wa target="_blank" rel="noopener" href="' + esc(a.href) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Agendar</a>' : '');
     orcBarra.classList.add("ver");
     document.documentElement.classList.add("tem-orc");
