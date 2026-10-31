@@ -216,15 +216,78 @@ var CONFIG = {
       '<b>Local da instalação</b><p>' + esc(endTxt) + '</p>' +
       '<button type="button" class="res__corrigir" data-corrigir>Não é aqui? Corrigir o endereço</button></div></div>' + mapa();
   }
+  /* ---------- Orçamento em janela (modal) + barra fixa embaixo ao fechar ---------- */
+  var orc = null, orcBarra = null, barraInfo = null;
+  if (res) {
+    orc = document.createElement("div");
+    orc.className = "orc"; orc.setAttribute("role", "dialog"); orc.setAttribute("aria-modal", "true"); orc.setAttribute("aria-label", "Seu orçamento");
+    orc.innerHTML = '<div class="orc__caixa"><button type="button" class="orc__x" aria-label="Fechar">×</button></div>';
+    document.body.appendChild(orc);
+    orc.firstChild.appendChild(res);
+    orcBarra = document.createElement("div");
+    orcBarra.className = "orc-barra";
+    document.body.appendChild(orcBarra);
+  }
+  function orcAberto() { return orc && orc.classList.contains("aberto"); }
+  function abrirOrc() {
+    if (!orc || orcAberto()) return;
+    orc.classList.add("aberto");
+    document.documentElement.classList.add("orc-trava");
+    esconderBarra();
+    if (typeof atualizaFixo === "function") atualizaFixo();
+    try { history.pushState({ orc: 1 }, ""); } catch (e) {}
+    setTimeout(function () { orc.querySelector(".orc__x").focus({ preventScroll: true }); }, 50);
+  }
+  function fecharOrc(mostraBarra) {
+    if (!orcAberto()) return;
+    orc.classList.remove("aberto");
+    document.documentElement.classList.remove("orc-trava");
+    if (mostraBarra !== false && barraInfo) mostrarBarra();
+    if (typeof atualizaFixo === "function") atualizaFixo();
+  }
+  // Fechar pelo X, pelo fundo escuro ou pelo "voltar" do celular
+  function pedirFechar(mostraBarra) {
+    proximoFechar = mostraBarra;
+    if (history.state && history.state.orc) history.back(); else fecharOrc(mostraBarra);
+  }
+  var proximoFechar = true;
+  window.addEventListener("popstate", function () { if (orcAberto()) { fecharOrc(proximoFechar); proximoFechar = true; } });
+  if (orc) {
+    orc.addEventListener("click", function (ev) {
+      if (ev.target === orc || ev.target.closest(".orc__x")) pedirFechar(true);
+    });
+    document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && orcAberto()) pedirFechar(true); });
+  }
+  function mostrarBarra() {
+    var a = res.querySelector("a[data-wa]");
+    orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>Seu orçamento · toque para ver</small><b>' + barraInfo + '</b></button>' +
+      (a ? '<a class="orc-barra__wa" data-wa target="_blank" rel="noopener" href="' + esc(a.href) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Agendar</a>' : '');
+    orcBarra.classList.add("ver");
+    document.documentElement.classList.add("tem-orc");
+  }
+  function esconderBarra() {
+    if (!orcBarra) return;
+    orcBarra.classList.remove("ver");
+    document.documentElement.classList.remove("tem-orc");
+  }
+  if (orcBarra) orcBarra.addEventListener("click", function (ev) {
+    if (ev.target.closest(".orc-barra__info")) { medir("orcamento_reaberto"); abrirOrc(); }
+  });
+
   if (res) res.addEventListener("click", function (ev) {
     if (!ev.target.closest("[data-corrigir]")) return;
     medir("corrigir_endereco");
-    campo.scrollIntoView({ behavior: "smooth", block: "center" });
-    campo.focus(); campo.select();
+    barraInfo = null;
+    pedirFechar(false);
+    setTimeout(function () {
+      campo.scrollIntoView({ behavior: "smooth", block: "center" });
+      campo.focus(); campo.select();
+    }, 80);
   });
 
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
+    barraInfo = "Instalação a consultar";
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
     mostrar('<div class="res">' +
       (modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '') +
@@ -237,6 +300,7 @@ var CONFIG = {
   function resultadoPreco(endTxt, faixa, km) {
     medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: faixa.valor });
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
+    barraInfo = brl(faixa.valor) + " + R$ 59,90/mês";
     var txt = mensagem("Vi o anúncio no Google e quero agendar a instalação do rastreador.", endTxt, [
       "🗺️ *Região:* " + nomeReg + " (" + Math.round(km) + " km)",
       "",
@@ -260,6 +324,7 @@ var CONFIG = {
 
   function naoAchou(q) {
     medir("busca_preco", { resultado: "nao_encontrado" });
+    barraInfo = null;
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", q);
     mostrar('<div class="res"><p class="res__err">Não encontramos esse endereço. Tente com <b>rua, número, bairro e cidade</b>, ou o <b>CEP</b>.</p>' +
       '<p class="res__det" style="margin-top:8px">Se preferir, mande o endereço no WhatsApp e respondemos o valor.</p>' +
@@ -268,6 +333,7 @@ var CONFIG = {
 
   function falhou(q) {
     medir("busca_preco", { resultado: "erro" });
+    barraInfo = null;
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", q);
     mostrar('<div class="res"><p class="res__err">Não conseguimos calcular agora.</p><p class="res__det" style="margin-top:8px">Mande o endereço no WhatsApp e respondemos o valor.</p>' +
       botaoWa(txt, "Mandar no WhatsApp") + '</div>');
@@ -302,7 +368,10 @@ var CONFIG = {
     }
     if (q.length < 3) { campo.focus(); return; }
     var bt = form.querySelector("button"); bt.disabled = true;
-    mostrar('<p class="carregando">Calculando a distância…</p>');
+    campo.blur(); if (campoModelo) campoModelo.blur();
+    barraInfo = null; esconderBarra();
+    mostrar('<p class="carregando">Calculando o valor no seu endereço…</p>');
+    abrirOrc();
     var p;
     if (/^\d{5}-?\d{3}$/.test(q.replace(/\s/g, ""))) {
       // CEP: o ViaCEP dá o endereço por extenso; o Google calcula a rota até ele
@@ -485,7 +554,7 @@ var CONFIG = {
   if (fixo && hero && "IntersectionObserver" in window) {
     var naTela = [];
     var atualizaFixo = function () {
-      var outro = naTela.some(function (el) { return el !== res || res.querySelector("[data-wa]"); });
+      var outro = naTela.some(function (el) { return el !== res || (orcAberto() && res.querySelector("[data-wa]")); });
       fixo.classList.toggle("ver", !outro);
     };
     var obsFixo = new IntersectionObserver(function (es) {

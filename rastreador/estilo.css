@@ -339,3 +339,29 @@ p{margin:0}
 .res .btn--wa .ic{width:21px;height:21px}
 .res__rod{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 0;font-size:.8rem;color:var(--mut)}
 .res__rod .ic{width:15px;height:15px}
+/* 30/10 23h30: LED azul em volta do cartão do buscador */
+.consulta{border:2px solid rgba(27,79,216,.7);box-shadow:0 0 0 3px rgba(27,79,216,.10),0 0 22px rgba(27,79,216,.45),0 0 52px rgba(27,79,216,.25);animation:ledAzul 3.2s ease-in-out infinite}
+@keyframes ledAzul{50%{border-color:rgba(27,79,216,1);box-shadow:0 0 0 3px rgba(27,79,216,.14),0 0 30px rgba(27,79,216,.62),0 0 72px rgba(27,79,216,.34)}}
+@media (prefers-reduced-motion:reduce){.consulta{animation:none}}
+/* 30/10 23h40: orçamento em janela + barra fixa */
+.orc{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(8,15,30,.6);opacity:0;visibility:hidden;transition:opacity .25s,visibility .25s}
+.orc.aberto{opacity:1;visibility:visible}
+.orc__caixa{position:relative;width:100%;max-width:560px;max-height:92vh;max-height:92dvh;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:#fff;border-radius:22px 22px 0 0;padding:20px 18px calc(18px + env(safe-area-inset-bottom));transform:translateY(40px);transition:transform .3s ease;box-shadow:0 -10px 40px rgba(0,0,0,.25)}
+.orc.aberto .orc__caixa{transform:none}
+@media (min-width:620px){.orc{align-items:center;padding:20px}.orc__caixa{border-radius:22px;padding:24px}}
+.orc__x{position:absolute;top:12px;right:12px;z-index:2;width:40px;height:40px;border-radius:50%;border:0;background:#eef2f7;color:var(--tx);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.orc__x:hover{background:#e2e8f0}
+.orc .resultado{margin:0;border:0;padding:0;box-shadow:none;animation:none}
+.orc .resultado:empty{display:block}
+.orc .res__tit{padding-right:48px}
+.orc .carregando{min-height:120px;justify-content:center;padding-right:0}
+html.orc-trava,html.orc-trava body{overflow:hidden}
+.orc-barra{position:fixed;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));z-index:45;display:none;align-items:center;gap:10px;max-width:560px;margin:0 auto;background:#0b1730;color:#fff;border:1.5px solid rgba(27,79,216,.8);border-radius:18px;padding:8px 8px 8px 14px;box-shadow:0 0 22px rgba(27,79,216,.45),0 10px 26px rgba(0,0,0,.3)}
+.orc-barra.ver{display:flex;animation:surge .25s ease}
+.orc-barra__info{flex:1;min-width:0;background:none;border:0;color:#fff;text-align:left;font:inherit;cursor:pointer;padding:4px 0}
+.orc-barra__info small{display:block;font-size:.72rem;opacity:.75}
+.orc-barra__info b{display:block;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.orc-barra__wa{flex:none;display:flex;align-items:center;gap:6px;background:var(--verde);color:#fff;text-decoration:none;font-weight:700;border-radius:12px;padding:.7em 1em}
+.orc-barra__wa .ic{width:18px;height:18px}
+html.tem-orc .wa-fixo{display:none}
+html.tem-orc body{padding-bottom:90px}
