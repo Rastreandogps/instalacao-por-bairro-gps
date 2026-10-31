@@ -177,6 +177,24 @@ var CONFIG = {
 
   function mostrar(html) { res.innerHTML = html; }
 
+  // Modelo do veículo (obrigatório, preenchido antes de ver o preço)
+  var campoModelo = document.getElementById("busca-modelo");
+  var caixaModelo = document.getElementById("modelo-campo");
+  var avisoModelo = document.getElementById("modelo-aviso");
+  var modeloAtual = "";
+  if (caixaModelo) caixaModelo.hidden = false;
+  if (campoModelo) {
+    campoModelo.addEventListener("input", function () {
+      if (campoModelo.value.trim().length >= 2) { campoModelo.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true; }
+    });
+    campoModelo.addEventListener("keydown", function (ev) { if (ev.key === "Enter") { ev.preventDefault(); campo.focus(); } });
+  }
+  function comVeiculo(txt) { return modeloAtual ? txt.replace(" Endereço: ", " Veículo: " + modeloAtual + ". Endereço: ") : txt; }
+  function botaoWa(txt, rotulo) {
+    return '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(comVeiculo(txt))) + '">' + rotulo + '</a>';
+  }
+  function paraVeiculo(fim) { return modeloAtual ? '<p class="res__para">Para o veículo <b>' + esc(modeloAtual) + '</b>' + fim + '</p>' : ""; }
+
   // Mapinha com a agulha no endereço encontrado, para o cliente conferir
   var pinLL = null;
   function mapa() {
@@ -198,8 +216,8 @@ var CONFIG = {
     medir("busca_preco", { resultado: "consultar" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + endTxt;
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
-      '<p class="res__val">Consultar</p><p class="res__det">' + esc(motivo) + '</p>' +
-      '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Consultar pelo WhatsApp</a></div>');
+      paraVeiculo(":") + '<p class="res__val">Consultar</p><p class="res__det">' + esc(motivo) + '</p>' +
+      botaoWa(txt, "Consultar pelo WhatsApp") + '</div>');
   }
 
   function resultadoPreco(endTxt, faixa, km) {
@@ -208,10 +226,12 @@ var CONFIG = {
     var txt = "Olá! Vi o anúncio no Google e quero agendar a instalação do rastreador. Endereço: " + endTxt +
       " (" + nomeReg + ", " + Math.round(km) + " km). Valor informado no site: " + brl(faixa.valor) + ".";
     mostrar('<div class="res"><p class="res__end">' + esc(endTxt) + '</p>' + mapa() +
+      paraVeiculo(", a instalação fica:") +
       '<p class="res__val">' + brl(faixa.valor) + ' <small>instalação</small></p>' +
       '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small></b></p>' +
       '<p class="res__det">Sem fidelidade.</p>' +
-      '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Agendar pelo WhatsApp</a></div>');
+      '<p class="res__pergunta">Deseja agendar sua instalação?</p>' +
+      botaoWa(txt, "Agendar pelo WhatsApp") + '</div>');
   }
 
   function naoAchou(q) {
@@ -219,14 +239,14 @@ var CONFIG = {
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
     mostrar('<div class="res"><p class="res__err">Não encontramos esse endereço. Tente com <b>rua, número, bairro e cidade</b>, ou o <b>CEP</b>.</p>' +
       '<p class="res__det" style="margin-top:8px">Se preferir, mande o endereço no WhatsApp e respondemos o valor.</p>' +
-      '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Mandar no WhatsApp</a></div>');
+      botaoWa(txt, "Mandar no WhatsApp") + '</div>');
   }
 
   function falhou(q) {
     medir("busca_preco", { resultado: "erro" });
     var txt = "Olá! Vi o anúncio no Google e quero saber o valor da instalação. Endereço: " + q;
     mostrar('<div class="res"><p class="res__err">Não conseguimos calcular agora.</p><p class="res__det" style="margin-top:8px">Mande o endereço no WhatsApp e respondemos o valor.</p>' +
-      '<a class="btn btn--wa btn--lg" data-wa target="_blank" rel="noopener" href="' + esc(waLink(txt)) + '">Mandar no WhatsApp</a></div>');
+      botaoWa(txt, "Mandar no WhatsApp") + '</div>');
   }
 
   function calcular(endTxt, r) {
@@ -249,6 +269,13 @@ var CONFIG = {
   if (form) form.addEventListener("submit", function (ev) {
     ev.preventDefault();
     var q = (campo.value || "").trim();
+    if (campoModelo) {
+      modeloAtual = campoModelo.value.trim().replace(/\s+/g, " ");
+      if (modeloAtual.length < 2) {
+        campoModelo.classList.add("erro"); if (avisoModelo) avisoModelo.hidden = false;
+        campoModelo.focus(); return;
+      }
+    }
     if (q.length < 3) { campo.focus(); return; }
     var bt = form.querySelector("button"); bt.disabled = true;
     mostrar('<p class="carregando">Calculando a distância…</p>');
@@ -430,8 +457,23 @@ var CONFIG = {
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
   var fixo = document.querySelector(".wa-fixo");
   var hero = document.querySelector(".hero");
+  // Some quando já tem outro botão de WhatsApp na tela (topo, resultado do preço ou chamada final)
   if (fixo && hero && "IntersectionObserver" in window) {
-    new IntersectionObserver(function (e) { fixo.classList.toggle("ver", !e[0].isIntersecting); }, { threshold: 0 }).observe(hero);
+    var naTela = [];
+    var atualizaFixo = function () {
+      var outro = naTela.some(function (el) { return el !== res || res.querySelector("[data-wa]"); });
+      fixo.classList.toggle("ver", !outro);
+    };
+    var obsFixo = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var i = naTela.indexOf(e.target);
+        if (e.isIntersecting && i < 0) naTela.push(e.target);
+        if (!e.isIntersecting && i >= 0) naTela.splice(i, 1);
+      });
+      atualizaFixo();
+    }, { threshold: 0 });
+    [hero, res, document.querySelector(".final")].forEach(function (el) { if (el) obsFixo.observe(el); });
+    if (res && "MutationObserver" in window) new MutationObserver(atualizaFixo).observe(res, { childList: true });
   } else if (fixo) { fixo.classList.add("ver"); }
 
   /* ---------- Google Ads + aviso de cookies ---------- */

@@ -300,3 +300,11 @@ p{margin:0}
 .res__mapa{margin:10px 0 6px}
 .res__mapa img{display:block;width:100%;height:auto;aspect-ratio:3/1;object-fit:cover;border-radius:12px;background:#e9eef3;border:1px solid #dde5ee}
 .res__corrigir{background:none;border:0;padding:6px 0 0;font:inherit;font-size:.85rem;color:var(--azul);text-decoration:underline;cursor:pointer}
+.modelo-campo{margin:0 0 10px;text-align:left}
+.modelo-campo label{display:block;font-size:.9rem;font-weight:700;color:var(--tx);margin:0 0 6px 6px}
+.modelo-campo input{width:100%;font:inherit;font-size:16px;padding:.85em 1.1em;border:1.5px solid var(--linha);border-radius:999px;background:#fff;color:var(--tx);box-shadow:0 6px 18px rgba(11,23,48,.06)}
+.modelo-campo input:focus{border-color:var(--azul);outline:none;box-shadow:0 0 0 4px rgba(27,79,216,.12)}
+.modelo-campo input.erro{border-color:#c62828;box-shadow:0 0 0 4px rgba(198,40,40,.12)}
+.modelo-campo__aviso{color:#c62828;font-size:.85rem;font-weight:600;margin:6px 0 0 6px}
+.res__para{font-size:1rem;color:var(--tx);margin:8px 0 0}
+.res__pergunta{font-weight:700;color:var(--tx);margin:4px 0 10px}
