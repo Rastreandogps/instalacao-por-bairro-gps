@@ -70,14 +70,18 @@ var CONFIG = {
     window.gtag("js", new Date());
     if (CONFIG.googleAdsId) window.gtag("config", CONFIG.googleAdsId);
     if (CONFIG.ga4Id) window.gtag("config", CONFIG.ga4Id);
-    // o script do Google entra depois que a página carregou (não atrapalha a velocidade)
+    // o script do Google só entra quando a pessoa mexe na página (rolar, tocar) ou depois de 6 s,
+    // para não pesar na abertura; os eventos ficam guardados e vão todos quando ele chega
+    var googlePosto = false;
     var poeGoogle = function () {
+      if (googlePosto) return; googlePosto = true;
+      ["scroll", "touchstart", "mousemove", "keydown", "click"].forEach(function (t) { window.removeEventListener(t, poeGoogle, { passive: true }); });
       var s = document.createElement("script");
       s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.ga4Id || CONFIG.googleAdsId);
       document.head.appendChild(s);
     };
-    if (document.readyState === "complete") setTimeout(poeGoogle, 300);
-    else window.addEventListener("load", function () { setTimeout(poeGoogle, 300); });
+    ["scroll", "touchstart", "mousemove", "keydown", "click"].forEach(function (t) { window.addEventListener(t, poeGoogle, { passive: true }); });
+    window.addEventListener("load", function () { setTimeout(poeGoogle, 6000); });
   }
   function medir(nome, params) {
     try {
