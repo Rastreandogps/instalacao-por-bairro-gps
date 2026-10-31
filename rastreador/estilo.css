@@ -398,3 +398,13 @@ html.tem-orc body{padding-bottom:90px}
 .orc .carregando{min-height:90px;font-size:.92em}
 .orc-barra__info small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .orc-barra__info small i{font-style:normal;font-weight:700;opacity:1;color:#fff}
+/* 30/10 23h55: quantidade de veículos */
+.consulta__rot{font-size:.92rem;font-weight:700;color:var(--tx);margin:0 0 8px}
+.consulta__qtd{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 18px}
+.consulta__qtd button{height:46px;border:1.5px solid var(--linha);border-radius:12px;background:#fff;font:inherit;font-weight:700;font-size:1rem;color:var(--tx);cursor:pointer;transition:all .15s}
+.consulta__qtd button:hover{border-color:var(--azul)}
+.consulta__qtd button.ativo{background:var(--azul);border-color:var(--azul);color:#fff;box-shadow:0 4px 12px rgba(27,79,216,.25)}
+.consulta label small{font-weight:500;color:var(--mut)}
+.res__extras{font-size:.82rem;color:var(--mut);margin:-4px 0 10px}
+.orc .res__extras{font-size:.78em}
+.res__mens span small{display:block;font-size:.75em;font-weight:500;color:var(--mut)}

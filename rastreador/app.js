@@ -7,6 +7,8 @@ var CONFIG = {
   // Chave do Google só para calcular a rota (restrita a este site e à Routes API; teto de 300/dia)
   googleRotasChave: "AIzaSyDBA1qcNcAgZ3XB5smm67o09m8fQpfNz-k",
   // Preço da instalação por KM DE ESTRADA a partir da base. valor null = "Consultar pelo WhatsApp"
+  // Mais de um veículo na mesma visita: valor de cada veículo extra (2º, 3º, 4º). 5 ou mais = frota (WhatsApp)
+  extras: [69.90, 69.90, 59.90],
   faixas: [
     { ateKm: 42, regiao: 1, valor: 89.90 },
     { ateKm: 50, regiao: 2, valor: 120.00 },
@@ -182,7 +184,33 @@ var CONFIG = {
   var caixaModelo = document.getElementById("modelo-campo");
   var avisoModelo = document.getElementById("modelo-aviso");
   var modeloAtual = "";
+  var qtdAtual = 1;
+  var rotuloModelo = document.getElementById("modelo-rotulo");
   if (caixaModelo) caixaModelo.hidden = false;
+  // Quantidade de veículos: 1 = modelo obrigatório; 2 a 4 = modelos opcionais; 5+ = frota
+  if (form) form.addEventListener("click", function (ev) {
+    var b = ev.target.closest && ev.target.closest("[data-qtd]");
+    if (!b) return;
+    qtdAtual = +b.getAttribute("data-qtd");
+    form.querySelectorAll("[data-qtd]").forEach(function (x) { x.classList.toggle("ativo", x === b); x.setAttribute("aria-pressed", x === b); });
+    campoModelo.parentNode.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true;
+    if (qtdAtual === 1) { rotuloModelo.textContent = "Qual é o modelo do seu veículo?"; campoModelo.placeholder = "Ex.: Onix, CG 160, Bongo"; }
+    else if (qtdAtual < 5) { rotuloModelo.innerHTML = 'Quais são os modelos? <small>(opcional)</small>'; campoModelo.placeholder = "Ex.: 2 Onix e 1 Strada"; }
+    else { rotuloModelo.innerHTML = 'Quais são os veículos? <small>(opcional)</small>'; campoModelo.placeholder = "Ex.: 8 caminhões e 3 motos"; }
+  });
+  function totalInstalacao(primeiro) {
+    var t = primeiro;
+    for (var i = 0; i < qtdAtual - 1; i++) t += CONFIG.extras[i];
+    return Math.round(t * 100) / 100;
+  }
+  function detalheExtras(primeiro) {
+    var d = ["1º " + brl(primeiro)], ex = CONFIG.extras;
+    if (qtdAtual >= 2) d.push(qtdAtual >= 3 && ex[1] === ex[0] ? "2º e 3º " + brl(ex[0]) + " cada" : "2º " + brl(ex[0]));
+    if (qtdAtual >= 3 && ex[1] !== ex[0]) d.push("3º " + brl(ex[1]));
+    if (qtdAtual >= 4) d.push("4º " + brl(ex[2]));
+    return d.join(" · ");
+  }
+  function nomeQtd() { return qtdAtual + " veículos"; }
   if (campoModelo) {
     campoModelo.addEventListener("input", function () {
       if (campoModelo.value.trim().length >= 2) { campoModelo.parentNode.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true; }
@@ -192,7 +220,8 @@ var CONFIG = {
   // Mensagem do WhatsApp organizada em linhas (o *texto* sai em negrito no WhatsApp)
   function mensagem(intro, endereco, extras) {
     var l = ["Olá! 👋 " + intro, ""];
-    if (modeloAtual) l.push("🚗 *Veículo:* " + modeloAtual);
+    if (qtdAtual > 1) l.push("🔢 *Quantidade:* " + (qtdAtual >= 5 ? "5 ou mais veículos" : nomeQtd()));
+    if (modeloAtual) l.push("🚗 *" + (qtdAtual > 1 ? "Veículos" : "Veículo") + ":* " + modeloAtual);
     l.push("📍 *Endereço:* " + endereco);
     return l.concat(extras || []).join("\n");
   }
@@ -260,7 +289,7 @@ var CONFIG = {
   }
   function mostrarBarra() {
     var a = res.querySelector("a[data-wa]");
-    orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>' + (modeloAtual ? '🚗 <i>' + esc(modeloAtual) + '</i> · ' : 'Seu orçamento · ') + 'toque para ver</small><b>' + barraInfo + '</b></button>' +
+    orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>' + (qtdAtual > 1 ? '🚗 <i>' + nomeQtd() + '</i> · ' : modeloAtual ? '🚗 <i>' + esc(modeloAtual) + '</i> · ' : 'Seu orçamento · ') + 'toque para ver</small><b>' + barraInfo + '</b></button>' +
       (a ? '<a class="orc-barra__wa" data-wa target="_blank" rel="noopener" href="' + esc(a.href) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Agendar</a>' : '');
     orcBarra.classList.add("ver");
     document.documentElement.classList.add("tem-orc");
@@ -285,12 +314,35 @@ var CONFIG = {
     }, 80);
   });
 
+  function linhaPara() {
+    if (qtdAtual > 1) return '<p class="res__para">Instalação de <b>' + nomeQtd() + '</b>' + (modeloAtual ? ': ' + esc(modeloAtual) : '') + '</p>';
+    return modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '';
+  }
+  function mensBloco() {
+    return '<p class="res__mens"><span>Mensalidade' + (qtdAtual > 1 ? ' <small>por veículo</small>' : '') + '</span><b>R$ 59,90<small>/mês</small></b></p>';
+  }
+
+  // 5 ou mais veículos: atendimento de frota
+  function resultadoFrota(endTxt) {
+    medir("busca_preco", { resultado: "frota" });
+    barraInfo = null;
+    var txt = mensagem("Vi o anúncio no Google e quero rastreador para a minha frota.", endTxt || "(a combinar)");
+    mostrar('<div class="res">' +
+      '<p class="res__tit">' + IC_OK + ' Atendimento para frotas</p>' +
+      '<p class="res__para">Para <b>5 ou mais veículos</b>, montamos um orçamento especial para a sua empresa.</p>' +
+      mensBloco() +
+      '<p class="res__ok">' + IC_OK + ' Todos os veículos num só aplicativo</p>' +
+      '<p class="res__ok">' + IC_OK + ' Sem contrato de fidelidade</p>' +
+      '<p class="res__pergunta">Fale com a gente para receber o valor:</p>' +
+      botaoWa(txt, "Pedir orçamento da frota") + '</div>');
+  }
+
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
     barraInfo = "Instalação a consultar";
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
     mostrar('<div class="res">' +
-      (modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '') +
+      linhaPara() +
       '<p class="res__lbl">Valor da instalação</p><p class="res__val">Consultar</p>' +
       '<p class="res__det">' + esc(motivo) + '</p>' +
       local(endTxt) +
@@ -298,22 +350,24 @@ var CONFIG = {
   }
 
   function resultadoPreco(endTxt, faixa, km) {
-    medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: faixa.valor });
+    medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: totalInstalacao(faixa.valor), quantidade: qtdAtual });
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
-    barraInfo = brl(faixa.valor) + " + R$ 59,90/mês";
+    var total = totalInstalacao(faixa.valor), varios = qtdAtual > 1;
+    barraInfo = brl(total) + " + " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês";
     var txt = mensagem("Vi o anúncio no Google e quero agendar a instalação do rastreador.", endTxt, [
       "🗺️ *Região:* " + nomeReg + " (" + Math.round(km) + " km)",
       "",
       "💰 *Valor informado no site:*",
-      "Instalação: " + brl(faixa.valor),
-      "Mensalidade: R$ 59,90/mês"
+      "Instalação: " + brl(total) + (varios ? " (" + detalheExtras(faixa.valor) + ")" : ""),
+      "Mensalidade: " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês"
     ]);
     mostrar('<div class="res">' +
       '<p class="res__tit">' + IC_OK + ' Seu orçamento está pronto!</p>' +
-      (modeloAtual ? '<p class="res__para">Instalação para <b>' + esc(modeloAtual) + '</b></p>' : '') +
-      '<p class="res__lbl">Valor da instalação</p>' +
-      '<p class="res__val">' + brl(faixa.valor) + ' <small>pagamento único</small></p>' +
-      '<p class="res__mens"><span>Mensalidade</span><b>R$ 59,90<small>/mês</small></b></p>' +
+      linhaPara() +
+      '<p class="res__lbl">Valor da instalação' + (varios ? ' (' + nomeQtd() + ')' : '') + '</p>' +
+      '<p class="res__val">' + brl(total) + ' <small>pagamento único</small></p>' +
+      (varios ? '<p class="res__extras">' + detalheExtras(faixa.valor) + '</p>' : '') +
+      mensBloco() +
       '<p class="res__ok">' + IC_OK + ' Sem contrato de fidelidade</p>' +
       local(endTxt) +
       '<p class="res__pergunta">Deseja agendar sua instalação?</p>' +
@@ -361,13 +415,17 @@ var CONFIG = {
     var q = (campo.value || "").trim();
     if (campoModelo) {
       modeloAtual = campoModelo.value.trim().replace(/\s+/g, " ");
-      if (modeloAtual.length < 2) {
+      if (qtdAtual === 1 && modeloAtual.length < 2) {
         campoModelo.parentNode.classList.add("erro"); if (avisoModelo) avisoModelo.hidden = false;
         campoModelo.focus(); return;
       }
     }
+    if (qtdAtual >= 5) {
+      campo.blur(); if (campoModelo) campoModelo.blur();
+      esconderBarra(); resultadoFrota(q); abrirOrc(); return;
+    }
     if (q.length < 3) { campo.focus(); return; }
-    var bt = form.querySelector("button"); bt.disabled = true;
+    var bt = form.querySelector('button[type="submit"]'); bt.disabled = true;
     campo.blur(); if (campoModelo) campoModelo.blur();
     barraInfo = null; esconderBarra();
     mostrar('<p class="carregando">Calculando o valor no seu endereço…</p>');

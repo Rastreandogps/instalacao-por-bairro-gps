@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-capa.webp?v=2">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=20">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=21">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -115,7 +115,15 @@
       <div class="consulta" id="modelo-campo" hidden>
         <p class="consulta__mens">Mensalidade fixa: <b>R$ 59,90</b> para qualquer veículo</p>
         <form id="busca" autocomplete="off" novalidate>
-          <label for="busca-modelo">Qual é o modelo do seu veículo?</label>
+          <p class="consulta__rot" id="qtd-rotulo">Quantos veículos?</p>
+          <div class="consulta__qtd" role="group" aria-labelledby="qtd-rotulo">
+            <button type="button" data-qtd="1" class="ativo" aria-pressed="true">1</button>
+            <button type="button" data-qtd="2" aria-pressed="false">2</button>
+            <button type="button" data-qtd="3" aria-pressed="false">3</button>
+            <button type="button" data-qtd="4" aria-pressed="false">4</button>
+            <button type="button" data-qtd="5" aria-pressed="false">5+</button>
+          </div>
+          <label for="busca-modelo" id="modelo-rotulo">Qual é o modelo do seu veículo?</label>
           <div class="consulta__campo">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 16.5V12l2-5h13l2 5v4.5z"/><path d="M3.5 12h17M7 14.3h1.6M15.4 14.3H17M5.5 16.5v2M18.5 16.5v2"/></g></svg>
             <input id="busca-modelo" type="text" maxlength="60" placeholder="Ex.: Onix, CG 160, Bongo" autocomplete="off" enterkeyhint="next">
@@ -423,6 +431,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=31" defer></script>
+<script src="/rastreador/app.js?v=32" defer></script>
 </body>
 </html>
