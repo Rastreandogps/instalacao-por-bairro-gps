@@ -195,7 +195,7 @@ var CONFIG = {
     form.querySelectorAll("[data-qtd]").forEach(function (x) { x.classList.toggle("ativo", x === b); x.setAttribute("aria-pressed", x === b); });
     campoModelo.parentNode.classList.remove("erro"); if (avisoModelo) avisoModelo.hidden = true;
     if (qtdAtual === 1) { rotuloModelo.textContent = "Qual é o modelo do seu veículo?"; campoModelo.placeholder = "Ex.: Onix, CG 160, Bongo"; }
-    else if (qtdAtual < 5) { rotuloModelo.innerHTML = 'Quais são os modelos? <small>(opcional)</small>'; campoModelo.placeholder = "Ex.: 2 Onix e 1 Strada"; }
+    else if (qtdAtual < 5) { rotuloModelo.innerHTML = 'Quais são os modelos? <small>(opcional)</small>'; campoModelo.placeholder = qtdAtual === 2 ? "Ex.: Onix e Strada" : qtdAtual === 3 ? "Ex.: 2 Onix e 1 Strada" : "Ex.: 2 Onix, 1 Strada e 1 CG 160"; }
     else { rotuloModelo.innerHTML = 'Quais são os veículos? <small>(opcional)</small>'; campoModelo.placeholder = "Ex.: 8 caminhões e 3 motos"; }
   });
   function totalInstalacao(primeiro) {
