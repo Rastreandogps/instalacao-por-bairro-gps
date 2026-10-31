@@ -290,7 +290,7 @@ var CONFIG = {
   function mostrarBarra() {
     var a = res.querySelector("a[data-wa]");
     orcBarra.innerHTML = '<button type="button" class="orc-barra__info"><small>' + (qtdAtual > 1 ? '🚗 <i>' + nomeQtd() + '</i> · ' : modeloAtual ? '🚗 <i>' + esc(modeloAtual) + '</i> · ' : 'Seu orçamento · ') + 'toque para ver</small><b>' + barraInfo + '</b></button>' +
-      (a ? '<a class="orc-barra__wa" data-wa target="_blank" rel="noopener" href="' + esc(a.href) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Agendar</a>' : '');
+      (a ? '<a class="orc-barra__wa" data-wa target="_blank" rel="noopener" href="' + esc(a.href) + '"><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> ' + (barraInfo.indexOf("R$") === 0 ? "Agendar" : "Falar") + '</a>' : '');
     orcBarra.classList.add("ver");
     document.documentElement.classList.add("tem-orc");
   }
@@ -345,6 +345,7 @@ var CONFIG = {
       linhaPara() +
       '<p class="res__lbl">Valor da instalação</p><p class="res__cons">Verificar valor com o atendente para a sua região</p>' +
       '<p class="res__det">' + esc(motivo) + '</p>' +
+      mensBloco() +
       local(endTxt) +
       botaoWa(txt, "Verificar valor pelo WhatsApp") + '</div>');
   }
@@ -446,7 +447,11 @@ var CONFIG = {
     }
     p.then(function (o) { calcular(o.endTxt, o.r); })
       .catch(function () { falhou(q); })
-      .then(function () { bt.disabled = false; });
+      .then(function () {
+        bt.disabled = false;
+        // fechou a janela enquanto calculava: o orçamento aparece na barra de baixo
+        if (!orcAberto() && barraInfo) mostrarBarra();
+      });
   });
 
   /* ---------- Vídeos: carregam só ao tocar ---------- */
@@ -602,7 +607,8 @@ var CONFIG = {
     var a = ev.target.closest && ev.target.closest("[data-wa]");
     if (!a) return;
     var sec = a.closest("section, footer");
-    medir("clique_whatsapp", { local: a.classList.contains("wa-fixo") ? "botao_fixo" : (sec ? (sec.id || (sec.className || "").split(" ")[0]) : "outro") });
+    var local = a.classList.contains("wa-fixo") ? "botao_fixo" : a.closest(".orc") ? "orcamento" : a.closest(".orc-barra") ? "barra_orcamento" : (sec ? (sec.id || (sec.className || "").split(" ")[0]) : "outro");
+    medir("clique_whatsapp", { local: local });
   });
 
   /* ---------- Botão fixo do WhatsApp (celular) ---------- */
