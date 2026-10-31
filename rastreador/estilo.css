@@ -289,3 +289,11 @@ p{margin:0}
 .video:not(.tocando) .vbarra{opacity:0}
 #video-topo .vbarra{bottom:4px}
 .app-demo__vid{position:relative}
+
+/* 30/10 (sugestão aproveitada): no celular a busca vira campo em cima e botão grande embaixo */
+@media (max-width:559px){
+  .busca{flex-wrap:wrap;border-radius:18px;padding:8px 8px 8px 44px;row-gap:8px}
+  .busca::before{top:29px}
+  .busca input{flex-basis:100%;padding:.75em .4em}
+  .busca .btn{flex:1 1 100%;margin-left:-36px;border-radius:12px;padding:.85em 1.2em}
+}
