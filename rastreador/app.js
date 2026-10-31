@@ -52,10 +52,34 @@ var CONFIG = {
 (function () {
   "use strict";
 
-  /* ---------- Medição: guarda os eventos até a pessoa aceitar os cookies ---------- */
-  var filaMedir = [], medindo = false;
+  /* ---------- Google (Ads + Analytics) com "modo de consentimento" (30/10) ----------
+     Sem o "Aceitar": nenhum cookie; o Google recebe só avisos anônimos e estima o que falta.
+     Com o "Aceitar": medição completa. O Clarity só carrega com o "Aceitar". */
+  var CHAVE = "rg_cookies";
+  function ler() { try { return localStorage.getItem(CHAVE); } catch (e) { return null; } }
+  function gravar(v) { try { localStorage.setItem(CHAVE, v); } catch (e) {} }
+  var aceitou = ler() === "sim";
+  var googleLigado = !!(CONFIG.googleAdsId || CONFIG.ga4Id);
+  if (googleLigado) {
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    var est = aceitou ? "granted" : "denied";
+    window.gtag("consent", "default", { ad_storage: est, analytics_storage: est, ad_user_data: est, ad_personalization: est });
+    window.gtag("set", "ads_data_redaction", true);
+    window.gtag("set", "url_passthrough", true);
+    window.gtag("js", new Date());
+    if (CONFIG.googleAdsId) window.gtag("config", CONFIG.googleAdsId);
+    if (CONFIG.ga4Id) window.gtag("config", CONFIG.ga4Id);
+    // o script do Google entra depois que a página carregou (não atrapalha a velocidade)
+    var poeGoogle = function () {
+      var s = document.createElement("script");
+      s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.ga4Id || CONFIG.googleAdsId);
+      document.head.appendChild(s);
+    };
+    if (document.readyState === "complete") setTimeout(poeGoogle, 300);
+    else window.addEventListener("load", function () { setTimeout(poeGoogle, 300); });
+  }
   function medir(nome, params) {
-    if (!medindo) { if (filaMedir.length < 60) filaMedir.push([nome, params || {}]); return; }
     try {
       if (CONFIG.ga4Id && window.gtag) window.gtag("event", nome, Object.assign({ send_to: CONFIG.ga4Id }, params || {}));
       if (window.clarity) window.clarity("event", nome);
@@ -389,24 +413,14 @@ var CONFIG = {
   } else if (fixo) { fixo.classList.add("ver"); }
 
   /* ---------- Google Ads + aviso de cookies ---------- */
-  var CHAVE = "rg_cookies";
   var aviso = document.getElementById("cookies");
   var abrir = document.getElementById("cookies-abrir");
-  function ler() { try { return localStorage.getItem(CHAVE); } catch (e) { return null; } }
-  function gravar(v) { try { localStorage.setItem(CHAVE, v); } catch (e) {} }
-  var adsCarregado = false;
-  function carregarAds() {
-    if (adsCarregado || !CONFIG.googleAdsId) return;
-    adsCarregado = true;
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () { window.dataLayer.push(arguments); };
-    window.gtag("js", new Date());
-    window.gtag("config", CONFIG.googleAdsId);
-    if (CONFIG.ga4Id) window.gtag("config", CONFIG.ga4Id);
-    var s = document.createElement("script");
-    s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(CONFIG.ga4Id || CONFIG.googleAdsId);
-    document.head.appendChild(s);
+  var clarityCarregado = false;
+  function aceitar() {
+    if (window.gtag) window.gtag("consent", "update", { ad_storage: "granted", analytics_storage: "granted", ad_user_data: "granted", ad_personalization: "granted" });
+    if (clarityCarregado) { window.clarity("consent"); return; }
     if (CONFIG.clarityId) {
+      clarityCarregado = true;
       (function (c, l, a, r, i, t, y) {
         c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
         t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
@@ -414,18 +428,20 @@ var CONFIG = {
       })(window, document, "clarity", "script", CONFIG.clarityId);
       window.clarity("consent");
     }
-    medindo = true;
-    filaMedir.splice(0).forEach(function (x) { medir(x[0], x[1]); });
   }
-  if (CONFIG.googleAdsId) {
+  function recusar() {
+    if (window.gtag) window.gtag("consent", "update", { ad_storage: "denied", analytics_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" });
+    if (clarityCarregado && window.clarity) window.clarity("consent", false);
+  }
+  if (googleLigado) {
     if (abrir) abrir.hidden = false;
     var esc0 = ler();
-    if (esc0 === "sim") carregarAds();
+    if (esc0 === "sim") aceitar();
     else if (!esc0 && aviso) aviso.hidden = false;
     if (aviso) aviso.addEventListener("click", function (ev) {
       var b = ev.target.closest("[data-cookies]"); if (!b) return;
       var v = b.getAttribute("data-cookies"); gravar(v); aviso.hidden = true;
-      if (v === "sim") carregarAds();
+      if (v === "sim") aceitar(); else recusar();
     });
     if (abrir) abrir.addEventListener("click", function () { aviso.hidden = false; });
   }
@@ -433,7 +449,7 @@ var CONFIG = {
   // Conversão: clique em qualquer botão de WhatsApp
   document.addEventListener("click", function (ev) {
     var a = ev.target.closest && ev.target.closest("[data-wa]");
-    if (!a || !adsCarregado || !CONFIG.googleAdsRotuloWhatsApp) return;
+    if (!a || !window.gtag || !CONFIG.googleAdsRotuloWhatsApp) return;
     window.gtag("event", "conversion", { send_to: CONFIG.googleAdsId + "/" + CONFIG.googleAdsRotuloWhatsApp });
   });
 
