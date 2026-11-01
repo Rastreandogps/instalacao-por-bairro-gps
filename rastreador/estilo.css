@@ -436,7 +436,7 @@ html.tem-orc body{padding-bottom:90px}
   background:repeating-linear-gradient(90deg,#cbd5e1 0 6px,transparent 6px 11px)}
 .jor__seg::after{content:"";position:absolute;inset:0;border-radius:4px;background:#22c55e;
   transform:scaleX(0);transform-origin:left}
-.jor__seg--ponta{flex:.3}
+.jor__seg--ponta{display:none}
 .jor__seg--ponta::after{display:none}
 .jor__ic{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;position:relative;
   background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);border:1px solid rgba(15,23,42,.08);
