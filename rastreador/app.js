@@ -1,3 +1,21 @@
+/* 01/11/2026 (dono): a página /rastreador virou também a página inicial do site.
+   Quem veio do anúncio do Google continua mandando "Vi o anúncio no Google"; quem chegou por outro caminho manda "Vi o site". */
+var VEIO_DO_GOOGLE_ADS = (function () {
+  try {
+    var q = new URLSearchParams(location.search);
+    var ads = q.has("gclid") || q.has("gbraid") || q.has("wbraid") || /google/i.test(q.get("utm_source") || "") && /cpc|ads|paid/i.test(q.get("utm_medium") || "cpc");
+    if (ads) sessionStorage.setItem("rg_origem", "ads");
+    return ads || sessionStorage.getItem("rg_origem") === "ads";
+  } catch (e) { return true; }
+})();
+function textoOrigem(t) { return VEIO_DO_GOOGLE_ADS ? t : String(t).replace("Vi o anúncio no Google e ", "Vi o site e "); }
+function linksOrigem() {
+  if (VEIO_DO_GOOGLE_ADS) return;
+  var a = document.querySelectorAll('a[href*="wa.me/"]');
+  for (var i = 0; i < a.length; i++) a[i].href = a[i].getAttribute("href").replace("Vi%20o%20an%C3%BAncio%20no%20Google%20e%20", "Vi%20o%20site%20e%20");
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", linksOrigem); else linksOrigem();
+
 /* Rastreando GPS — página /rastreador
    CONFIGURAÇÃO: troque aqui preços, faixas e a tag do Google Ads. */
 var CONFIG = {
@@ -219,7 +237,7 @@ var CONFIG = {
   }
   // Mensagem do WhatsApp organizada em linhas (o *texto* sai em negrito no WhatsApp)
   function mensagem(intro, endereco, extras) {
-    var l = ["Olá! 👋 " + intro, ""];
+    var l = ["Olá! 👋 " + textoOrigem(intro), ""];
     if (qtdAtual > 1) l.push("🔢 *Quantidade:* " + (qtdAtual >= 5 ? "5 ou mais veículos" : nomeQtd()));
     if (modeloAtual) l.push("🚗 *" + (qtdAtual > 1 ? "Veículos" : "Veículo") + ":* " + modeloAtual);
     l.push("📍 *Endereço:* " + endereco);

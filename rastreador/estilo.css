@@ -423,3 +423,8 @@ html.tem-orc body{padding-bottom:90px}
 .app-ban__nota{max-width:720px;margin:14px auto 0;text-align:center;color:#c3cee3;font-size:.86rem}
 @media (min-width:760px){.app-ban{max-width:1120px;aspect-ratio:1200/420}.app-demo--banner{padding:56px 0}}
 .app-ban .vbarra{display:none} /* 01/11 (dono): banner sem linha de progresso */
+
+/* 01/11/2026: link para quem já é cliente (a página virou também a inicial do site) */
+.topo__cli{margin-left:auto;margin-right:0;font-size:.86rem;font-weight:600;color:#c3cee3;text-decoration:none;white-space:nowrap}
+.topo__cli:hover{color:#fff;text-decoration:underline}
+@media (min-width:760px){.topo__cli{margin-right:14px}}
