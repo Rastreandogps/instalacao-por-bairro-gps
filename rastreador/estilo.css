@@ -430,7 +430,8 @@ html.tem-orc body{padding-bottom:90px}
 @media (min-width:760px){.topo__cli{margin-right:14px}}
 
 /* 01/11/2026: linha animada do orçamento (agendado → instalado → rastreado) */
-.jor{display:flex;align-items:center;margin:2px 12px 14px;padding:4px 0}
+.jor{display:flex;align-items:center;margin:2px 12px 32px;padding:4px 0}
+.jor__txt{position:absolute;top:calc(50% + 29px);left:50%;transform:translateX(-50%);font-size:.8rem;font-weight:700;color:#128040;white-space:nowrap;letter-spacing:.01em}
 .jor__seg{flex:1;height:3px;border-radius:4px;position:relative;
   background:repeating-linear-gradient(90deg,#cbd5e1 0 6px,transparent 6px 11px)}
 .jor__seg::after{content:"";position:absolute;inset:0;border-radius:4px;background:#22c55e;
