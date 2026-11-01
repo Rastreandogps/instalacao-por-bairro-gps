@@ -445,20 +445,20 @@ html.tem-orc body{padding-bottom:90px}
 .jor__ic--fim{width:52px;height:52px;border-radius:16px}
 .jor__ic--fim svg{width:40px;height:40px}
 
-/* tempos: o ícone acende quando a linha chega nele */
-.jor.play .jor__ic{animation:acende .5s cubic-bezier(.3,1.5,.5,1) forwards}
-.jor.play .jor__ic:nth-of-type(1){animation-delay:.2s}
-.jor.play .jor__ic:nth-of-type(2){animation-delay:1.4s}
-.jor.play .jor__ic:nth-of-type(3){animation-delay:2.6s}
-.jor.play .jor__seg--a::after{animation:enche .8s ease-in-out .6s forwards}
-.jor.play .jor__seg--b::after{animation:enche .8s ease-in-out 1.8s forwards}
+/* tempos (ciclo de 6 s que se repete): o ícone acende quando a linha chega nele, fica tudo aceso um pouco e recomeça */
+.jor.play .jor__ic:nth-child(2){animation:jorIc1 6s ease-in-out infinite}
+.jor.play .jor__ic:nth-child(4){animation:jorIc2 6s ease-in-out infinite}
+.jor.play .jor__ic:nth-child(6){animation:jorIc3 6s ease-in-out infinite}
+.jor.play .jor__seg--a::after{animation:jorSegA 6s ease-in-out infinite}
+.jor.play .jor__seg--b::after{animation:jorSegB 6s ease-in-out infinite}
 .jor.play .jor__ic--fim::after{content:"";position:absolute;inset:-4px;border-radius:19px;border:2px solid #22c55e;
-  background:rgba(34,197,94,.06);opacity:0;animation:pulso 1.8s ease-out 3.1s infinite}
-@keyframes acende{to{transform:scale(1);opacity:1;filter:none;border-color:rgba(34,197,94,.3);
-  background:linear-gradient(180deg,#ffffff 0%,#effdf5 100%);
-  box-shadow:inset 0 1px 0 #fff,0 12px 26px rgba(34,197,94,.22),0 3px 8px rgba(15,23,42,.05)}}
-@keyframes enche{to{transform:scaleX(1)}}
-@keyframes pulso{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(1.3)}}
+  background:rgba(34,197,94,.06);opacity:0;animation:jorPulso 6s ease-out infinite}
+@keyframes jorIc1{0%,3%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}8%{transform:scale(1.1);opacity:1;filter:none}11%,88%{transform:scale(1);opacity:1;filter:none;border-color:rgba(34,197,94,.3);background:linear-gradient(180deg,#ffffff 0%,#effdf5 100%);box-shadow:inset 0 1px 0 #fff,0 12px 26px rgba(34,197,94,.22),0 3px 8px rgba(15,23,42,.05)}97%,100%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}}
+@keyframes jorIc2{0%,23%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}28%{transform:scale(1.1);opacity:1;filter:none}31%,88%{transform:scale(1);opacity:1;filter:none;border-color:rgba(34,197,94,.3);background:linear-gradient(180deg,#ffffff 0%,#effdf5 100%);box-shadow:inset 0 1px 0 #fff,0 12px 26px rgba(34,197,94,.22),0 3px 8px rgba(15,23,42,.05)}97%,100%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}}
+@keyframes jorIc3{0%,43%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}48%{transform:scale(1.1);opacity:1;filter:none}51%,88%{transform:scale(1);opacity:1;filter:none;border-color:rgba(34,197,94,.3);background:linear-gradient(180deg,#ffffff 0%,#effdf5 100%);box-shadow:inset 0 1px 0 #fff,0 12px 26px rgba(34,197,94,.22),0 3px 8px rgba(15,23,42,.05)}97%,100%{transform:scale(.82);opacity:.45;filter:grayscale(1);border-color:rgba(15,23,42,.08);background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05)}}
+@keyframes jorSegA{0%,10%{transform:scaleX(0)}23%,88%{transform:scaleX(1)}97%,100%{transform:scaleX(0)}}
+@keyframes jorSegB{0%,30%{transform:scaleX(0)}43%,88%{transform:scaleX(1)}97%,100%{transform:scaleX(0)}}
+@keyframes jorPulso{0%,52%{opacity:0;transform:scale(1)}54%{opacity:.8;transform:scale(1)}70%{opacity:0;transform:scale(1.3)}71%{opacity:.8;transform:scale(1)}86%,100%{opacity:0;transform:scale(1.3)}}
 @media (prefers-reduced-motion:reduce){
   .jor .jor__ic{animation:none!important;transform:none;opacity:1;filter:none;border-color:rgba(34,197,94,.3)}
   .jor .jor__seg::after{animation:none!important;transform:scaleX(1)}
