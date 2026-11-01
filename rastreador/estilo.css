@@ -430,20 +430,20 @@ html.tem-orc body{padding-bottom:90px}
 @media (min-width:760px){.topo__cli{margin-right:14px}}
 
 /* 01/11/2026: linha animada do orçamento (agendado → instalado → rastreado) */
-.jor{display:flex;align-items:center;margin:4px 0 18px;padding:6px 2px}
-.jor__seg{flex:1;height:4px;border-radius:4px;position:relative;
+.jor{display:flex;align-items:center;margin:2px 12px 14px;padding:4px 0}
+.jor__seg{flex:1;height:3px;border-radius:4px;position:relative;
   background:repeating-linear-gradient(90deg,#cbd5e1 0 6px,transparent 6px 11px)}
 .jor__seg::after{content:"";position:absolute;inset:0;border-radius:4px;background:#22c55e;
   transform:scaleX(0);transform-origin:left}
 .jor__seg--ponta{flex:.3}
 .jor__seg--ponta::after{display:none}
-.jor__ic{width:60px;height:60px;border-radius:19px;flex:none;display:grid;place-items:center;position:relative;
+.jor__ic{width:46px;height:46px;border-radius:14px;flex:none;display:grid;place-items:center;position:relative;
   background:linear-gradient(180deg,#ffffff 0%,#f4f7f9 100%);border:1px solid rgba(15,23,42,.08);
   box-shadow:inset 0 1px 0 #fff,0 8px 20px rgba(15,23,42,.08),0 2px 6px rgba(15,23,42,.05);
   transform:scale(.82);opacity:.45;filter:grayscale(1)}
-.jor__ic svg{width:44px;height:44px;overflow:visible}
-.jor__ic--fim{width:66px;height:66px;border-radius:21px}
-.jor__ic--fim svg{width:50px;height:50px}
+.jor__ic svg{width:34px;height:34px;overflow:visible}
+.jor__ic--fim{width:52px;height:52px;border-radius:16px}
+.jor__ic--fim svg{width:40px;height:40px}
 
 /* tempos: o ícone acende quando a linha chega nele */
 .jor.play .jor__ic{animation:acende .5s cubic-bezier(.3,1.5,.5,1) forwards}
@@ -452,7 +452,7 @@ html.tem-orc body{padding-bottom:90px}
 .jor.play .jor__ic:nth-of-type(3){animation-delay:2.6s}
 .jor.play .jor__seg--a::after{animation:enche .8s ease-in-out .6s forwards}
 .jor.play .jor__seg--b::after{animation:enche .8s ease-in-out 1.8s forwards}
-.jor.play .jor__ic--fim::after{content:"";position:absolute;inset:-4px;border-radius:24px;border:2px solid #22c55e;
+.jor.play .jor__ic--fim::after{content:"";position:absolute;inset:-4px;border-radius:19px;border:2px solid #22c55e;
   background:rgba(34,197,94,.06);opacity:0;animation:pulso 1.8s ease-out 3.1s infinite}
 @keyframes acende{to{transform:scale(1);opacity:1;filter:none;border-color:rgba(34,197,94,.3);
   background:linear-gradient(180deg,#ffffff 0%,#effdf5 100%);
