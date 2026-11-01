@@ -562,6 +562,23 @@
       line-height: 1.5;
     }
 
+
+    /* 01/11/2026: bloco do nosso app com a foto do celular */
+    .app-nosso{max-width:820px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:18px;align-items:center;
+      background:linear-gradient(160deg,rgba(17,29,48,.6),rgba(7,13,24,.6));border:1px solid rgba(34,197,94,.3);border-radius:20px;padding:22px 20px;overflow:hidden}
+    .app-nosso-mock{width:100%;max-width:230px;height:auto;margin:0 auto;display:block;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45))}
+    .app-nosso-tit{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+    .app-nosso-tit img{border-radius:12px}
+    .app-nosso-tit strong{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#fff;line-height:1.05}
+    .app-nosso-txt p{color:var(--muted);font-size:15px;line-height:1.55;margin:0 0 12px}
+    .app-nosso-txt p b{color:#e6fff1}
+    .app-nosso-txt ul{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:8px}
+    .app-nosso-txt li{color:#d6e2ef;font-size:14.5px;display:flex;gap:10px;align-items:center}
+    .app-nosso-txt li i{color:var(--green);width:18px;text-align:center}
+    .app-nosso-txt .app-card-btn{display:flex;justify-content:center;background:linear-gradient(135deg,#22c55e,#15803d);box-shadow:0 8px 22px rgba(34,197,94,.35)}
+    .app-nosso-sec{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:10px;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,.14);color:#e6eef8;font-weight:700;text-decoration:none;font-size:14.5px}
+    .app-nosso-sec:hover{border-color:rgba(34,197,94,.5)}
+    @media (min-width:720px){.app-nosso{grid-template-columns:260px 1fr;gap:30px;padding:28px 32px}.app-nosso-mock{max-width:260px}}
     /* aviso "dois apps" */
     .app-which {
       display: flex; align-items: flex-start; gap: 12px;
@@ -1018,144 +1035,25 @@
       <p>Acompanhe seu veículo em tempo real, receba alertas e tenha o histórico de rotas na palma da sua mão.</p>
     </div>
 
-    <!-- aviso: dois aplicativos -->
-    <div class="app-which">
-      <i class="fas fa-circle-info"></i>
-      <p>Trabalhamos com <strong>dois aplicativos</strong>. Baixe o que foi configurado no seu rastreador. <strong>Não sabe qual é o seu?</strong> <a href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Quero%20saber%20qual%20app%20%C3%A9%20o%20do%20meu%20rastreador." target="_blank" rel="noopener">Fale com o suporte</a>.</p>
-    </div>
-
-    <!-- ──────── APP 1: NobGPS ──────── -->
-    <div class="app-block" id="appNob">
-      <div class="app-block-head" onclick="toggleApp('appNob')">
-        <div class="app-block-logo nob"><img src="../Logo/nobgps.jpeg" alt="NobGPS"></div>
-        <div class="app-block-title">
-          <strong>NobGPS</strong>
-          <span>Toque para abrir · Android, iPhone e Web</span>
-        </div>
-        <i class="fas fa-chevron-down app-block-chevron"></i>
-      </div>
-      <div class="app-acc-body">
-       <div class="app-acc-inner">
-      <div class="app-cards-grid">
-        <!-- Android -->
-        <div class="app-card android">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
-          <div class="app-card-store">
-            <small>Disponível no</small>
-            <strong>Google Play</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="https://play.google.com/store/apps/details?id=br.com.nobgps" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-download"></i> Baixar Grátis
-          </a>
-        </div>
-
-        <!-- iPhone -->
-        <div class="app-card iphone">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
-          <div class="app-card-store">
-            <small>Baixe na</small>
-            <strong>App Store</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="https://apps.apple.com/br/app/nobgps-2-0/id6739852876" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-download"></i> Baixar Grátis
-          </a>
-        </div>
-
-        <!-- Web -->
-        <div class="app-card web">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
-          <div class="app-card-store">
-            <small>Acesse pelo</small>
-            <strong>Computador</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="http://web.nobgps.com.br" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-external-link-alt"></i> Acessar Agora
-          </a>
-        </div>
-      </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ──────── APP 2: Rastreando GPS ──────── -->
-    <div class="app-block" id="appRast">
-      <div class="app-block-head" onclick="toggleApp('appRast')">
-        <div class="app-block-logo rast"><img src="../Logo/Logo1.png" alt="Rastreando GPS"></div>
-        <div class="app-block-title">
-          <strong>Rastreando GPS</strong>
-          <span>Toque para abrir · Android, iPhone e Web</span>
-        </div>
-        <i class="fas fa-chevron-down app-block-chevron"></i>
-      </div>
-      <div class="app-acc-body">
-       <div class="app-acc-inner">
-      <div class="app-cards-grid">
-        <!-- Android -->
-        <div class="app-card android">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-google-play"></i></div>
-          <div class="app-card-store">
-            <small>Disponível no</small>
-            <strong>Google Play</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="https://play.google.com/store/apps/details?id=com.rastreandogpsrastreamento.br" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-download"></i> Baixar Grátis
-          </a>
-        </div>
-
-        <!-- iPhone -->
-        <div class="app-card iphone">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fab fa-apple"></i></div>
-          <div class="app-card-store">
-            <small>Baixe na</small>
-            <strong>App Store</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="https://apps.apple.com/br/app/rastreando-gps/id1642112039" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-download"></i> Baixar Grátis
-          </a>
-        </div>
-
-        <!-- Web -->
-        <div class="app-card web">
-          <div class="app-card-top"><div class="app-card-icon-wrap"><i class="fas fa-desktop"></i></div>
-          <div class="app-card-store">
-            <small>Acesse pelo</small>
-            <strong>Computador</strong>
-          </div></div>
-          <div class="app-card-rating">
-            <span class="app-card-stars">★★★★★</span>
-            <span class="app-card-rating-text"><strong>5.0</strong> · Excelente</span>
-          </div>
-          <a href="https://rastreamento.ong.br/index.php" target="_blank" rel="noopener" class="app-card-btn">
-            <i class="fas fa-external-link-alt"></i> Acessar Agora
-          </a>
-        </div>
-      </div>
-        </div>
+    <!-- 01/11/2026 (dono): saíram o NobGPS e o app antigo; fica só o nosso app, com a foto do celular -->
+    <div class="app-nosso">
+      <img class="app-nosso-mock" src="app-mockup.webp" width="420" height="633" alt="App Rastreando GPS aberto no celular, com o veículo no mapa" loading="lazy">
+      <div class="app-nosso-txt">
+        <div class="app-nosso-tit"><img src="../Logo/Logo1-96.webp" width="44" height="44" alt=""><strong>App Rastreando GPS</strong></div>
+        <p>Funciona no <b>Android</b>, no <b>iPhone</b> e no <b>computador</b>. Não precisa de loja: abre pelo navegador e você instala na tela inicial do celular.</p>
+        <ul>
+          <li><i class="fas fa-location-dot"></i> Veículo no mapa em tempo real</li>
+          <li><i class="fas fa-lock"></i> Bloqueio e desbloqueio pelo celular</li>
+          <li><i class="fas fa-bell"></i> Alertas de ignição, cerca e bateria</li>
+          <li><i class="fas fa-route"></i> Histórico de trajetos</li>
+        </ul>
+        <a class="app-card-btn" href="https://gps.rastreandogpsbr.com.br/instalar.html"><i class="fas fa-download"></i> Instalar no celular</a>
+        <a class="app-nosso-sec" href="https://gps.rastreandogpsbr.com.br/tempo-real.html"><i class="fas fa-arrow-up-right-from-square"></i> Abrir o app agora</a>
       </div>
     </div>
 
     <div class="app-download-footer">
-      <p>💡 <strong>Dica:</strong> Use o mesmo login em todos os dispositivos. Pode instalar em até <strong>5 telefones</strong> diferentes da mesma família.</p>
+      <p>💡 <strong>Dica:</strong> Use o mesmo login no celular e no computador. Esqueceu a senha? Fale com a gente no WhatsApp.</p>
     </div>
 
   </div>
