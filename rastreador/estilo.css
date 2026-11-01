@@ -415,3 +415,10 @@ html.tem-orc body{padding-bottom:90px}
 .res__porv{display:block;font-style:normal;font-size:.62em;font-weight:700;color:var(--azul);margin-top:2px}
 .res__mapa + .btn,.res__local + .btn{margin-top:14px}
 .res__porv{font-size:.7em}
+
+/* 01/11/2026: banner animado no lugar do vídeo do app (azul da página). Vídeo vertical no celular, largo no computador */
+.app-demo--banner{background:var(--navy);padding:40px 0}
+.app-ban{display:block;max-width:480px;margin:0 auto;border-radius:20px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.35);aspect-ratio:720/980;background:#0b1730}
+.app-ban video{display:block;width:100%;height:100%;object-fit:cover}
+.app-ban__nota{max-width:720px;margin:14px auto 0;text-align:center;color:#c3cee3;font-size:.86rem}
+@media (min-width:760px){.app-ban{max-width:1120px;aspect-ratio:1200/420}.app-demo--banner{padding:56px 0}}

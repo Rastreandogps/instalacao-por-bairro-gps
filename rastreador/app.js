@@ -551,6 +551,13 @@ var CONFIG = {
 
   /* ---------- Vídeo do app: toca sozinho (sem som) quando aparece na tela ---------- */
   var appV = document.getElementById("app-video");
+  /* 01/11/2026: escolhe o banner do celular ou do computador antes de carregar (o vídeo só baixa quando aparece na tela) */
+  if (appV && appV.dataset.celular) {
+    var largo = window.matchMedia && window.matchMedia("(min-width:760px)").matches;
+    appV.poster = largo ? appV.dataset.computadorCapa : appV.dataset.celularCapa;
+    appV.src = largo ? appV.dataset.computador : appV.dataset.celular;
+    if (largo) { appV.width = 1200; appV.height = 420; }
+  }
   if (appV) {
     var tocarApp = function () { var p = appV.play(); if (p && p.catch) p.catch(function () {}); };
     if ("IntersectionObserver" in window) {
