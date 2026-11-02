@@ -535,3 +535,8 @@ html.tem-orc body{padding-bottom:90px}
   .hero__acoes{grid-column:1/-1;grid-row:4}
   .selos{grid-column:1/-1;grid-row:5}
 }
+
+/* 02/11/2026: botão fixo do WhatsApp no celular vira bolinha no canto (não cobre o buscador) */
+.wa-fixo{left:auto;right:max(16px,env(safe-area-inset-right));bottom:max(16px,calc(env(safe-area-inset-bottom) + 12px));width:58px;height:58px;padding:0;border-radius:50%;gap:0;box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 0 4px rgba(18,128,64,.15)}
+.wa-fixo .ic{width:30px;height:30px}
+.wa-fixo__txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
