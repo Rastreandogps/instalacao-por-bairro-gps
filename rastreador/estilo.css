@@ -514,3 +514,21 @@ html.tem-orc body{padding-bottom:90px}
   .rec__c strong{font-size:11.5px}
 }
 @media(prefers-reduced-motion:reduce){.rec__c{transition:none}.rec__c.on{animation:none}.rec__c.on .rec__bar{animation:none;width:100%}}
+
+/* 02/11/2026: linha animada no topo (fundo escuro) — toca uma vez e fica acesa */
+.jor--topo{margin:22px 4px 36px;max-width:420px}
+.jor--topo .jor__ic{width:40px;height:40px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);box-shadow:none;transform:scale(.85);opacity:.4;filter:grayscale(1);animation:jorTopoIc .5s ease-out forwards}
+.jor--topo .jor__ic svg{width:28px;height:28px}
+.jor--topo .jor__ic--fim{width:44px;height:44px;border-radius:14px}
+.jor--topo .jor__ic--fim svg{width:32px;height:32px}
+.jor--topo .jor__ic:nth-child(2){animation-delay:.4s}
+.jor--topo .jor__ic:nth-child(4){animation-delay:1.4s}
+.jor--topo .jor__ic:nth-child(6){animation-delay:2.4s}
+.jor--topo .jor__seg{height:3px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 6px,transparent 6px 11px)}
+.jor--topo .jor__seg::after{background:#22c55e;animation:jorTopoSeg .8s ease-in-out forwards}
+.jor--topo .jor__seg--a::after{animation-delay:.7s}
+.jor--topo .jor__seg--b::after{animation-delay:1.7s}
+.jor--topo .jor__txt{top:calc(50% + 26px);font-size:.75rem;color:#86efac}
+@keyframes jorTopoIc{to{transform:scale(1);opacity:1;filter:none;background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.55);box-shadow:0 0 14px rgba(34,197,94,.25)}}
+@keyframes jorTopoSeg{to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.jor--topo .jor__ic{animation:none;transform:none;opacity:1;filter:none;border-color:rgba(34,197,94,.55)}.jor--topo .jor__seg::after{animation:none;transform:scaleX(1)}}
