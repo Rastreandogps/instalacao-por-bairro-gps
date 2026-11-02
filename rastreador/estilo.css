@@ -514,3 +514,24 @@ html.tem-orc body{padding-bottom:90px}
   .rec__c strong{font-size:11.5px}
 }
 @media(prefers-reduced-motion:reduce){.rec__c{transition:none}.rec__c.on{animation:none}.rec__c.on .rec__bar{animation:none;width:100%}}
+
+/* 02/11/2026 (teste): no celular, vídeo do bloqueio pequeno ao lado do bloco de preço */
+@media (max-width:899px){
+  .hero__in{grid-template-columns:minmax(0,1fr) auto;column-gap:12px;row-gap:0;align-items:stretch}
+  .hero__txt{display:contents}
+  .hero h1{grid-column:1/-1;grid-row:1}
+  .hero__sub{grid-column:1/-1;grid-row:2}
+  .preco{grid-column:1;grid-row:3;flex-direction:column;align-items:flex-start;flex-wrap:nowrap;gap:8px;padding:12px 14px}
+  .preco__div{display:none}
+  .preco__val{font-size:1.45rem}
+  .preco__nota{font-size:.76rem}
+  .hero__video{grid-column:2;grid-row:3;margin-top:22px;align-items:stretch}
+  .hero__video .video{width:min(34vw,136px);height:100%;aspect-ratio:auto;min-height:200px;border-radius:14px}
+  .hero__video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero__video .video__play{width:46px;height:46px;margin:-23px 0 0 -23px}
+  .hero__video .video__play .ic{width:22px;height:22px;margin-left:3px}
+  .hero__video .video__leg{font-size:0;bottom:10px}
+  .hero__video .video__leg small{font-size:.72rem;opacity:.9}
+  .hero__acoes{grid-column:1/-1;grid-row:4}
+  .selos{grid-column:1/-1;grid-row:5}
+}

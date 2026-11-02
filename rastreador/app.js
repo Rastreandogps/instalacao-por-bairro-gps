@@ -532,6 +532,13 @@ var CONFIG = {
       bloqBox.classList.add("tocando");
       bloqV.controls = true; bloqV.muted = false; bloqV.preload = "auto";
       var p = bloqV.play(); if (p && p.catch) p.catch(function () {});
+      /* 02/11/2026: no celular o vídeo é pequeno; ao tocar, abre em tela cheia */
+      if (window.innerWidth < 900) {
+        try {
+          if (bloqV.requestFullscreen) { var f = bloqV.requestFullscreen(); if (f && f.catch) f.catch(function () {}); }
+          else if (bloqV.webkitEnterFullscreen) bloqV.webkitEnterFullscreen();
+        } catch (e) {}
+      }
     };
     bloqBox.addEventListener("click", function (ev) { if (!bloqBox.classList.contains("tocando")) { ev.preventDefault(); iniciar(); } });
     bloqV.addEventListener("ended", function () {
