@@ -704,3 +704,42 @@ var CONFIG = {
   });
 
 })();
+
+/* 02/11/2026: seção de recursos com vídeos do app. Só começa a tocar quando aparece na tela (economiza dados). */
+(function () {
+  var sec = document.getElementById("plano"), vid = document.getElementById("recVid");
+  if (!sec || !vid) return;
+  var bts = [].slice.call(sec.querySelectorAll(".rec__c"));
+  var at = 0, auto = !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches), tm = null, ativo = false, visivel = true;
+  function el(id) { return document.getElementById(id); }
+  function mostra(i) {
+    at = (i + bts.length) % bts.length;
+    var b = bts[at], d = b.dataset, dur = parseFloat(d.dur) || 4.5;
+    bts.forEach(function (x, j) { x.classList.remove("on"); x.setAttribute("aria-pressed", j === at ? "true" : "false"); });
+    b.style.setProperty("--t", dur + "s"); void b.offsetWidth;
+    b.classList.add("on"); b.classList.toggle("parado", !auto);
+    el("recCat").textContent = d.cat; el("recCont").textContent = ("0" + (at + 1)).slice(-2) + " / 06";
+    el("recTit").textContent = d.tit; el("recDesc").textContent = d.desc;
+    vid.loop = !auto; vid.poster = "/rastreador/img/recursos/" + d.v + "-capa.webp";
+    vid.src = "/rastreador/img/recursos/" + d.v + ".mp4"; vid.setAttribute("aria-label", "Vídeo do app: " + d.tit);
+    if (visivel) { var p = vid.play(); if (p && p.catch) p.catch(function () {}); }
+    clearTimeout(tm); if (auto && visivel) tm = setTimeout(function () { mostra(at + 1); }, (dur + 2) * 1000);
+  }
+  vid.addEventListener("ended", function () { if (auto) { clearTimeout(tm); mostra(at + 1); } });
+  bts.forEach(function (b, i) { b.addEventListener("click", function () { auto = false; ativo = true; mostra(i); }); });
+  var x0 = null, f = el("recFeat");
+  f.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  f.addEventListener("touchend", function (e) { if (x0 == null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) { auto = false; ativo = true; mostra(at + (dx < 0 ? 1 : -1)); } });
+  function comeca() { if (ativo) return; ativo = true; mostra(0); }
+  if ("IntersectionObserver" in window) {
+    visivel = false;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        visivel = e.isIntersecting;
+        if (e.isIntersecting) { if (ativo && auto && !vid.paused) return; if (ativo && auto) { mostra(at); return; } comeca(); if (vid.paused && vid.src) { var p = vid.play(); if (p && p.catch) p.catch(function () {}); } }
+        else if (ativo) { vid.pause(); clearTimeout(tm); }
+      });
+    }, { rootMargin: "200px 0px" });
+    io.observe(sec);
+  } else comeca();
+})();

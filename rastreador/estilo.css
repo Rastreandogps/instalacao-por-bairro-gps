@@ -465,3 +465,47 @@ html.tem-orc body{padding-bottom:90px}
   .jor .jor__seg::after{animation:none!important;transform:scaleX(1)}
   .jor .jor__ic--fim::after{display:none}
 }
+
+/* 02/11/2026: seção "O que vem no plano" com vídeos do app (prefixo rec__) */
+.rec{background:linear-gradient(160deg,#f8fbff,#eaf3f9);padding:clamp(40px,6vw,72px) 0}
+.rec__head{text-align:center;margin-bottom:26px}
+.rec__eye{font-size:11px;letter-spacing:2px;color:#008fa9;font-weight:800}
+.rec__head h2{font-size:clamp(26px,4.5vw,42px);font-weight:850;letter-spacing:-1px;margin:8px 0;text-wrap:balance}
+.rec__head p{font-size:clamp(14px,2vw,16px);color:#637188;margin:0}
+.rec__preco{font-weight:800;color:#078da7}
+.rec__lay{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;align-items:stretch}
+.rec__feat{background:radial-gradient(ellipse at 80% 10%,#135773 0%,transparent 55%),linear-gradient(145deg,#0b213b,#071321);border:1px solid #2d5971;border-radius:23px;padding:24px;color:#fff;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;box-shadow:0 18px 36px #0c2d4630;overflow:hidden;touch-action:pan-y}
+.rec__tel{width:190px;max-width:100%;aspect-ratio:432/834;border-radius:28px;background:#05070c;padding:7px;box-shadow:0 20px 40px #0008,0 0 0 1px #3a5a6e}
+.rec__tel video{width:100%;height:100%;object-fit:cover;border-radius:22px;display:block;background:#0b1520}
+.rec__info{min-width:0}
+.rec__cat{font-size:10px;color:#5beeff;font-weight:800;letter-spacing:1.5px}
+.rec__cont{font-size:10px;color:#a1c7d6;border:1px solid #477083;border-radius:20px;padding:4px 9px;margin-left:8px}
+.rec__info h3{font-size:clamp(22px,3vw,30px);font-weight:850;letter-spacing:-.6px;margin:10px 0 8px;color:#fff}
+.rec__info p{color:#bed0dd;font-size:15px;line-height:1.6;margin:0}
+.rec__pe{display:flex;align-items:center;gap:8px;border-top:1px solid #244357;margin-top:20px;padding-top:14px;font-size:12px;color:#8de9e7}
+.rec__pulse{width:7px;height:7px;border-radius:50%;background:#42ebad;box-shadow:0 0 0 5px #42ebad1b}
+.rec__ch{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.rec__c{appearance:none;cursor:pointer;min-width:0;background:#fff;border:1px solid #dce7ee;border-radius:17px;padding:15px 13px;text-align:left;color:#17233a;font:inherit;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s}
+.rec__c:hover{transform:translateY(-2px)}
+.rec__c:focus-visible{outline:3px solid #06aacf;outline-offset:3px}
+.rec__c.on{background:#f1fcff;border-color:#22e5ff;box-shadow:0 0 0 1px #22e5ff,0 0 14px #22e5ffaa,0 0 32px #06c8f066;animation:recLed 1.6s ease-in-out infinite}
+@keyframes recLed{50%{box-shadow:0 0 0 1px #22e5ff,0 0 8px #22e5ff66,0 0 18px #06c8f033}}
+.rec__mi{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#e8f6fa;color:#087c9f}
+.rec__mi svg{width:22px;height:22px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.rec__c strong{font-size:14px;line-height:1.3;font-weight:800}
+.rec__bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#04bddb}
+.rec__c.on .rec__bar{animation:recEnche var(--t,4.5s) linear forwards}
+.rec__c.on.parado .rec__bar{animation:none;width:100%}
+@keyframes recEnche{to{width:100%}}
+.rec__rod{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:22px 0 0;color:#586d81;font-size:12px}
+@media(max-width:760px){
+  .rec__lay{grid-template-columns:1fr}
+  .rec__feat{grid-template-columns:1fr;justify-items:center;text-align:center;padding:20px}
+  .rec__tel{width:min(200px,60vw)}
+  .rec__pe{justify-content:center}
+  .rec__ch{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .rec__c{padding:11px 6px;align-items:center;text-align:center;gap:7px}
+  .rec__mi{width:34px;height:34px}
+  .rec__c strong{font-size:11.5px}
+}
+@media(prefers-reduced-motion:reduce){.rec__c{transition:none}.rec__c.on{animation:none}.rec__c.on .rec__bar{animation:none;width:100%}}
