@@ -530,6 +530,7 @@ var CONFIG = {
       // pausa o vídeo da Fita se estiver com som
       var nv = document.getElementById("nfc-video"); if (nv && !nv.muted) { nv.muted = true; }
       bloqBox.classList.add("tocando");
+      if (bloqV.dataset.completo && bloqV.getAttribute("src") !== bloqV.dataset.completo) { bloqV.loop = false; bloqV.src = bloqV.dataset.completo; }
       bloqV.controls = true; bloqV.muted = false; bloqV.preload = "auto";
       var p = bloqV.play(); if (p && p.catch) p.catch(function () {});
       /* 02/11/2026: toca dentro do quadro pequeno (sem abrir tela cheia); a tela cheia fica no botão do próprio vídeo */
@@ -537,7 +538,8 @@ var CONFIG = {
     bloqBox.addEventListener("click", function (ev) { if (!bloqBox.classList.contains("tocando")) { ev.preventDefault(); iniciar(); } });
     bloqV.addEventListener("ended", function () {
       bloqV.controls = false; bloqBox.classList.remove("tocando");
-      bloqV.currentTime = 0; bloqV.load();   // volta a mostrar a capa
+      bloqV.muted = true; bloqV.loop = true; bloqV.src = "/rastreador/img/bloqueio-previa.mp4";   // volta para a prévia sem som
+      var p2 = bloqV.play(); if (p2 && p2.catch) p2.catch(function () {});
     });
   }
 
@@ -618,7 +620,7 @@ var CONFIG = {
   }
   [["bloq-video", "bloqueio_topo"], ["nfc-video", "fita_nfc"], ["app-video", "app"]].forEach(function (par) {
     var vid = document.getElementById(par[0]); if (!vid) return;
-    vid.addEventListener("timeupdate", function () { if (vid.duration) marcoVideo(par[1], vid.currentTime / vid.duration * 100); });
+    vid.addEventListener("timeupdate", function () { if (par[0] === "bloq-video" && vid.loop) return; /* prévia sem som do topo não conta */ if (vid.duration) marcoVideo(par[1], vid.currentTime / vid.duration * 100); });
   });
   if ("IntersectionObserver" in window) {
     var secVistas = {};

@@ -540,3 +540,9 @@ html.tem-orc body{padding-bottom:90px}
 .wa-fixo{left:auto;right:max(16px,env(safe-area-inset-right));bottom:max(16px,calc(env(safe-area-inset-bottom) + 12px));width:58px;height:58px;padding:0;border-radius:50%;gap:0;box-shadow:0 8px 22px rgba(0,0,0,.28),0 0 0 4px rgba(18,128,64,.15)}
 .wa-fixo .ic{width:30px;height:30px}
 .wa-fixo__txt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* 02/11/2026: selo "Vídeo" no vídeo do topo (o amigo achou que era foto) */
+.video__selo{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;align-items:center;gap:5px;background:rgba(0,0,0,.6);color:#fff;font-size:.72rem;font-weight:700;padding:4px 9px 4px 7px;border-radius:999px;backdrop-filter:blur(4px)}
+.video__selo .ic{width:11px;height:11px}
+.video.tocando .video__selo{display:none}
+@media (max-width:899px){.hero__video .video__selo{top:7px;left:7px;font-size:.66rem;padding:3px 7px 3px 6px}}
