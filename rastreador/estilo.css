@@ -239,7 +239,7 @@ p{margin:0}
 
 /* "A partir de" pulsando (pedido do dono, 30/10) */
 @keyframes pulsaAp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(1.06)}}
-.preco__ap{transform-origin:left center;animation:pulsaAp 1.6s ease-in-out infinite}
+/* 02/11/2026: "A partir de" fixo, sem piscar (pedido do dono) */
 .destaque-ap{display:inline-block;animation:pulsaAp 1.6s ease-in-out infinite}
 
 /* Fita NFC em vídeo (30/10): toca sozinho, sem som, em repetição */
