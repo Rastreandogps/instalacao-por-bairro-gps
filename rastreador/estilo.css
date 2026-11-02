@@ -546,3 +546,13 @@ html.tem-orc body{padding-bottom:90px}
 .video__selo .ic{width:11px;height:11px}
 .video.tocando .video__selo{display:none}
 @media (max-width:899px){.hero__video .video__selo{top:7px;left:7px;font-size:.66rem;padding:3px 7px 3px 6px}}
+
+/* 02/11/2026: no celular a nota "* O valor da instalação…" sai do bloco de preço e fica embaixo, em linha inteira (vídeo ganha largura) */
+.preco__nota--cel{display:none}
+@media (max-width:899px){
+  .preco > .preco__nota{display:none}
+  .preco__nota--cel{display:block;grid-column:1/-1;grid-row:4;border-top:0;margin:10px 0 0;padding-top:0;font-size:.8rem}
+  .hero__acoes{grid-row:5}
+  .selos{grid-row:6}
+  .hero__video .video{width:min(42vw,175px);min-height:0}
+}
