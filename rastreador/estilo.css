@@ -807,3 +807,5 @@ html.tem-orc body{padding-bottom:90px}
 @keyframes ocPisca{50%{opacity:0}}
 @keyframes ocBrilho{35%{background:#ffffff2a}}
 @media (prefers-reduced-motion:reduce){.oc__b,.oc__eco,.oc__dica,.oc__wa,.oc__dig i,.oc__cur{animation:none!important}}
+/* 03/11/2026 21h (velocidade): animações paradas nas seções fora da tela (content-visibility testado e descartado: estragava os links #frotas etc.) */
+section.fora,section.fora *,section.fora *::before,section.fora *::after{animation-play-state:paused!important}

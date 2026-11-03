@@ -655,6 +655,21 @@ var CONFIG = {
     document.querySelectorAll("[data-vimeo]").forEach(function (v) { ioVimeo.observe(v); });
   }
 
+  /* 03/11/2026 21h (velocidade): fotos de baixo (data-src) só baixam a 600 px da tela */
+  (function () {
+    var imgs = document.querySelectorAll("img[data-src]");
+    function poe(im) { if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute("data-src"); } }
+    if (!("IntersectionObserver" in window)) { imgs.forEach(poe); return; }
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { poe(e.target); io.unobserve(e.target); } }); }, { rootMargin: "600px 0px" });
+    imgs.forEach(function (im) { io.observe(im); });
+  })();
+
+  /* 03/11/2026 21h (velocidade): seção fora da tela fica com as animações paradas */
+  if ("IntersectionObserver" in window) {
+    var ioSec = new IntersectionObserver(function (es) { es.forEach(function (e) { e.target.classList.toggle("fora", !e.isIntersecting); }); }, { rootMargin: "200px 0px" });
+    document.querySelectorAll("main section, body > section").forEach(function (sec) { if (!sec.classList.contains("hero")) ioSec.observe(sec); });
+  }
+
   /* ---------- Vídeos: carregam só ao tocar ---------- */
   document.addEventListener("click", function (ev) {
     var v = ev.target.closest && ev.target.closest("[data-vimeo]");
@@ -718,8 +733,10 @@ var CONFIG = {
       bloqV.src = bloqV.dataset.previa; bloqV.preload = "auto";
       var p0 = bloqV.play(); if (p0 && p0.catch) p0.catch(function () {});
     };
-    if (document.readyState === "complete") setTimeout(ligarPrevia, 300);
-    else window.addEventListener("load", function () { setTimeout(ligarPrevia, 300); });
+    /* 03/11/2026 21h: a prévia espera a página assentar (o celular desenha o resto primeiro) */
+    var depois = function () { var f = function () { setTimeout(ligarPrevia, 1200); }; if (window.requestIdleCallback) requestIdleCallback(f, { timeout: 2500 }); else f(); };
+    if (document.readyState === "complete") depois();
+    else window.addEventListener("load", depois);
     var iniciar = function () {
       if (bloqBox.classList.contains("tocando")) return;
       // pausa o vídeo da Fita se estiver com som
