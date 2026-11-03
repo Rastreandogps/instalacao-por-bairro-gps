@@ -706,3 +706,5 @@ html.tem-orc body{padding-bottom:90px}
 }
 @media (max-width:400px){.wa2{padding:14px 14px 12px}.wa2__fone{width:128px;margin:-4px 0 -14px -14px}.wa2__itens{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.wa2__fone,.wa2__tela .wb,.wa2__tela .wc,.wa2__tela .wm{animation:none}.wa2__tela .wc{opacity:1}}
+/* 03/11/2026: 5 veículos no mapa — etiquetas menores no celular */
+@media (max-width:560px){#frotas .etq{font-size:8.5px;padding:2px 5px 2px 4px;gap:4px;border-radius:6px}#frotas .etq em{font-size:7.5px}#frotas .etq .st{width:6px;height:6px}#frotas .bola{width:24px;height:24px;border-width:2px;margin-top:3px}#frotas .bola svg{width:15px;height:15px}}

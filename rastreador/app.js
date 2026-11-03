@@ -807,11 +807,11 @@ var CONFIG = {
   ];
   const VEL=24; // unidades do mapa por segundo
   const reduzir=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const parado={el:document.getElementById('v3'),x:112,y:191};
+  const parados=[{el:document.getElementById('v3'),x:112,y:191},{el:document.getElementById('v5'),x:290,y:162}]; /* 03/11/2026: Marcos e Lucas parados */
   const nova=(u,now,excluir)=>{ let k; do{ k=Math.floor(Math.random()*ROTAS.length) }while(k===excluir||us.some(o=>o!==u&&o.k===k)); const pts=ROTAS[k],legs=pts.slice(1).map((p,i)=>Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1])); Object.assign(u,{k,pts,legs,tot:legs.reduce((a,b)=>a+b,0),ini:now+(u.pts?1000+Math.random()*3000:0)}) };
-  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]}];
+  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]},{el:document.getElementById('v4'),vel:document.getElementById('vel4'),faixa:[30,48]}]; /* 03/11/2026: João, Pedro e Tiago andando */
   const t0=performance.now(); let raf=0, ult=0;
-  us.forEach((u,n)=>{ nova(u,t0,-1); u.ini=t0-(n?u.tot*0.55:u.tot*0.2)/VEL*1000 }); /* já começam no meio do caminho */
+  us.forEach((u,n)=>{ nova(u,t0,-1); u.ini=t0-(u.tot*[0.2,0.55,0.8][n])/VEL*1000 }); /* já começam no meio do caminho */
   function pos(u,now){
     let d=reduzir?u.tot*0.4:Math.max(0,(now-u.ini)/1000*VEL);
     if(d>=u.tot){ nova(u,now,u.k); d=0 }
@@ -824,7 +824,7 @@ var CONFIG = {
   function desenha(now){
     const sx=mapa.clientWidth/360,sy=mapa.clientHeight/230;
     us.forEach(u=>{const p=pos(u,now); if(!p) return; u.el.style.transform=`translate(${(p.x*sx).toFixed(1)}px,${(p.y*sy).toFixed(1)}px)`; if(p.esq!==undefined) u.el.classList.toggle('esq',p.esq)});
-    parado.el.style.transform=`translate(${(parado.x*sx).toFixed(1)}px,${(parado.y*sy).toFixed(1)}px)`;
+    parados.forEach(q=>{ if(q.el) q.el.style.transform=`translate(${(q.x*sx).toFixed(1)}px,${(q.y*sy).toFixed(1)}px)` });
     if(now-ult>2500){ ult=now; us.forEach(u=>{ if(u.vel) u.vel.textContent=Math.round(u.faixa[0]+Math.random()*(u.faixa[1]-u.faixa[0]))+' km/h' }) }
   }
   if('IntersectionObserver' in window){
