@@ -769,3 +769,16 @@ html.tem-orc body{padding-bottom:90px}
 .oc__mini:hover{background:none;color:#fff}
 .oc__salvo{text-transform:none;letter-spacing:0}
 .oc__det:empty{display:none}
+/* 03/11/2026 19h10 (dono): mensalidade e instalação lado a lado, em dois quadros */
+.oc{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.oc__top,.oc__tit,.oc__eco,.oc__dica,.oc__wa{grid-column:1/-1}
+.oc__lin{display:block;padding:12px;border-radius:12px;background:#ffffff0d;border:1px solid #ffffff1c;min-width:0}
+.oc__lin+.oc__lin{border-top:1px solid #ffffff1c}
+.oc__rot{font-size:11.5px}
+.oc__val{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 4px;margin-top:8px}
+.oc__val em{flex-basis:100%;font-size:12px;margin-bottom:2px}
+.oc__val strong{font-size:clamp(20px,5.6vw,24px)}
+.oc__val--vazio strong{font-size:15px;line-height:1.25}
+.oc__det{margin-top:4px}
+.oc__eco{justify-self:start;margin-top:0}
+.oc__wa{margin-top:2px}

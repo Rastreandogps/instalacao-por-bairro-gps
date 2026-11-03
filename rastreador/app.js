@@ -453,7 +453,7 @@ var CONFIG = {
       extrasAtuais = extrasDa(ocSalvo.faixa);
       var tot = totalInstalacao(ocSalvo.faixa.valor), cheio = Math.round(ocSalvo.faixa.valor * q * 100) / 100;
       eco = Math.round((cheio - tot) * 100) / 100;
-      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<em>por apenas</em><strong>" + brl(tot) + "</strong>";
+      iv.innerHTML = "<em>por apenas</em><strong>" + brl(tot) + "</strong>"; // 03/11/2026 (dono): sem preço riscado
       ocEl("ocIDet").textContent = ""; // 03/11/2026 (dono): sem endereço e sem "pagamento único" no cartão
     } else if (ocConsultar) { iv.innerHTML = "<strong>Verificar com o atendente</strong>"; ocEl("ocIDet").textContent = "Fale com a gente pelo WhatsApp para o seu endereço"; }
     else { iv.innerHTML = "<strong>Calcule abaixo ↓</strong>"; ocEl("ocIDet").textContent = "Depende do seu endereço"; }
@@ -461,7 +461,6 @@ var CONFIG = {
     if (eco > 0) ocEl("ocEco").innerHTML = "🏷️ Você economiza <b>" + brl(eco) + "</b> " + (q === 2 ? "no 2º veículo" : q === 3 ? "no 2º e 3º veículos" : "do 2º ao 4º veículo");
     var ex2 = (ocSalvo ? extrasDa(ocSalvo.faixa) : CONFIG.extras)[0];
     ocEl("ocDica").innerHTML = q !== 1 ? "" : (ocSalvo ? "➕ Instalando 2 veículos, o 2º sai por <b>" + brl(ex2) + "</b>" : "➕ A partir do 2º veículo, a instalação tem desconto");
-    ocEl("ocAcao").hidden = !ocSalvo; ocEl("ocSalvo").hidden = !ocSalvo;
     var wa = ocEl("ocWa");
     wa.hidden = !tem;
     if (tem) { extrasAtuais = extrasDa(ocSalvo.faixa); wa.href = waLink(textoAgendar(ocSalvo.end, ocSalvo.faixa, ocSalvo.km)); }
@@ -487,7 +486,6 @@ var CONFIG = {
       if (campo && ocSalvo.end) { var mc = /\(CEP ([^)]*)\)/.exec(ocSalvo.end); campo.value = mc ? mc[1] : ocSalvo.end; }
     }
     ocPintar(false);
-    ocEl("ocTrocar").addEventListener("click", function () { campo.scrollIntoView({ behavior: "smooth", block: "center" }); campo.focus(); try { campo.select(); } catch (e) {} });
   }
 
   function calcular(endTxt, r) {
