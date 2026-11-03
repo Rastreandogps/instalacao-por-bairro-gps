@@ -545,7 +545,11 @@ var CONFIG = {
       // pausa o vídeo da Fita se estiver com som
       var nv = document.getElementById("nfc-video"); if (nv && !nv.muted) { nv.muted = true; }
       bloqBox.classList.add("tocando");
-      if (bloqV.dataset.completo && bloqV.getAttribute("src") !== bloqV.dataset.completo) { bloqV.loop = false; bloqV.src = bloqV.dataset.completo; }
+      if (bloqV.dataset.completo && bloqV.getAttribute("src") !== bloqV.dataset.completo) {
+        bloqV.loop = false; bloqV.src = bloqV.dataset.completo;
+        /* 03/11/2026 (dono): o vídeo completo começa no segundo 8 */
+        bloqV.addEventListener("loadedmetadata", function pula() { bloqV.removeEventListener("loadedmetadata", pula); try { if (bloqV.currentTime < 8 && bloqV.duration > 8) bloqV.currentTime = 8; } catch (e) {} });
+      }
       bloqV.controls = true; bloqV.muted = false; bloqV.preload = "auto";
       var p = bloqV.play(); if (p && p.catch) p.catch(function () {});
       /* 02/11/2026: toca dentro do quadro pequeno (sem abrir tela cheia); a tela cheia fica no botão do próprio vídeo */
