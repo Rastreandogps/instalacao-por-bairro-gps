@@ -395,7 +395,7 @@ var CONFIG = {
     var total = totalInstalacao(faixa.valor), varios = qtdAtual > 1;
     barraInfo = brl(total) + " + " + brl(Math.round(59.90 * qtdAtual * 100) / 100) + "/mês"; // 03/11/2026 (dono): só o total da mensalidade
     var txt = textoAgendar(endTxt, faixa, km);
-    if (!silencioso) ocGuardar({ end: endTxt, faixa: { regiao: faixa.regiao, valor: faixa.valor }, km: km, modelo: modeloAtual, ll: pinLL });
+    if (!silencioso) { ocGuardar({ end: endTxt, faixa: { regiao: faixa.regiao, valor: faixa.valor }, km: km, modelo: modeloAtual, ll: pinLL, cidade: cidadeAtual }); buscarCidade(pinLL); }
     mostrar('<div class="res">' +
       '<p class="res__tit">' + IC_OK + ' Seu orçamento está pronto!</p>' +
       linhaPara() +
@@ -480,7 +480,8 @@ var CONFIG = {
     if (tem) {
       extrasAtuais = extrasDa(ocSalvo.faixa);
       var inst = brl(totalInstalacao(ocSalvo.faixa.valor));
-      return [[q === 1 ? "A sua instalação fica no valor de " : "A instalação dos seus " + q + " veículos fica no valor de ", inst, ". Nosso técnico vai até você."],
+      var cid = String(ocSalvo.cidade || "").trim(), em = !cid ? "" : /^rio de janeiro$/i.test(cid) ? " no Rio de Janeiro" : " em " + cid;
+      return [[q === 1 ? "A sua instalação" + em + " fica no valor de " : "A instalação dos seus " + q + " veículos" + em + " fica no valor de ", inst, ". Nosso técnico vai até você."],
               [q === 1 ? "E a sua mensalidade fica no valor de " : "E a mensalidade dos " + q + " fica no valor de ", mens, "."]];
     }
     return [["Para o seu endereço, o valor da instalação é passado pelo nosso atendente no WhatsApp.", "", ""], [q === 1 ? "E a sua mensalidade fica no valor de " : "E a mensalidade dos " + q + " fica no valor de ", mens, "."]];
@@ -539,6 +540,17 @@ var CONFIG = {
     ocPintar(false);
   }
 
+  /* 03/11/2026 (dono): nome da cidade no texto do cartão ("A sua instalação em Niterói..."). CEP: vem do ViaCEP.
+     Endereço digitado: pergunta ao OpenStreetMap pela posição achada (grátis; sem resposta em 3 s, o texto sai sem a cidade). */
+  var cidadeAtual = "";
+  function buscarCidade(ll) {
+    if (cidadeAtual || !ll || ll.latitude == null || !window.fetch) return;
+    var ctl = window.AbortController ? new AbortController() : null, tm = setTimeout(function () { if (ctl) ctl.abort(); }, 3000);
+    fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=10&accept-language=pt-BR&lat=" + ll.latitude.toFixed(5) + "&lon=" + ll.longitude.toFixed(5), ctl ? { signal: ctl.signal } : {})
+      .then(function (r) { return r.json(); })
+      .then(function (j) { var a = (j && j.address) || {}, c = a.city || a.town || a.municipality || a.village || ""; if (c && ocSalvo && !ocSalvo.cidade) { ocSalvo.cidade = c; if (!ocDigitando && !ocDigitarPendente) ocPintar(false); } })
+      .catch(function () {}).then(function () { clearTimeout(tm); });
+  }
   function calcular(endTxt, r) {
     pinLL = r.ll || null;
     if (r.naoAchou) return naoAchou(endTxt);
@@ -573,7 +585,7 @@ var CONFIG = {
     if (q.length < 3) { campo.focus(); return; }
     var bt = form.querySelector('button[type="submit"]'); bt.disabled = true;
     campo.blur(); if (campoModelo) campoModelo.blur();
-    barraInfo = null; esconderBarra();
+    barraInfo = null; esconderBarra(); cidadeAtual = "";
     mostrar('<p class="carregando">Calculando o valor no seu endereço…</p>');
     abrirOrc();
     var p;
@@ -582,6 +594,7 @@ var CONFIG = {
       p = viaCep(q.replace(/\D/g, "")).then(function (c) {
         if (!c) return { endTxt: q, r: { naoAchou: true } };
         var endTxt = [c.logradouro, c.bairro, c.localidade].filter(Boolean).join(", ") + " (CEP " + c.cep + ")";
+        cidadeAtual = c.localidade || ""; // 03/11/2026: cidade para o texto do cartão
         if (c.uf !== "RJ") return { endTxt: endTxt, r: { km: 0, noRJ: false } };
         var dest = [c.logradouro, c.bairro, c.localidade, "RJ", c.cep, "Brasil"].filter(Boolean).join(", ");
         return rotaGoogle(dest, true).then(function (r) { return { endTxt: endTxt, r: r }; });
