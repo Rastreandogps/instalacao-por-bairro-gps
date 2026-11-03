@@ -601,3 +601,8 @@ html.tem-orc body{padding-bottom:90px}
   .nfc2__lista{font-size:13px;padding-top:12px;gap:8px}
 }
 @media (prefers-reduced-motion:reduce){.nfc2__selo{animation:none}}
+
+/* 03/11/2026 (dono): "Ativar o som" no meio do vídeo dá uma pulsada para chamar o toque */
+@keyframes nfcSomPulsa{0%,100%{transform:translate(-50%,-50%) scale(1);box-shadow:0 8px 24px rgba(0,0,0,.3),0 0 0 0 rgba(255,255,255,.45)}50%{transform:translate(-50%,-50%) scale(1.08);box-shadow:0 8px 24px rgba(0,0,0,.3),0 0 0 8px rgba(255,255,255,0)}}
+.nfc2__tel .nfc__som--centro:not(.ligado){animation:nfcSomPulsa 1.3s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.nfc2__tel .nfc__som--centro{animation:none}}

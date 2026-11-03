@@ -572,7 +572,7 @@ var CONFIG = {
     } else { nfcV.preload = "auto"; tocar(); }
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
-      if (!nfcV.muted) { tocar(); medir("fita_som_ligado", { segundo: Math.round(nfcV.currentTime) }); }   // continua de onde estava
+      if (!nfcV.muted) { var seg = Math.round(nfcV.currentTime); try { nfcV.currentTime = 0; } catch (e) {} tocar(); medir("fita_som_ligado", { segundo: seg }); }   // 03/11/2026 (dono): ligou o som, o vídeo volta para o início
       nfcSom.textContent = nfcV.muted ? "🔇 Ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
       posSom();
