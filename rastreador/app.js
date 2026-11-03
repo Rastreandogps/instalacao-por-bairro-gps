@@ -385,8 +385,8 @@ var CONFIG = {
       "🗺️ *Região:* " + nomeReg + " (" + Math.round(km) + " km)",
       "",
       "💰 *Valor informado no site:*",
-      "Instalação: " + brl(total) + (varios ? " (" + detalheExtras(faixa.valor) + ")" : ""),
-      "Mensalidade: " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês"
+      "Instalação: " + brl(total), // 03/11/2026 (dono): só os dois valores, sem conta
+      "Mensalidade: " + brl(Math.round(59.90 * qtdAtual * 100) / 100) + "/mês"
     ]);
   }
   function resultadoPreco(endTxt, faixa, km, silencioso) {
