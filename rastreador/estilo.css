@@ -708,3 +708,13 @@ html.tem-orc body{padding-bottom:90px}
 @media (prefers-reduced-motion:reduce){.wa2__fone,.wa2__tela .wb,.wa2__tela .wc,.wa2__tela .wm{animation:none}.wa2__tela .wc{opacity:1}}
 /* 03/11/2026: 5 veículos no mapa — etiquetas menores no celular */
 @media (max-width:560px){#frotas .etq{font-size:8.5px;padding:2px 5px 2px 4px;gap:4px;border-radius:6px}#frotas .etq em{font-size:7.5px}#frotas .etq .st{width:6px;height:6px}#frotas .bola{width:24px;height:24px;border-width:2px;margin-top:3px}#frotas .bola svg{width:15px;height:15px}}
+
+/* 03/11/2026 (dono): Alertas no WhatsApp com as cores do site (azul-marinho e ciano, como a Fita e os recursos); verde só no selo. Fica só a ignição. */
+.wa2{background:radial-gradient(ellipse at 80% 10%,#135773 0%,transparent 55%),linear-gradient(145deg,#0b213b,#071321);border-color:#2d5971;color:#fff}
+.wa2__txt p{color:#bed0dd}
+.wa2__nota{color:#8fb3c8}
+.wa2__item{grid-column:1/-1;display:flex;align-items:center;gap:12px;margin:14px 0 0;padding:14px 0 0;border-top:1px solid #244357}
+.wa2__item img{width:44px;height:44px;flex:none}
+.wa2__item b{display:block;font-size:15px;color:#fff}
+.wa2__item small{display:block;font-size:13px;color:#a1c7d6;margin-top:2px}
+@media (min-width:760px){.wa2__fone{grid-row:span 2}.wa2__item{grid-column:2;justify-content:flex-start;border-top:1px solid #244357;margin-top:12px}.wa2__txt{align-self:end}}
