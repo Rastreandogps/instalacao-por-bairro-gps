@@ -556,3 +556,21 @@ html.tem-orc body{padding-bottom:90px}
   .selos{grid-row:6}
   .hero__video .video{width:min(42vw,175px);min-height:0}
 }
+
+/* 03/11/2026 (dono): "Como funciona" animado — cada passo acende em sequência (brilho ciano) e uma luz corre pela linha até o próximo.
+   Celular: em pé, linha vertical. Computador: lado a lado, linha horizontal. Só anima com a seção na tela; "reduzir movimento" = parado. */
+.passos li{border:1px solid transparent;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease,border-color .5s ease}
+.passos li.ativa{transform:translateY(-4px) scale(1.02);border-color:rgba(0,190,230,.6);box-shadow:0 10px 30px rgba(0,175,220,.16),0 0 23px rgba(0,190,230,.13)}
+.passos__n{transition:box-shadow .5s ease}
+.passos li.ativa .passos__n{box-shadow:0 0 0 5px rgba(0,195,235,.16),0 0 20px rgba(0,195,235,.65)}
+.passos__con{position:absolute;left:36px;top:100%;width:3px;height:14px;background:#e0e5ef;overflow:hidden}
+.passos__con::after{content:"";position:absolute;inset:0;background:#00c4ef;box-shadow:0 0 10px #00c4ef;transform:translateY(-100%);opacity:0}
+.passos__con.passando::after{opacity:1;animation:passoDesce .72s ease-in-out forwards}
+@keyframes passoDesce{from{transform:translateY(-100%)}to{transform:translateY(100%)}}
+@keyframes passoLado{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+@media (min-width:900px){
+  .passos__con{left:100%;top:43px;width:14px;height:3px}
+  .passos__con::after{transform:translateX(-100%)}
+  .passos__con.passando::after{animation-name:passoLado}
+}
+@media (prefers-reduced-motion:reduce){.passos li,.passos__n{transition:none}.passos__con.passando::after{animation:none}}

@@ -762,3 +762,23 @@ var CONFIG = {
     io.observe(sec);
   } else comeca();
 })();
+
+/* 03/11/2026 (dono): "Como funciona" animado (passo acende, luz corre até o próximo; ciclo de 9 s enquanto a seção está na tela) */
+(function () {
+  var sec = document.getElementById("como"); if (!sec || !("IntersectionObserver" in window)) return;
+  var passos = [].slice.call(sec.querySelectorAll(".passos li")), cons = [].slice.call(sec.querySelectorAll(".passos__con"));
+  var rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)"), tms = [], ciclo = null;
+  function limpar() { tms.forEach(clearTimeout); tms = []; clearInterval(ciclo); passos.forEach(function (p) { p.classList.remove("ativa"); }); cons.forEach(function (c) { c.classList.remove("passando"); }); }
+  function depois(f, ms) { tms.push(setTimeout(f, ms)); }
+  function animar() {
+    passos.forEach(function (p, i) {
+      depois(function () { p.classList.add("ativa"); }, i * 3000 + 150);
+      depois(function () { p.classList.remove("ativa"); }, i * 3000 + 1750);
+      if (cons[i]) depois(function () { cons[i].classList.remove("passando"); void cons[i].offsetWidth; cons[i].classList.add("passando"); }, i * 3000 + 2100);
+    });
+  }
+  new IntersectionObserver(function (e) {
+    limpar();
+    if (e[0].isIntersecting && !(rm && rm.matches)) { animar(); ciclo = setInterval(animar, 9000); }
+  }, { threshold: 0.25 }).observe(sec);
+})();
