@@ -788,3 +788,49 @@ var CONFIG = {
     if (e[0].isIntersecting && !(rm && rm.matches)) animar();
   }, { threshold: 0.25 }).observe(sec);
 })();
+
+/* 03/11/2026 (dono): Frotas — veículos de entrega no mapa: 2 andando (entram e saem pelas bordas, rota sorteada) e 1 parado */
+(function () {
+  var mapa = document.getElementById("mapa"); if (!mapa) return;
+
+  
+  // Rotas pelo centro das ruas (viewBox 360 x 230). Ruas: y=51, 121 (avenida), 191; x=70, 180, 290.
+  // Rotas pelo centro das ruas (viewBox 360 x 230). Ruas: y=51, 121 (avenida), 191; x=70, 180, 290.
+  // Cada rota entra por uma borda e sai por outra; a cada saída o veículo sorteia a próxima (a troca acontece fora da tela).
+  const ROTAS=[
+    [[-40,121],[70,121],[70,51],[180,51],[180,121],[290,121],[400,121]],
+    [[180,275],[180,191],[290,191],[290,51],[180,51],[180,-45]],
+    [[400,51],[290,51],[290,121],[70,121],[70,191],[-40,191]],
+    [[70,-45],[70,51],[180,51],[180,191],[290,191],[400,191]],
+    [[-40,51],[70,51],[70,191],[180,191],[180,121],[400,121]],
+    [[400,191],[290,191],[290,121],[180,121],[180,51],[70,51],[70,-45]],
+  ];
+  const VEL=24; // unidades do mapa por segundo
+  const reduzir=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parado={el:document.getElementById('v3'),x:112,y:191};
+  const nova=(u,now,excluir)=>{ let k; do{ k=Math.floor(Math.random()*ROTAS.length) }while(k===excluir||us.some(o=>o!==u&&o.k===k)); const pts=ROTAS[k],legs=pts.slice(1).map((p,i)=>Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1])); Object.assign(u,{k,pts,legs,tot:legs.reduce((a,b)=>a+b,0),ini:now+(u.pts?1000+Math.random()*3000:0)}) };
+  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]}];
+  const t0=performance.now(); let raf=0, ult=0;
+  us.forEach((u,n)=>{ nova(u,t0,-1); u.ini=t0-(n?u.tot*0.55:u.tot*0.2)/VEL*1000 }); /* já começam no meio do caminho */
+  function pos(u,now){
+    let d=reduzir?u.tot*0.4:Math.max(0,(now-u.ini)/1000*VEL);
+    if(d>=u.tot){ nova(u,now,u.k); d=0 }
+    for(let i=0;i<u.legs.length;i++){
+      if(d<=u.legs[i]||i===u.legs.length-1){const a=u.pts[i],b=u.pts[i+1],t=u.legs[i]?Math.min(1,d/u.legs[i]):0;return{x:a[0]+(b[0]-a[0])*t,y:a[1]+(b[1]-a[1])*t,esq:b[0]<a[0]?true:b[0]>a[0]?false:undefined}}
+      d-=u.legs[i];
+    }
+  }
+  function quadro(now){ desenha(now); if(!reduzir) raf=requestAnimationFrame(quadro) }
+  function desenha(now){
+    const sx=mapa.clientWidth/360,sy=mapa.clientHeight/230;
+    us.forEach(u=>{const p=pos(u,now); if(!p) return; u.el.style.transform=`translate(${(p.x*sx).toFixed(1)}px,${(p.y*sy).toFixed(1)}px)`; if(p.esq!==undefined) u.el.classList.toggle('esq',p.esq)});
+    parado.el.style.transform=`translate(${(parado.x*sx).toFixed(1)}px,${(parado.y*sy).toFixed(1)}px)`;
+    if(now-ult>2500){ ult=now; us.forEach(u=>{ if(u.vel) u.vel.textContent=Math.round(u.faixa[0]+Math.random()*(u.faixa[1]-u.faixa[0]))+' km/h' }) }
+  }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(e=>{cancelAnimationFrame(raf); if(e[0].isIntersecting) raf=requestAnimationFrame(quadro)},{threshold:0}).observe(mapa);
+  }
+  desenha(t0);
+  addEventListener('resize',()=>desenha(performance.now()));
+
+})();

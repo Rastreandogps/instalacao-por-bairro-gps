@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-v2-capa.webp" fetchpriority="high">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=43">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=44">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -306,22 +306,67 @@
     </div>
   </section>
 
-  <!-- 9. FROTAS -->
-  <section class="sec sec--cinza" id="frotas">
-    <div class="wrap frota">
-      <div>
-        <p class="eyebrow">Para empresas</p>
-        <h2>Tem frota?</h2>
-        <p class="sec__sub sec__sub--esq">Caminhões, carros de empresa e motos de entrega.</p>
-      </div>
-      <ul class="frota__lista">
-        <li><svg class="ic"><use href="#i-truck"/></svg> Todos os veículos num só aplicativo</li>
-        <li><svg class="ic"><use href="#i-user"/></svg> Motorista de cada veículo, com WhatsApp a um toque</li>
-        <li><svg class="ic"><use href="#i-share"/></svg> Mande ao seu cliente o link de “a caminho”, com rota e previsão</li>
-      </ul>
-      <a class="btn btn--azul" data-wa href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Vi%20o%20an%C3%BAncio%20no%20Google%20e%20quero%20rastrear%20a%20frota%20da%20minha%20empresa." target="_blank" rel="noopener">Falar sobre frota</a>
+  <!-- 9. FROTAS — 03/11/2026 (dono): mapa animado com 3 veículos de entrega (2 andando, entram e saem da tela; 1 parado) + 4 benefícios -->
+  <section class="sec sec--cinza frotas" id="frotas" aria-labelledby="fr-tit">
+  <div class="wrap fr-wrap">
+    <div class="fr-topo">
+      <p class="eyebrow fr-eye">Para empresas</p>
+      <h2 id="fr-tit">Tem frota? <span>Veja tudo em tempo real.</span></h2>
+      <p class="fr-sub">Caminhões, vans, carros de empresa e motos de entrega, todos no mesmo aplicativo.</p>
     </div>
-  </section>
+
+    <div class="painel">
+      <div class="p-topo"><div><b>SUA FROTA AGORA</b><small>Exemplo do painel no app</small></div><span class="vivo"><i></i>AO VIVO</span></div>
+      <div class="mapa" id="mapa">
+        <svg class="base" viewBox="0 0 360 230" preserveAspectRatio="none" aria-hidden="true">
+          <rect width="360" height="230" fill="#eef0e8"/>
+          <!-- quarteirões -->
+          <g fill="#f7f5ef" stroke="#e3e0d6" stroke-width=".6">
+            <rect x="8" y="8" width="48" height="30" rx="3"/><rect x="84" y="8" width="82" height="30" rx="3"/><rect x="194" y="8" width="82" height="30" rx="3"/><rect x="304" y="8" width="48" height="30" rx="3"/>
+            <rect x="8" y="64" width="48" height="44" rx="3"/><rect x="84" y="64" width="82" height="44" rx="3"/><rect x="304" y="64" width="48" height="44" rx="3"/>
+            <rect x="8" y="134" width="48" height="44" rx="3"/><rect x="84" y="134" width="82" height="44" rx="3"/><rect x="304" y="134" width="48" height="44" rx="3"/>
+            <rect x="8" y="204" width="48" height="22" rx="3"/><rect x="84" y="204" width="82" height="22" rx="3"/><rect x="194" y="204" width="82" height="22" rx="3"/><rect x="304" y="204" width="48" height="22" rx="3"/>
+          </g>
+          <!-- praça e lagoa -->
+          <rect x="194" y="64" width="82" height="44" rx="5" fill="#cfe7c3"/>
+          <g fill="#b9dcaa"><circle cx="210" cy="78" r="5"/><circle cx="226" cy="93" r="6"/><circle cx="252" cy="76" r="5"/><circle cx="262" cy="96" r="4"/></g>
+          <path d="M196 140 C214 132 250 134 272 142 C278 154 270 172 250 176 C226 180 202 172 196 160 Z" fill="#b6d9f2"/>
+          <!-- ruas: borda + asfalto -->
+          <g fill="none" stroke="#dcdcd6" stroke-width="15" stroke-linecap="square">
+            <path d="M0 51H360M0 191H360M70 0V230M180 0V230M290 0V230"/>
+          </g>
+          <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="square">
+            <path d="M0 51H360M0 191H360M70 0V230M180 0V230M290 0V230"/>
+          </g>
+          <!-- avenida principal -->
+          <path d="M0 121H360" stroke="#efc46a" stroke-width="17"/>
+          <path d="M0 121H360" stroke="#fde7a6" stroke-width="13"/>
+          <path d="M0 121H360" stroke="#efc46a" stroke-width=".8" stroke-dasharray="5 5"/>
+          <g class="rot"><text x="96" y="47">RUA DOS ENTREGADORES</text><text x="200" y="187">RUA DO PORTO</text><text x="207" y="152" fill="#5a8fb5">Lagoa</text><text x="214" y="104" fill="#5f8a52">Praça</text></g>
+          <text class="rot av" x="96" y="118">AV. BRASIL</text>
+          <!-- base da empresa -->
+          <g transform="translate(312 76)"><rect width="34" height="20" rx="4" fill="#0b1730"/><text x="17" y="13" text-anchor="middle" font-size="6.5" font-weight="800" fill="#fff" font-family="Inter,system-ui,sans-serif">BASE</text></g>
+        </svg>
+
+        <div class="v" id="v1"><div class="pin"><span class="etq"><i class="st"></i>Entrega 01 <em id="vel1">38 km/h</em></span><span class="bola"><svg viewBox="0 0 24 24"><path d="M2 7.5h11v8.5H2z" fill="#1d4ed8"/><path d="M13 10h4.2l3.3 3.3V16H13z" fill="#0b1730"/><circle cx="6" cy="17.3" r="1.9" fill="#0b1730"/><circle cx="17" cy="17.3" r="1.9" fill="#0b1730"/><path d="M14.5 11h2.2l1.6 1.6h-3.8z" fill="#9bd4ff"/></svg></span></div></div>
+        <div class="v" id="v2"><div class="pin"><span class="etq"><i class="st"></i>Entrega 02 <em id="vel2">42 km/h</em></span><span class="bola"><svg viewBox="0 0 24 24"><path d="M2 7.5h11v8.5H2z" fill="#0b6f7a"/><path d="M13 10h4.2l3.3 3.3V16H13z" fill="#0b1730"/><circle cx="6" cy="17.3" r="1.9" fill="#0b1730"/><circle cx="17" cy="17.3" r="1.9" fill="#0b1730"/><path d="M14.5 11h2.2l1.6 1.6h-3.8z" fill="#9bd4ff"/></svg></span></div></div>
+        <div class="v parado" id="v3"><div class="pin"><span class="etq"><i class="st"></i>Entrega 03 <em>parado há 12 min</em></span><span class="bola"><svg viewBox="0 0 24 24"><path d="M2 7.5h11v8.5H2z" fill="#d97706"/><path d="M13 10h4.2l3.3 3.3V16H13z" fill="#0b1730"/><circle cx="6" cy="17.3" r="1.9" fill="#0b1730"/><circle cx="17" cy="17.3" r="1.9" fill="#0b1730"/><path d="M14.5 11h2.2l1.6 1.6h-3.8z" fill="#9bd4ff"/></svg></span></div></div>
+      </div>
+      <div class="p-num"><div><b>3</b><small>Veículos</small></div><div><b class="mov">2</b><small>Em movimento</small></div><div><b class="par">1</b><small>Parado</small></div></div>
+      <div class="p-rod">DEMONSTRAÇÃO · DADOS FICTÍCIOS</div>
+    </div>
+
+    <div class="fr-dir">
+      <ul class="fr-lista">
+        <li><span class="fr-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M9 9v11"/></svg></span><div><b>Todos os veículos em um só painel</b><p>Veja onde cada um está, quem está andando e quem está parado.</p></div></li>
+        <li><span class="fr-ico"><svg viewBox="0 0 24 24"><path d="M12 3s5 5.6 5 9.5A5 5 0 0 1 7 12.5C7 8.6 12 3 12 3z"/><path d="M10 14a2 2 0 0 0 2 2"/></svg></span><div><b>Troca de óleo e combustível em dia</b><p>Aviso da troca de óleo pela quilometragem e quanto cada veículo gastou de combustível.</p></div></li>
+        <li><span class="fr-ico"><svg viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.4-4A8 8 0 1 1 20 11.5z"/></svg></span><div><b>Contato rápido com o motorista</b><p>O WhatsApp de cada motorista a um toque, direto do veículo.</p></div></li>
+        <li><span class="fr-ico"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2"/><circle cx="18" cy="18" r="2"/><path d="M8 6h7a3.5 3.5 0 0 1 0 7H9a3.5 3.5 0 0 0 0 7h7"/></svg></span><div><b>Compartilhe suas entregas</b><p>Mande ao seu cliente o link de “a caminho”, com rota e previsão de chegada.</p></div></li>
+      </ul>
+      <a class="fr-btn" data-wa href="https://wa.me/5521980886087?text=Ol%C3%A1!%20Vi%20o%20an%C3%BAncio%20no%20Google%20e%20quero%20rastrear%20a%20frota%20da%20minha%20empresa." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>Falar sobre frota</a>
+    </div>
+  </div>
+</section>
 
   <!-- 10. PERGUNTAS -->
   <section class="sec" id="perguntas">
@@ -422,6 +467,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=49" defer></script>
+<script src="/rastreador/app.js?v=50" defer></script>
 </body>
 </html>
