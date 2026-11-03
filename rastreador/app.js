@@ -460,7 +460,7 @@ var CONFIG = {
     ocEl("ocEco").hidden = !(eco > 0);
     if (eco > 0) ocEl("ocEco").innerHTML = "🏷️ Você economiza <b>" + brl(eco) + "</b> " + (q === 2 ? "no 2º veículo" : q === 3 ? "no 2º e 3º veículos" : "do 2º ao 4º veículo");
     var ex2 = (ocSalvo ? extrasDa(ocSalvo.faixa) : CONFIG.extras)[0];
-    ocEl("ocDica").innerHTML = q !== 1 ? "" : (ocSalvo ? "➕ Instalando 2 veículos, o 2º sai por <b>" + brl(ex2) + "</b>" : "➕ A partir do 2º veículo, a instalação tem desconto");
+    ocEl("ocDica").innerHTML = ""; // 03/11/2026 20h20 (dono): sem a frase do 2º veículo
     var wa = ocEl("ocWa");
     wa.hidden = !tem;
     if (tem) { extrasAtuais = extrasDa(ocSalvo.faixa); wa.href = waLink(textoAgendar(ocSalvo.end, ocSalvo.faixa, ocSalvo.km)); }
