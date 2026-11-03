@@ -434,7 +434,7 @@ var CONFIG = {
   var OC_CHAVE = "rg_orcamento", OC_VALIDADE = 30 * 86400000, MENS = 59.90;
   var ocSalvo = null, ocConsultar = false;
   function ocEl(id) { return document.getElementById(id); }
-  function ocGravar() { try { if (ocSalvo) localStorage.setItem(OC_CHAVE, JSON.stringify(Object.assign({}, ocSalvo, { qtd: qtdAtual }))); else localStorage.removeItem(OC_CHAVE); } catch (e) {} }
+  function ocGravar() { /* 03/11/2026 20h (dono): não guarda mais no celular; recarregou, some */ }
   function ocGuardar(o) { o.em = Date.now(); ocSalvo = o; ocConsultar = false; ocDigitarPendente = true; ocGer++; ocDigitando = false; ocGravar(); ocPintar(true); }
   function ocPulsa(el) { if (!el) return; el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); }
   function ocPintar(animar) {
@@ -473,7 +473,7 @@ var CONFIG = {
       if (animar) ocEl("ocConv").querySelectorAll(".oc__b").forEach(ocPulsa);
     }
   }
-  var ocFrases = [], ocDigitarPendente = false, ocDigitando = false, ocGer = 0;
+  var ocFrases = [], ocDigitarPendente = false, ocDigitando = false, ocGer = 0, ocSaiu = false;
   function ocMontarFrases(q, tem) {
     var mens = brl(Math.round(MENS * Math.min(q, 4) * 100) / 100);
     if (q >= 5) return [["Para 5 ou mais veículos, fazemos um orçamento especial para a sua frota.", "", ""], ["A mensalidade fica no valor de ", brl(MENS), " por veículo."]];
@@ -495,10 +495,12 @@ var CONFIG = {
     var conv = ocEl("ocConv"), g = ++ocGer, fs = ocFrases.slice(), i = 0;
     if (!conv) return;
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { ocDigitando = false; ocPintar(false); return; }
+    ocSaiu = false;
+    conv.style.minHeight = conv.offsetHeight ? conv.offsetHeight + "px" : ""; // não encolhe enquanto escreve (evita "piscar" na tela)
     ocDigitando = true; conv.innerHTML = ""; ocEl("oc").classList.add("oc--digitando");
     function proxima() {
       if (g !== ocGer) return;
-      if (i >= fs.length) { ocDigitando = false; ocPintar(false); return; } // fim: mostra selo/dica/botão (e já com a quantidade atual)
+      if (i >= fs.length) { ocDigitando = false; conv.style.minHeight = ""; ocPintar(false); return; } // fim: mostra selo/dica/botão (e já com a quantidade atual)
       var f = fs[i++], dig = document.createElement("div"); dig.className = "oc__dig"; dig.innerHTML = "<i></i><i></i><i></i>"; conv.appendChild(dig);
       setTimeout(function () {
         if (g !== ocGer) return;
@@ -526,13 +528,13 @@ var CONFIG = {
     }
   }
   if (ocEl("oc")) {
-    try { var o0 = JSON.parse(localStorage.getItem(OC_CHAVE) || "null"); if (o0 && o0.faixa && Date.now() - o0.em < OC_VALIDADE) ocSalvo = o0; } catch (e) {}
-    if (ocSalvo) { // voltou: já mostra o que calculou
-      var q0 = Math.min(5, Math.max(1, +ocSalvo.qtd || 1));
-      var bq = form && form.querySelector('[data-qtd="' + q0 + '"]');
-      if (bq && q0 !== 1) bq.click(); // ajusta botões e textos (e repinta)
-      if (campoModelo && ocSalvo.modelo) { campoModelo.value = ocSalvo.modelo; modeloAtual = ocSalvo.modelo; }
-      if (campo && ocSalvo.end) { var mc = /\(CEP ([^)]*)\)/.exec(ocSalvo.end); campo.value = mc ? mc[1] : ocSalvo.end; }
+    try { localStorage.removeItem(OC_CHAVE); } catch (e) {} // apaga o que ficou guardado na versão anterior
+    /* 03/11/2026 20h (dono): toda vez que o cartão sai da tela e volta, escreve de novo */
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (e) {
+        if (!e[0].isIntersecting) { if (!ocDigitando) ocSaiu = true; return; }
+        if (ocSaiu && (ocSalvo || ocConsultar) && !orcAberto()) { ocSaiu = false; ocDigitar(); }
+      }, { threshold: 0.35 }).observe(ocEl("oc"));
     }
     ocPintar(false);
   }
