@@ -476,6 +476,18 @@ var CONFIG = {
       });
   });
 
+  /* 03/11/2026 (dono): tocou um vídeo com som, os outros param. qual = "topo" | "nfc" | "vimeo" */
+  var pararTopo = null, pararNfc = null;
+  function pararOutros(qual) {
+    if (qual !== "topo" && pararTopo) pararTopo();
+    if (qual !== "nfc" && pararNfc) pararNfc();
+    document.querySelectorAll(".video.tocando[data-vimeo]").forEach(function (o) {
+      if (qual === "vimeo") return; // o próprio clique do Vimeo já cuida dos outros Vimeo
+      var f = o.querySelector("iframe"); if (f) f.remove(); o.classList.remove("tocando");
+      var b0 = o.querySelector(".vbarra i"); if (b0) b0.style.width = "0%";
+    });
+  }
+
   /* ---------- Vídeos: carregam só ao tocar ---------- */
   document.addEventListener("click", function (ev) {
     var v = ev.target.closest && ev.target.closest("[data-vimeo]");
@@ -487,6 +499,7 @@ var CONFIG = {
       if (o !== v) { var f = o.querySelector("iframe"); if (f) f.remove(); o.classList.remove("tocando"); }
     });
     if (v.classList.contains("tocando")) return;
+    pararOutros("vimeo");
     var ifr = document.createElement("iframe");
     ifr.src = "https://player.vimeo.com/video/" + id + "?autoplay=1&title=0&byline=0&portrait=0&dnt=1&playsinline=1";
     ifr.allow = "autoplay; fullscreen; picture-in-picture";
@@ -543,7 +556,7 @@ var CONFIG = {
     var iniciar = function () {
       if (bloqBox.classList.contains("tocando")) return;
       // pausa o vídeo da Fita se estiver com som
-      var nv = document.getElementById("nfc-video"); if (nv && !nv.muted) { nv.muted = true; }
+      pararOutros("topo");
       bloqBox.classList.add("tocando");
       if (bloqV.dataset.completo && bloqV.getAttribute("src") !== bloqV.dataset.completo) {
         bloqV.loop = false; bloqV.src = bloqV.dataset.completo;
@@ -555,11 +568,13 @@ var CONFIG = {
       /* 02/11/2026: toca dentro do quadro pequeno (sem abrir tela cheia); a tela cheia fica no botão do próprio vídeo */
     };
     bloqBox.addEventListener("click", function (ev) { if (!bloqBox.classList.contains("tocando")) { ev.preventDefault(); iniciar(); } });
-    bloqV.addEventListener("ended", function () {
+    var voltarPrevia = function () {
       bloqV.controls = false; bloqBox.classList.remove("tocando");
       bloqV.muted = true; bloqV.loop = true; bloqV.src = "/rastreador/img/bloqueio-previa.mp4";   // volta para a prévia sem som
       var p2 = bloqV.play(); if (p2 && p2.catch) p2.catch(function () {});
-    });
+    };
+    bloqV.addEventListener("ended", voltarPrevia);
+    pararTopo = function () { if (bloqBox.classList.contains("tocando")) voltarPrevia(); };
   }
 
   /* ---------- Vídeo da Fita NFC: toca sozinho (sem som) quando aparece na tela ---------- */
@@ -576,6 +591,7 @@ var CONFIG = {
     } else { nfcV.preload = "auto"; tocar(); }
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
+      if (!nfcV.muted) pararOutros("nfc");
       if (!nfcV.muted) { var seg = Math.round(nfcV.currentTime); try { nfcV.currentTime = 0; } catch (e) {} tocar(); medir("fita_som_ligado", { segundo: seg }); }   // 03/11/2026 (dono): ligou o som, o vídeo volta para o início
       nfcSom.textContent = nfcV.muted ? "🔇 Ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
@@ -590,6 +606,7 @@ var CONFIG = {
       nfcSom.classList.toggle("escondido", nfcV.muted && !noMeio);
     };
     nfcV.addEventListener("timeupdate", posSom); nfcV.addEventListener("seeked", posSom);
+    pararNfc = function () { if (!nfcV.muted) alternarSom(); }; // volta a ficar sem som
     if (nfcSom) nfcSom.addEventListener("click", function (ev) { ev.stopPropagation(); alternarSom(); });
     nfcV.addEventListener("click", alternarSom);
   }
