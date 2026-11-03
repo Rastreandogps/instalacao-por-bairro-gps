@@ -809,7 +809,7 @@ var CONFIG = {
   const reduzir=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const parados=[{el:document.getElementById('v3'),x:112,y:191},{el:document.getElementById('v5'),x:290,y:162}]; /* 03/11/2026: Marcos e Lucas parados */
   const nova=(u,now,excluir)=>{ let k; do{ k=Math.floor(Math.random()*ROTAS.length) }while(k===excluir||us.some(o=>o!==u&&o.k===k)); const pts=ROTAS[k],legs=pts.slice(1).map((p,i)=>Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1])); Object.assign(u,{k,pts,legs,tot:legs.reduce((a,b)=>a+b,0),ini:now+(u.pts?1000+Math.random()*3000:0)}) };
-  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]},{el:document.getElementById('v4'),vel:document.getElementById('vel4'),faixa:[30,48]}]; /* 03/11/2026: João, Pedro e Tiago andando */
+  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]},{el:document.getElementById('v4'),vel:document.getElementById('vel4'),faixa:[30,48]}]; /* 03/11/2026: João, Pedro e Mateus andando */
   const t0=performance.now(); let raf=0, ult=0;
   us.forEach((u,n)=>{ nova(u,t0,-1); u.ini=t0-(u.tot*[0.2,0.55,0.8][n])/VEL*1000 }); /* já começam no meio do caminho */
   function pos(u,now){
