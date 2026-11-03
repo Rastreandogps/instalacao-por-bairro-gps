@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-v2-capa.webp" fetchpriority="high">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=42">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=43">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -101,8 +101,9 @@
           <!-- 02/11/2026: prévia curta sem som tocando sozinha (mostra que é vídeo); ao tocar, carrega o vídeo completo com som -->
           <video id="bloq-video" muted loop playsinline preload="none" poster="/rastreador/img/bloqueio-v2-capa.webp" width="540" height="960" data-previa="/rastreador/img/bloqueio-previa.mp4" data-completo="/rastreador/img/bloqueio-v2.mp4" aria-label="Vídeo: cliente bloqueando o veículo pelo celular"></video>
           <span class="video__selo" aria-hidden="true"><svg class="ic"><use href="#i-play"/></svg> Vídeo · 1:11</span>
-          <button type="button" class="video__play" id="bloq-play" aria-label="Assistir ao vídeo do bloqueio, com som"><svg class="ic"><use href="#i-play"/></svg></button>
-          <span class="video__leg">Veja o bloqueio na prática <small>🔊 Toque para ouvir</small></span>
+          <!-- 03/11/2026 (dono): mesmo botão da Fita NFC ("Ativar o som", pulsando) no lugar do play, para o cliente aprender o gesto -->
+          <button type="button" class="video__som" id="bloq-play" aria-label="Assistir ao vídeo do bloqueio, com som">🔇 Ativar o som</button>
+          <span class="video__leg">Veja o bloqueio na prática</span>
         </div>
       </div>
     </div>
