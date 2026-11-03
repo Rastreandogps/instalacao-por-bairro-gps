@@ -294,7 +294,7 @@ var CONFIG = {
     document.documentElement.classList.remove("orc-trava");
     if (mostraBarra !== false && barraInfo) mostrarBarra();
     if (typeof atualizaFixo === "function") atualizaFixo();
-    if (typeof ocPintar === "function" && ocSalvo) ocPintar(true); // 03/11/2026: o cartão "acende" quando a janela fecha
+    if (typeof ocPintar === "function" && (ocSalvo || ocConsultar)) { if (ocDigitarPendente) ocDigitar(); else ocPintar(true); } // 03/11/2026: ao fechar a janela, o cartão "escreve" o orçamento
   }
   // Fechar pelo X, pelo fundo escuro ou pelo "voltar" do celular
   function pedirFechar(mostraBarra) {
@@ -361,7 +361,7 @@ var CONFIG = {
 
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
-    ocConsultar = true; ocPintar(true);
+    ocConsultar = true; ocSalvo = null; ocGravar(); ocDigitarPendente = true; ocGer++; ocDigitando = false; ocPintar(true);
     barraInfo = "Verificar valor com o atendente";
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
     mostrar('<div class="res">' +
@@ -435,7 +435,7 @@ var CONFIG = {
   var ocSalvo = null, ocConsultar = false;
   function ocEl(id) { return document.getElementById(id); }
   function ocGravar() { try { if (ocSalvo) localStorage.setItem(OC_CHAVE, JSON.stringify(Object.assign({}, ocSalvo, { qtd: qtdAtual }))); else localStorage.removeItem(OC_CHAVE); } catch (e) {} }
-  function ocGuardar(o) { o.em = Date.now(); ocSalvo = o; ocConsultar = false; ocGravar(); ocPintar(true); }
+  function ocGuardar(o) { o.em = Date.now(); ocSalvo = o; ocConsultar = false; ocDigitarPendente = true; ocGer++; ocDigitando = false; ocGravar(); ocPintar(true); }
   function ocPulsa(el) { if (!el) return; el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); }
   function ocPintar(animar) {
     if (!ocEl("oc")) return;
@@ -464,7 +464,56 @@ var CONFIG = {
     var wa = ocEl("ocWa");
     wa.hidden = !tem;
     if (tem) { extrasAtuais = extrasDa(ocSalvo.faixa); wa.href = waLink(textoAgendar(ocSalvo.end, ocSalvo.faixa, ocSalvo.km)); }
-    if (animar) { ocPulsa(mv); if (tem) ocPulsa(iv); }
+    /* 03/11/2026 20h (dono): o orçamento vira mensagem. Digita só na 1ª vez (ao fechar a janela); depois muda na hora. */
+    ocFrases = ocMontarFrases(q, tem);
+    if (ocDigitarPendente || ocDigitando) { ocEl("oc").classList.add("oc--digitando"); if (!ocDigitando) ocEl("ocConv").innerHTML = ""; }
+    else {
+      ocEl("oc").classList.remove("oc--digitando");
+      ocEl("ocConv").innerHTML = ocFrases.map(ocBolhaPronta).join("");
+      if (animar) ocEl("ocConv").querySelectorAll(".oc__b").forEach(ocPulsa);
+    }
+  }
+  var ocFrases = [], ocDigitarPendente = false, ocDigitando = false, ocGer = 0;
+  function ocMontarFrases(q, tem) {
+    var mens = brl(Math.round(MENS * Math.min(q, 4) * 100) / 100);
+    if (q >= 5) return [["Para 5 ou mais veículos, fazemos um orçamento especial para a sua frota.", "", ""], ["A mensalidade fica no valor de ", brl(MENS), " por veículo."]];
+    if (tem) {
+      extrasAtuais = extrasDa(ocSalvo.faixa);
+      var inst = brl(totalInstalacao(ocSalvo.faixa.valor));
+      return [[q === 1 ? "A sua instalação fica no valor de " : "A instalação dos seus " + q + " veículos fica no valor de ", inst, ". Nosso técnico vai até você."],
+              [q === 1 ? "E a sua mensalidade fica no valor de " : "E a mensalidade dos " + q + " fica no valor de ", mens, "."]];
+    }
+    return [["Para o seu endereço, o valor da instalação é passado pelo nosso atendente no WhatsApp.", "", ""], [q === 1 ? "E a sua mensalidade fica no valor de " : "E a mensalidade dos " + q + " fica no valor de ", mens, "."]];
+  }
+  function ocHtml(f, n) { // n = quantos caracteres mostrar (sem n = tudo)
+    var t = f[0] + f[1] + f[2], a = f[0].length, b = a + f[1].length; if (n == null) n = t.length;
+    return esc(t.slice(0, Math.min(n, a))) + (n > a && f[1] ? "<b>" + esc(t.slice(a, Math.min(n, b))) + "</b>" : "") + (n > b ? esc(t.slice(b, n)) : "");
+  }
+  function ocBolhaPronta(f) { return '<div class="oc__b">' + ocHtml(f) + "</div>"; }
+  function ocDigitar() {
+    ocDigitarPendente = false;
+    var conv = ocEl("ocConv"), g = ++ocGer, fs = ocFrases.slice(), i = 0;
+    if (!conv) return;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { ocDigitando = false; ocPintar(false); return; }
+    ocDigitando = true; conv.innerHTML = ""; ocEl("oc").classList.add("oc--digitando");
+    function proxima() {
+      if (g !== ocGer) return;
+      if (i >= fs.length) { ocDigitando = false; ocPintar(false); return; } // fim: mostra selo/dica/botão (e já com a quantidade atual)
+      var f = fs[i++], dig = document.createElement("div"); dig.className = "oc__dig"; dig.innerHTML = "<i></i><i></i><i></i>"; conv.appendChild(dig);
+      setTimeout(function () {
+        if (g !== ocGer) return;
+        dig.remove();
+        var el = document.createElement("div"); el.className = "oc__b"; conv.appendChild(el);
+        var t = f[0] + f[1] + f[2], a = f[0].length, b = a + f[1].length, n = 0;
+        (function letra() {
+          if (g !== ocGer) return;
+          n++; el.innerHTML = ocHtml(f, n) + (n < t.length ? '<span class="oc__cur"></span>' : "");
+          if (n >= t.length) { setTimeout(proxima, 250); return; }
+          setTimeout(letra, t.charAt(n - 1) === " " ? 8 : (n > a && n <= b ? 40 : 14));
+        })();
+      }, 450);
+    }
+    proxima();
   }
   function ocQtdMudou() {
     ocGravar(); ocPintar(true);

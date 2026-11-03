@@ -782,3 +782,28 @@ html.tem-orc body{padding-bottom:90px}
 .oc__det{margin-top:4px}
 .oc__eco{justify-self:start;margin-top:0}
 .oc__wa{margin-top:2px}
+/* 03/11/2026 20h (dono): o cartão escreve o orçamento como mensagem (bolhas) */
+.oc__quem{display:none;grid-column:1/-1;position:relative;align-items:center;gap:10px;margin-top:-2px}
+.oc__quem img{width:36px;height:36px;border-radius:50%;border:2px solid #52deed66;background:#000}
+.oc__quem b{font-size:14px;color:#fff}
+.oc__quem:after{content:"";position:absolute;left:27px;top:27px;width:10px;height:10px;border-radius:50%;background:#2fd47a;border:2px solid var(--navy)}
+.oc:not(.oc--vazio) .oc__top{display:none}
+.oc:not(.oc--vazio) .oc__quem{display:flex}
+.oc .oc__lin{display:none!important}
+.oc__conv{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;position:relative}
+.oc--vazio .oc__conv{display:none}
+.oc__b{align-self:flex-start;max-width:94%;background:#ffffff14;border:1px solid #ffffff22;border-radius:4px 16px 16px 16px;padding:10px 13px 9px;font-size:15px;line-height:1.45;color:#eef4ff;animation:ocEntra .22s ease}
+.oc__b b{color:#fff;font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.oc__b .oc__cur{display:inline-block;width:2px;height:1.05em;background:#52deed;vertical-align:-2px;margin-left:1px;animation:ocPisca .8s steps(1) infinite}
+.oc__dig{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:#ffffff14;border:1px solid #ffffff22;border-radius:4px 16px 16px 16px}
+.oc__dig i{width:7px;height:7px;border-radius:50%;background:#cfe0f7;opacity:.4;animation:ocPonto 1s infinite}
+.oc__dig i:nth-child(2){animation-delay:.15s}.oc__dig i:nth-child(3){animation-delay:.3s}
+.oc--digitando .oc__eco,.oc--digitando .oc__dica,.oc--digitando .oc__wa{display:none!important}
+.oc__eco,.oc__dica,.oc__wa{animation:ocEntra .35s ease}
+.oc__dica b{white-space:nowrap}
+.oc__b.pulse{animation:ocBrilho .8s ease}
+@keyframes ocEntra{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes ocPonto{0%,100%{opacity:.35;transform:none}40%{opacity:1;transform:translateY(-3px)}}
+@keyframes ocPisca{50%{opacity:0}}
+@keyframes ocBrilho{35%{background:#ffffff2a}}
+@media (prefers-reduced-motion:reduce){.oc__b,.oc__eco,.oc__dica,.oc__wa,.oc__dig i,.oc__cur{animation:none!important}}
