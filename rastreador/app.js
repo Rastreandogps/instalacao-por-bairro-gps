@@ -393,7 +393,7 @@ var CONFIG = {
     extrasAtuais = extrasDa(faixa);
     if (!silencioso) medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: totalInstalacao(faixa.valor), quantidade: qtdAtual });
     var total = totalInstalacao(faixa.valor), varios = qtdAtual > 1;
-    barraInfo = brl(total) + " + " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês";
+    barraInfo = brl(total) + " + " + brl(Math.round(59.90 * qtdAtual * 100) / 100) + "/mês"; // 03/11/2026 (dono): só o total da mensalidade
     var txt = textoAgendar(endTxt, faixa, km);
     if (!silencioso) ocGuardar({ end: endTxt, faixa: { regiao: faixa.regiao, valor: faixa.valor }, km: km, modelo: modeloAtual, ll: pinLL });
     mostrar('<div class="res">' +
@@ -401,7 +401,6 @@ var CONFIG = {
       linhaPara() +
       '<p class="res__lbl">Valor da instalação' + (varios ? ' (' + nomeQtd() + ')' : '') + '</p>' +
       '<p class="res__val">' + brl(total) + ' <small>pagamento único</small></p>' +
-      (varios ? '<p class="res__extras">' + detalheExtras(faixa.valor) + '</p>' : '') +
       mensBloco() +
       '<p class="res__ok">' + IC_OK + ' Sem contrato de fidelidade</p>' +
       local(endTxt) +
@@ -446,7 +445,7 @@ var CONFIG = {
     ocEl("oc").classList.toggle("oc--vazio", vazio);
     if (vazio) return;
     if (q >= 5) { mv.innerHTML = "<strong>" + brl(MENS) + "</strong><span>/mês por veículo</span>"; ocEl("ocMDet").textContent = "5 ou mais: orçamento especial de frota"; }
-    else { mv.innerHTML = "<em>por apenas</em><strong>" + brl(Math.round(MENS * q * 100) / 100) + "</strong><span>/mês</span>"; ocEl("ocMDet").textContent = q === 1 ? "Mesmo valor para carro, moto ou caminhão" : q + " × " + brl(MENS) + " por veículo"; }
+    else { mv.innerHTML = "<em>por apenas</em><strong>" + brl(Math.round(MENS * q * 100) / 100) + "</strong><span>/mês</span>"; ocEl("ocMDet").textContent = ""; } // 03/11/2026 (dono): enxuto
     var tem = !!ocSalvo && q < 5, eco = 0;
     iv.classList.toggle("oc__val--vazio", !tem);
     if (q >= 5) { iv.innerHTML = "<strong>Sob consulta</strong>"; ocEl("ocIDet").textContent = "Fale com a gente para o valor da frota"; }
@@ -454,8 +453,8 @@ var CONFIG = {
       extrasAtuais = extrasDa(ocSalvo.faixa);
       var tot = totalInstalacao(ocSalvo.faixa.valor), cheio = Math.round(ocSalvo.faixa.valor * q * 100) / 100;
       eco = Math.round((cheio - tot) * 100) / 100;
-      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<em>por apenas</em><strong>" + brl(tot) + "</strong><span>pagamento único</span>";
-      ocEl("ocIDet").textContent = (q > 1 ? q + " veículos · " : "") + ocSalvo.end;
+      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<em>por apenas</em><strong>" + brl(tot) + "</strong>";
+      ocEl("ocIDet").textContent = ""; // 03/11/2026 (dono): sem endereço e sem "pagamento único" no cartão
     } else if (ocConsultar) { iv.innerHTML = "<strong>Verificar com o atendente</strong>"; ocEl("ocIDet").textContent = "Fale com a gente pelo WhatsApp para o seu endereço"; }
     else { iv.innerHTML = "<strong>Calcule abaixo ↓</strong>"; ocEl("ocIDet").textContent = "Depende do seu endereço"; }
     ocEl("ocEco").hidden = !(eco > 0);
