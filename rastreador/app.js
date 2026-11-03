@@ -573,7 +573,7 @@ var CONFIG = {
     var alternarSom = function () {
       nfcV.muted = !nfcV.muted;
       if (!nfcV.muted) { tocar(); medir("fita_som_ligado", { segundo: Math.round(nfcV.currentTime) }); }   // continua de onde estava
-      nfcSom.textContent = nfcV.muted ? "🔇 Toque para ativar o som" : "🔊 Som ligado";
+      nfcSom.textContent = nfcV.muted ? "🔇 Ativar o som" : "🔊 Som ligado";
       nfcSom.classList.toggle("ligado", !nfcV.muted);
       posSom();
       nfcSom.setAttribute("aria-label", nfcV.muted ? "Ligar o som do vídeo" : "Desligar o som do vídeo");

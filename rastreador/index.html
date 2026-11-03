@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-v2-capa.webp" fetchpriority="high">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=40">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=41">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -153,26 +153,28 @@
     </div>
   </section>
 
-  <!-- 3. FITA NFC -->
+  <!-- 3. FITA NFC — 03/11/2026 (dono): vídeo menor, em cartão no estilo dos recursos do app (vídeo no "celular" + texto ao lado) -->
   <section class="sec sec--escuro" id="fita">
-    <div class="wrap nfc">
-      <div class="nfc__img nfc__img--video">
-        <video id="nfc-video" class="nfc__video" muted loop playsinline preload="none" data-poster="/rastreador/img/fita-nfc-capa-v2.webp?v=2" width="480" height="854" aria-label="Vídeo: a Fita NFC de Emergência funcionando">
-          <source src="/rastreador/img/fita-nfc-v2.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="nfc__som escondido" id="nfc-som" aria-label="Ligar o som do vídeo">🔇 Toque para ativar o som</button>
-        <span class="nfc__selo"><span class="nfc__selo-ic" aria-hidden="true">🎁</span> Ganhe 2 fitas</span>
-      </div>
-      <div class="nfc__txt">
-        <p class="eyebrow eyebrow--claro">Exclusivo Rastreando GPS</p>
-        <h2>Fita NFC de Emergência</h2>
-        <p>Em uma emergência, cada segundo conta. Encoste a fita em um celular com NFC e o aplicativo abre na hora, sem procurar nada e sem instalar nada. É só entrar com o seu login.</p>
-        <ul class="lista-check">
-          <li><svg class="ic"><use href="#i-check"/></svg> Funciona em qualquer celular com NFC, até no de outra pessoa (a maioria dos celulares atuais tem)</li>
-          <li><svg class="ic"><use href="#i-check"/></svg> Não usa bateria, fica na carteira ou na capa da CNH</li>
-          <li><svg class="ic"><use href="#i-check"/></svg> <span><b>2 fitas grátis</b>, entregues no fim da instalação</span></li>
+    <div class="wrap">
+      <article class="nfc2" aria-labelledby="nfc-tit">
+        <div class="nfc2__tel">
+          <video id="nfc-video" class="nfc__video" muted loop playsinline preload="none" data-poster="/rastreador/img/fita-nfc-capa-v2.webp?v=2" width="480" height="854" aria-label="Vídeo: a Fita NFC de Emergência funcionando">
+            <source src="/rastreador/img/fita-nfc-v2.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="nfc__som escondido" id="nfc-som" aria-label="Ligar o som do vídeo">🔇 Ativar o som</button>
+        </div>
+        <div class="nfc2__info">
+          <span class="nfc2__cat">EXCLUSIVO RASTREANDO GPS</span>
+          <h2 id="nfc-tit">Fita NFC de Emergência</h2>
+          <p>Encoste a fita em um celular com NFC e o app abre na hora. Sem procurar nada, sem instalar nada.</p>
+          <span class="nfc2__selo"><span aria-hidden="true">🎁</span> 2 fitas grátis</span>
+        </div>
+        <ul class="nfc2__lista">
+          <li><svg class="ic"><use href="#i-check"/></svg> Funciona em qualquer celular com NFC, até no de outra pessoa</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Não usa bateria: fica na carteira ou na capa da CNH</li>
+          <li><svg class="ic"><use href="#i-check"/></svg> Entregues no fim da instalação</li>
         </ul>
-      </div>
+      </article>
     </div>
   </section>
 
@@ -419,6 +421,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=47" defer></script>
+<script src="/rastreador/app.js?v=48" defer></script>
 </body>
 </html>
