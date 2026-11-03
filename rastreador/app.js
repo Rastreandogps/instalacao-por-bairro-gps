@@ -522,9 +522,24 @@ var CONFIG = {
   });
 
   /* ---------- Vídeo do topo (no site): capa + play; toca com som; no fim volta para a capa ---------- */
+  /* 03/11/2026: capas dos vídeos de baixo só carregam perto da tela (não disputam com o topo) */
+  function posterPerto(v, url) {
+    if (!v || !url) return;
+    if (!("IntersectionObserver" in window)) { v.poster = url; return; }
+    var ioP = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { v.poster = url; ioP.disconnect(); } }, { rootMargin: "800px 0px" });
+    ioP.observe(v);
+  }
   var bloqV = document.getElementById("bloq-video");
   var bloqBox = document.getElementById("video-topo");
   if (bloqV && bloqBox) {
+    /* 03/11/2026: a prévia sem som só começa depois que a página carregou (a capa aparece antes) */
+    var ligarPrevia = function () {
+      if (bloqBox.classList.contains("tocando") || bloqV.getAttribute("src") || !bloqV.dataset.previa) return;
+      bloqV.src = bloqV.dataset.previa; bloqV.preload = "auto";
+      var p0 = bloqV.play(); if (p0 && p0.catch) p0.catch(function () {});
+    };
+    if (document.readyState === "complete") setTimeout(ligarPrevia, 300);
+    else window.addEventListener("load", function () { setTimeout(ligarPrevia, 300); });
     var iniciar = function () {
       if (bloqBox.classList.contains("tocando")) return;
       // pausa o vídeo da Fita se estiver com som
@@ -546,6 +561,7 @@ var CONFIG = {
   /* ---------- Vídeo da Fita NFC: toca sozinho (sem som) quando aparece na tela ---------- */
   var nfcV = document.getElementById("nfc-video");
   var nfcSom = document.getElementById("nfc-som");
+  if (nfcV) posterPerto(nfcV, nfcV.dataset.poster);
   if (nfcV) {
     var tocar = function () { var p = nfcV.play(); if (p && p.catch) p.catch(function () {}); };
     if ("IntersectionObserver" in window) {
@@ -579,7 +595,7 @@ var CONFIG = {
   /* 01/11/2026: escolhe o banner do celular ou do computador antes de carregar (o vídeo só baixa quando aparece na tela) */
   if (appV && appV.dataset.celular) {
     var largo = window.matchMedia && window.matchMedia("(min-width:760px)").matches;
-    appV.poster = largo ? appV.dataset.computadorCapa : appV.dataset.celularCapa;
+    posterPerto(appV, largo ? appV.dataset.computadorCapa : appV.dataset.celularCapa);
     appV.src = largo ? appV.dataset.computador : appV.dataset.celular;
     if (largo) { appV.width = 1200; appV.height = 420; }
   }
