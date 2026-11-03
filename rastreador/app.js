@@ -770,15 +770,21 @@ var CONFIG = {
   var rm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)"), tms = [], ciclo = null;
   function limpar() { tms.forEach(clearTimeout); tms = []; clearInterval(ciclo); passos.forEach(function (p) { p.classList.remove("ativa"); }); cons.forEach(function (c) { c.classList.remove("passando"); }); }
   function depois(f, ms) { tms.push(setTimeout(f, ms)); }
+  /* 03/11/2026 (dono): tempo aceso de cada passo: 1 = 7 s, 2 = 9 s, 3 = 7 s. Entre um e outro, a luz corre pela linha (~0,9 s). */
+  var DUR = [7000, 9000, 7000], LUZ = 900;
   function animar() {
+    var t = 150;
     passos.forEach(function (p, i) {
-      depois(function () { p.classList.add("ativa"); }, i * 3000 + 150);
-      depois(function () { p.classList.remove("ativa"); }, i * 3000 + 1750);
-      if (cons[i]) depois(function () { cons[i].classList.remove("passando"); void cons[i].offsetWidth; cons[i].classList.add("passando"); }, i * 3000 + 2100);
+      var ini = t, fim = t + (DUR[i] || 7000);
+      depois(function () { p.classList.add("ativa"); }, ini);
+      depois(function () { p.classList.remove("ativa"); }, fim);
+      if (cons[i]) depois(function () { cons[i].classList.remove("passando"); void cons[i].offsetWidth; cons[i].classList.add("passando"); }, fim);
+      t = fim + (cons[i] ? LUZ : 0);
     });
+    depois(animar, t + 1200); /* recomeça depois de uma pausa curta */
   }
   new IntersectionObserver(function (e) {
     limpar();
-    if (e[0].isIntersecting && !(rm && rm.matches)) { animar(); ciclo = setInterval(animar, 9000); }
+    if (e[0].isIntersecting && !(rm && rm.matches)) animar();
   }, { threshold: 0.25 }).observe(sec);
 })();
