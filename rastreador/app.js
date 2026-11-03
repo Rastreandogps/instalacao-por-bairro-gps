@@ -996,27 +996,38 @@ var CONFIG = {
   }, { threshold: 0.25 }).observe(sec);
 })();
 
-/* 03/11/2026 (dono): Frotas — veículos de entrega no mapa: 2 andando (entram e saem pelas bordas, rota sorteada) e 1 parado */
+/* 03/11/2026 (dono): Frotas — veículos no mapa: João, Pedro e Marcos andando (sempre dentro do mapa); Mateus e Lucas parados */
 (function () {
   var mapa = document.getElementById("mapa"); if (!mapa) return;
 
   
   // Rotas pelo centro das ruas (viewBox 360 x 230). Ruas: y=51, 121 (avenida), 191; x=70, 180, 290.
-  // Rotas pelo centro das ruas (viewBox 360 x 230). Ruas: y=51, 121 (avenida), 191; x=70, 180, 290.
-  // Cada rota entra por uma borda e sai por outra; a cada saída o veículo sorteia a próxima (a troca acontece fora da tela).
+  // 03/11/2026 21h (dono): os veículos ficam DENTRO do mapa. Cada rota é uma volta fechada pelas ruas; ao terminar,
+  // o veículo sorteia outra volta que passe pela esquina em que ele está (sem pular).
   const ROTAS=[
-    [[-40,121],[70,121],[70,51],[180,51],[180,121],[290,121],[400,121]],
-    [[180,275],[180,191],[290,191],[290,51],[180,51],[180,-45]],
-    [[400,51],[290,51],[290,121],[70,121],[70,191],[-40,191]],
-    [[70,-45],[70,51],[180,51],[180,191],[290,191],[400,191]],
-    [[-40,51],[70,51],[70,191],[180,191],[180,121],[400,121]],
-    [[400,191],[290,191],[290,121],[180,121],[180,51],[70,51],[70,-45]],
+    [[70,121],[180,121],[180,51],[70,51],[70,121]],
+    [[180,121],[290,121],[290,191],[180,191],[180,121]],
+    [[70,51],[290,51],[290,121],[70,121],[70,51]],
+    [[70,121],[180,121],[180,191],[70,191],[70,121]],
+    [[180,51],[290,51],[290,191],[180,191],[180,51]],
+    [[70,51],[180,51],[180,191],[290,191],[290,121],[70,121],[70,51]],
   ];
+  const girar=(r,c)=>{ // volta começando na esquina c, às vezes no sentido contrário
+    let pts=r.slice(0,-1); if(Math.random()<0.5) pts=pts.reverse();
+    const i=pts.findIndex(p=>p[0]===c[0]&&p[1]===c[1]); if(i<0) return null;
+    pts=pts.slice(i).concat(pts.slice(0,i)); return pts.concat([pts[0]]);
+  };
   const VEL=24; // unidades do mapa por segundo
   const reduzir=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const parados=[{el:document.getElementById('v3'),x:112,y:191},{el:document.getElementById('v5'),x:290,y:162}]; /* 03/11/2026: Marcos e Lucas parados */
-  const nova=(u,now,excluir)=>{ let k; do{ k=Math.floor(Math.random()*ROTAS.length) }while(k===excluir||us.some(o=>o!==u&&o.k===k)); const pts=ROTAS[k],legs=pts.slice(1).map((p,i)=>Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1])); Object.assign(u,{k,pts,legs,tot:legs.reduce((a,b)=>a+b,0),ini:now+(u.pts?1000+Math.random()*3000:0)}) };
-  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]},{el:document.getElementById('v4'),vel:document.getElementById('vel4'),faixa:[30,48]}]; /* 03/11/2026: João, Pedro e Mateus andando */
+  const parados=[{el:document.getElementById('v3'),x:112,y:191},{el:document.getElementById('v5'),x:290,y:162}]; /* 03/11/2026: Mateus e Lucas parados (homenagem ao dono, Mateus Lucas) */
+  const nova=(u,now,excluir)=>{
+    const c=u.pts?u.pts[u.pts.length-1]:null; let k,pts=null,tent=0;
+    do{ k=Math.floor(Math.random()*ROTAS.length); pts=c?girar(ROTAS[k],c):ROTAS[k].slice(); tent++ }
+    while(tent<60&&(!pts||(tent<40&&(k===excluir||us.some(o=>o!==u&&o.k===k)))));
+    if(!pts) pts=girar(ROTAS[excluir],c)||ROTAS[0].slice();
+    const legs=pts.slice(1).map((p,i)=>Math.hypot(p[0]-pts[i][0],p[1]-pts[i][1]));
+    Object.assign(u,{k,pts,legs,tot:legs.reduce((a,b)=>a+b,0),ini:now+(u.pts?400+Math.random()*1500:0)}) };
+  const us=[{el:document.getElementById('v1'),vel:document.getElementById('vel1'),faixa:[34,46]},{el:document.getElementById('v2'),vel:document.getElementById('vel2'),faixa:[28,44]},{el:document.getElementById('v4'),vel:document.getElementById('vel4'),faixa:[30,48]}]; /* 03/11/2026: João, Pedro e Marcos andando */
   const t0=performance.now(); let raf=0, ult=0;
   us.forEach((u,n)=>{ nova(u,t0,-1); u.ini=t0-(u.tot*[0.2,0.55,0.8][n])/VEL*1000 }); /* já começam no meio do caminho */
   function pos(u,now){
