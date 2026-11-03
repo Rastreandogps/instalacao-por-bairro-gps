@@ -216,6 +216,7 @@ var CONFIG = {
     if (qtdAtual === 1) { rotuloModelo.textContent = "Qual é o modelo do seu veículo?"; campoModelo.placeholder = "Ex.: Onix, CG 160, Bongo"; }
     else if (qtdAtual < 5) { rotuloModelo.innerHTML = 'Quais são os modelos? <small>(opcional)</small>'; campoModelo.placeholder = qtdAtual === 2 ? "Ex.: Onix e Strada" : qtdAtual === 3 ? "Ex.: 2 Onix e 1 Strada" : "Ex.: 2 Onix, 1 Strada e 1 CG 160"; }
     else { rotuloModelo.innerHTML = 'Quais são os veículos? <small>(opcional)</small>'; campoModelo.placeholder = "Ex.: 8 caminhões e 3 motos"; }
+    if (typeof ocQtdMudou === "function") ocQtdMudou();
   });
   var extrasAtuais = CONFIG.extras; // 03/11/2026: Lagos usa CONFIG.lagos.extras
   function totalInstalacao(primeiro) {
@@ -359,6 +360,7 @@ var CONFIG = {
 
   function resultadoConsultar(endTxt, motivo) {
     medir("busca_preco", { resultado: "consultar" });
+    ocConsultar = true; ocPintar(true);
     barraInfo = "Verificar valor com o atendente";
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", endTxt);
     mostrar('<div class="res">' +
@@ -373,19 +375,26 @@ var CONFIG = {
   /* 01/11/2026: linha animada agendado → instalado → rastreado (só imagens) no quadro do orçamento */
   var JORNADA = "<div class=\"jor play\" role=\"img\" aria-label=\"Agende, instale, rastreie\"><span class=\"jor__seg jor__seg--ponta\"></span><span class=\"jor__ic\" title=\"Agendado\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><defs><linearGradient id=\"calBody\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#fff\"/><stop offset=\"1\" stop-color=\"#DDE7EF\"/></linearGradient><linearGradient id=\"calTop\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#50DC91\"/><stop offset=\"1\" stop-color=\"#0D9A51\"/></linearGradient><linearGradient id=\"calTick\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#7EEDAE\"/><stop offset=\"1\" stop-color=\"#12A95B\"/></linearGradient></defs><ellipse cx=\"32\" cy=\"55\" rx=\"18\" ry=\"3.5\" fill=\"#1C5136\" opacity=\".14\"/><rect x=\"10\" y=\"12\" width=\"44\" height=\"40\" rx=\"11\" fill=\"#9CAEBB\" opacity=\".35\"/><rect x=\"9\" y=\"9\" width=\"44\" height=\"40\" rx=\"11\" fill=\"url(#calBody)\" stroke=\"#D3DCE4\"/><path d=\"M20 9h22a11 11 0 0 1 11 11v5H9v-5A11 11 0 0 1 20 9Z\" fill=\"url(#calTop)\"/><rect x=\"18\" y=\"5\" width=\"5\" height=\"12\" rx=\"2.5\" fill=\"#CBD7DD\" stroke=\"#9EADB8\" stroke-width=\".7\"/><rect x=\"39\" y=\"5\" width=\"5\" height=\"12\" rx=\"2.5\" fill=\"#CBD7DD\" stroke=\"#9EADB8\" stroke-width=\".7\"/><circle cx=\"31\" cy=\"36\" r=\"11.5\" fill=\"url(#calTick)\"/><path d=\"m25.5 35.8 4 4.1 7.8-8.2\" stroke=\"#fff\" stroke-width=\"3.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" fill=\"none\"/></svg><b class=\"jor__txt\">Agende</b></span><span class=\"jor__seg jor__seg--a\"></span><span class=\"jor__ic\" title=\"Instalado\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><defs><linearGradient id=\"ferMet\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#F4F8FC\"/><stop offset=\".45\" stop-color=\"#BBCBD7\"/><stop offset=\"1\" stop-color=\"#7C91A3\"/></linearGradient><linearGradient id=\"ferCabo\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0\"><stop stop-color=\"#5FE29C\"/><stop offset=\".5\" stop-color=\"#1FBC68\"/><stop offset=\"1\" stop-color=\"#087F43\"/></linearGradient><linearGradient id=\"gpsCx\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop stop-color=\"#475569\"/><stop offset=\"1\" stop-color=\"#111827\"/></linearGradient></defs><ellipse cx=\"30\" cy=\"57\" rx=\"24\" ry=\"3.2\" fill=\"#0f172a\" opacity=\".15\"/><path d=\"M10 46c-4 0-6 2-6 5\" stroke=\"#dc2626\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><path d=\"M10 49c-3 0-4.5 1.6-4.5 4\" stroke=\"#111827\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><rect x=\"9\" y=\"31\" width=\"34\" height=\"23\" rx=\"5.5\" fill=\"#0f172a\" opacity=\".25\" transform=\"translate(1.5 1.5)\"/><rect x=\"9\" y=\"31\" width=\"34\" height=\"23\" rx=\"5.5\" fill=\"url(#gpsCx)\"/><rect x=\"11.5\" y=\"33\" width=\"29\" height=\"3\" rx=\"1.5\" fill=\"#fff\" opacity=\".18\"/><circle cx=\"18\" cy=\"44\" r=\"2.6\" fill=\"#22c55e\"/><circle cx=\"18\" cy=\"44\" r=\"4.6\" fill=\"#22c55e\" opacity=\".25\"/><path d=\"M28 47.5a6 6 0 0 1 8.5-8.5M30.6 45a2.4 2.4 0 0 1 3.4-3.4\" stroke=\"#7AF3B0\" stroke-width=\"2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(42 21) scale(.7) translate(-32 -31) rotate(45 32 31)\"><path d=\"M32 3.5a13 13 0 0 0-6.5 24.3V31h13v-3.2A13 13 0 0 0 32 3.5Z\" fill=\"url(#ferMet)\" stroke=\"#8CA1B2\" stroke-width=\"1.4\"/><path d=\"M27.8 2.5h8.4v8.2a2 2 0 0 1-2 2h-4.4a2 2 0 0 1-2-2Z\" fill=\"#F4F7F9\"/><path d=\"M27.8 4v6.7a2 2 0 0 0 2 2h4.4a2 2 0 0 0 2-2V4\" fill=\"none\" stroke=\"#8CA1B2\" stroke-width=\"1.4\"/><rect x=\"25\" y=\"29\" width=\"14\" height=\"30\" rx=\"7\" fill=\"url(#ferCabo)\" stroke=\"#0C9350\"/><rect x=\"28.3\" y=\"34\" width=\"2.6\" height=\"20\" rx=\"1.3\" fill=\"#C7FFE0\" opacity=\".65\"/></g></svg><b class=\"jor__txt\">Instale</b></span><span class=\"jor__seg jor__seg--b\"></span><span class=\"jor__ic jor__ic--fim\" title=\"Rastreado\"><svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><defs><linearGradient id=\"celAro\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#475569\"/><stop offset=\"1\" stop-color=\"#0F172A\"/></linearGradient><linearGradient id=\"celTela\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop stop-color=\"#ECFDF3\"/><stop offset=\"1\" stop-color=\"#D1FAE5\"/></linearGradient><linearGradient id=\"carCorpo\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop stop-color=\"#475569\"/><stop offset=\"1\" stop-color=\"#1E293B\"/></linearGradient><linearGradient id=\"carVidro\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop stop-color=\"#E0F2FE\"/><stop offset=\"1\" stop-color=\"#93C5FD\"/></linearGradient><clipPath id=\"celClip\"><rect x=\"20\" y=\"8\" width=\"24\" height=\"46\" rx=\"3.5\"/></clipPath></defs><ellipse cx=\"32\" cy=\"60\" rx=\"17\" ry=\"2.6\" fill=\"#0f172a\" opacity=\".16\"/><rect x=\"17\" y=\"2.5\" width=\"30\" height=\"57\" rx=\"7\" fill=\"#0f172a\" opacity=\".25\" transform=\"translate(1.5 1.5)\"/><rect x=\"17\" y=\"2.5\" width=\"30\" height=\"57\" rx=\"7\" fill=\"url(#celAro)\"/><rect x=\"20\" y=\"8\" width=\"24\" height=\"46\" rx=\"3.5\" fill=\"url(#celTela)\"/><g clip-path=\"url(#celClip)\"><path d=\"M12 22 52 40\" stroke=\"#fff\" stroke-width=\"5\"/><path d=\"M14 16 50 30\" stroke=\"#BBF7D0\" stroke-width=\"2.5\"/></g><rect x=\"28\" y=\"4.6\" width=\"8\" height=\"1.8\" rx=\".9\" fill=\"#94A3B8\"/><circle cx=\"32\" cy=\"31\" r=\"10.5\" fill=\"#22c55e\" opacity=\".16\"/><g transform=\"translate(32 32) scale(.42) translate(-33 -42)\"><path d=\"M6 50v-6.5c0-2.1 1.4-3.6 3.4-4.1l6.4-1.6 7-7.6c1.1-1.2 2.5-1.8 4.1-1.8h12.4c1.7 0 3.2.8 4.3 2.1l5.8 7 5.1 1.3c2 .5 3.5 2.2 3.5 4.3V50c0 1.2-1 2.2-2.2 2.2H8.2C7 52.2 6 51.2 6 50Z\" fill=\"url(#carCorpo)\"/><path d=\"M22.5 38.2 28 32.3c.6-.6 1.3-.9 2.1-.9H38v6.8Z\" fill=\"url(#carVidro)\"/><path d=\"M40.6 31.4h2.1c.9 0 1.7.4 2.3 1.1l4.4 5.7h-8.8Z\" fill=\"url(#carVidro)\"/><circle cx=\"18.5\" cy=\"51.5\" r=\"6\" fill=\"#0F172A\"/><circle cx=\"18.5\" cy=\"51.5\" r=\"2.6\" fill=\"#CBD5E1\"/><circle cx=\"45.5\" cy=\"51.5\" r=\"6\" fill=\"#0F172A\"/><circle cx=\"45.5\" cy=\"51.5\" r=\"2.6\" fill=\"#CBD5E1\"/></g></svg><b class=\"jor__txt\">Rastreie</b></span><span class=\"jor__seg jor__seg--ponta\"></span></div>";
 
-  function resultadoPreco(endTxt, faixa, km) {
-    extrasAtuais = (typeof faixa.regiao !== "number" && CONFIG.lagos.extras) ? CONFIG.lagos.extras : CONFIG.extras;
-    medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: totalInstalacao(faixa.valor), quantidade: qtdAtual });
+  function extrasDa(faixa) { return (typeof faixa.regiao !== "number" && CONFIG.lagos.extras) ? CONFIG.lagos.extras : CONFIG.extras; }
+  function textoAgendar(endTxt, faixa, km) {
+    extrasAtuais = extrasDa(faixa);
     var nomeReg = typeof faixa.regiao === "number" ? "Região " + faixa.regiao : faixa.regiao;
     var total = totalInstalacao(faixa.valor), varios = qtdAtual > 1;
-    barraInfo = brl(total) + " + " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês";
-    var txt = mensagem("Vi o anúncio no Google e quero agendar a instalação do rastreador.", endTxt, [
+    return mensagem("Vi o anúncio no Google e quero agendar a instalação do rastreador.", endTxt, [
       "🗺️ *Região:* " + nomeReg + " (" + Math.round(km) + " km)",
       "",
       "💰 *Valor informado no site:*",
       "Instalação: " + brl(total) + (varios ? " (" + detalheExtras(faixa.valor) + ")" : ""),
       "Mensalidade: " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês"
     ]);
+  }
+  function resultadoPreco(endTxt, faixa, km, silencioso) {
+    extrasAtuais = extrasDa(faixa);
+    if (!silencioso) medir("busca_preco", { resultado: (typeof faixa.regiao === "number" ? "regiao_" + faixa.regiao : "lagos"), valor: totalInstalacao(faixa.valor), quantidade: qtdAtual });
+    var total = totalInstalacao(faixa.valor), varios = qtdAtual > 1;
+    barraInfo = brl(total) + " + " + (varios ? qtdAtual + " × " : "") + "R$ 59,90/mês";
+    var txt = textoAgendar(endTxt, faixa, km);
+    if (!silencioso) ocGuardar({ end: endTxt, faixa: { regiao: faixa.regiao, valor: faixa.valor }, km: km, modelo: modeloAtual, ll: pinLL });
     mostrar('<div class="res">' +
       '<p class="res__tit">' + IC_OK + ' Seu orçamento está pronto!</p>' +
       linhaPara() +
@@ -417,6 +426,64 @@ var CONFIG = {
     var txt = mensagem("Vi o anúncio no Google e quero saber o valor da instalação.", q);
     mostrar('<div class="res"><p class="res__err">Não conseguimos calcular agora.</p><p class="res__det" style="margin-top:8px">Mande o endereço no WhatsApp e respondemos o valor.</p>' +
       botaoWa(txt, "Mandar no WhatsApp") + '</div>');
+  }
+
+  /* ---------- 03/11/2026 (dono): cartão "Seu orçamento" ----------
+     Mensalidade multiplica pela quantidade na hora. A instalação calculada fica no cartão e no celular do cliente
+     (localStorage, 30 dias), para ele não precisar refazer. Mostra a economia do 2º veículo em diante. */
+  var OC_CHAVE = "rg_orcamento", OC_VALIDADE = 30 * 86400000, MENS = 59.90;
+  var ocSalvo = null, ocConsultar = false;
+  function ocEl(id) { return document.getElementById(id); }
+  function ocGravar() { try { if (ocSalvo) localStorage.setItem(OC_CHAVE, JSON.stringify(Object.assign({}, ocSalvo, { qtd: qtdAtual }))); else localStorage.removeItem(OC_CHAVE); } catch (e) {} }
+  function ocGuardar(o) { o.em = Date.now(); ocSalvo = o; ocConsultar = false; ocGravar(); ocPintar(true); }
+  function ocPulsa(el) { if (!el) return; el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse"); }
+  function ocPintar(animar) {
+    if (!ocEl("oc")) return;
+    var q = qtdAtual, mv = ocEl("ocMVal"), iv = ocEl("ocIVal");
+    if (q >= 5) { mv.innerHTML = "<strong>" + brl(MENS) + "</strong><span>/mês por veículo</span>"; ocEl("ocMDet").textContent = "5 ou mais: orçamento especial de frota"; }
+    else { mv.innerHTML = "<strong>" + brl(Math.round(MENS * q * 100) / 100) + "</strong><span>/mês</span>"; ocEl("ocMDet").textContent = q === 1 ? "Mesmo valor para carro, moto ou caminhão" : q + " × " + brl(MENS) + " por veículo"; }
+    var tem = !!ocSalvo && q < 5, eco = 0;
+    iv.classList.toggle("oc__val--vazio", !tem);
+    if (q >= 5) { iv.innerHTML = "<strong>Sob consulta</strong>"; ocEl("ocIDet").textContent = "Fale com a gente para o valor da frota"; }
+    else if (tem) {
+      extrasAtuais = extrasDa(ocSalvo.faixa);
+      var tot = totalInstalacao(ocSalvo.faixa.valor), cheio = Math.round(ocSalvo.faixa.valor * q * 100) / 100;
+      eco = Math.round((cheio - tot) * 100) / 100;
+      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<strong>" + brl(tot) + "</strong><span>pagamento único</span>";
+      ocEl("ocIDet").textContent = (q > 1 ? q + " veículos · " : "") + ocSalvo.end;
+    } else if (ocConsultar) { iv.innerHTML = "<strong>Verificar com o atendente</strong>"; ocEl("ocIDet").textContent = "Fale com a gente pelo WhatsApp para o seu endereço"; }
+    else { iv.innerHTML = "<strong>Calcule abaixo ↓</strong>"; ocEl("ocIDet").textContent = "Depende do seu endereço"; }
+    ocEl("ocEco").hidden = !(eco > 0);
+    if (eco > 0) ocEl("ocEco").innerHTML = "🏷️ Você economiza <b>" + brl(eco) + "</b> " + (q === 2 ? "no 2º veículo" : q === 3 ? "no 2º e 3º veículos" : "do 2º ao 4º veículo");
+    var ex2 = (ocSalvo ? extrasDa(ocSalvo.faixa) : CONFIG.extras)[0];
+    ocEl("ocDica").innerHTML = q !== 1 ? "" : (ocSalvo ? "➕ Instalando 2 veículos, o 2º sai por <b>" + brl(ex2) + "</b>" : "➕ A partir do 2º veículo, a instalação tem desconto");
+    ocEl("ocAcao").hidden = !ocSalvo; ocEl("ocSalvo").hidden = !ocSalvo;
+    var wa = ocEl("ocWa");
+    wa.hidden = !tem;
+    if (tem) { extrasAtuais = extrasDa(ocSalvo.faixa); wa.href = waLink(textoAgendar(ocSalvo.end, ocSalvo.faixa, ocSalvo.km)); }
+    if (animar) { ocPulsa(mv); if (tem) ocPulsa(iv); }
+  }
+  function ocQtdMudou() {
+    ocGravar(); ocPintar(true);
+    /* a janela e a barra de baixo acompanham a quantidade nova */
+    if (ocSalvo && qtdAtual < 5 && barraInfo && barraInfo.indexOf("R$") === 0) {
+      var pl = pinLL; pinLL = ocSalvo.ll || pinLL;
+      resultadoPreco(ocSalvo.end, ocSalvo.faixa, ocSalvo.km, true);
+      pinLL = pl;
+      if (orcBarra && orcBarra.classList.contains("ver")) mostrarBarra();
+    }
+  }
+  if (ocEl("oc")) {
+    try { var o0 = JSON.parse(localStorage.getItem(OC_CHAVE) || "null"); if (o0 && o0.faixa && Date.now() - o0.em < OC_VALIDADE) ocSalvo = o0; } catch (e) {}
+    if (ocSalvo) { // voltou: já mostra o que calculou
+      var q0 = Math.min(5, Math.max(1, +ocSalvo.qtd || 1));
+      var bq = form && form.querySelector('[data-qtd="' + q0 + '"]');
+      if (bq && q0 !== 1) bq.click(); // ajusta botões e textos (e repinta)
+      if (campoModelo && ocSalvo.modelo) { campoModelo.value = ocSalvo.modelo; modeloAtual = ocSalvo.modelo; }
+      if (campo && ocSalvo.end) { var mc = /\(CEP ([^)]*)\)/.exec(ocSalvo.end); campo.value = mc ? mc[1] : ocSalvo.end; }
+    }
+    ocPintar(false);
+    ocEl("ocTrocar").addEventListener("click", function () { campo.scrollIntoView({ behavior: "smooth", block: "center" }); campo.focus(); try { campo.select(); } catch (e) {} });
   }
 
   function calcular(endTxt, r) {
@@ -679,7 +746,7 @@ var CONFIG = {
     var a = ev.target.closest && ev.target.closest("[data-wa]");
     if (!a) return;
     var sec = a.closest("section, footer");
-    var local = a.classList.contains("wa-fixo") ? "botao_fixo" : a.closest(".orc") ? "orcamento" : a.closest(".orc-barra") ? "barra_orcamento" : (sec ? (sec.id || (sec.className || "").split(" ")[0]) : "outro");
+    var local = a.classList.contains("wa-fixo") ? "botao_fixo" : a.closest(".orc") ? "orcamento" : a.closest(".oc") ? "cartao_orcamento" : a.closest(".orc-barra") ? "barra_orcamento" : (sec ? (sec.id || (sec.className || "").split(" ")[0]) : "outro");
     medir("clique_whatsapp", { local: local });
   });
 

@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="/rastreador/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://i.vimeocdn.com">
 <link rel="preload" as="image" href="/rastreador/img/bloqueio-v2-capa.webp" fetchpriority="high">
-<link rel="stylesheet" href="/rastreador/estilo.css?v=47">
+<link rel="stylesheet" href="/rastreador/estilo.css?v=48">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Rastreando GPS","legalName":"RASTREANDO GPS LTDA","taxID":"29.488.621/0001-48","url":"https://www.rastreandogpsbr.com.br/rastreador/","image":"https://www.rastreandogpsbr.com.br/rastreador/img/logo-512.png","telephone":"+55-21-98088-6087","email":"rastreandogpsbr@rastreandogps.com","foundingDate":"2018","areaServed":["Rio de Janeiro","Baixada Fluminense","Niterói","São Gonçalo"],"openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$ 59,90/mês"}
 </script>
@@ -116,7 +116,24 @@
       <p class="sec__sub">A nossa equipe vai até você. Informe o veículo e o local da instalação.</p>
 
       <div class="consulta" id="modelo-campo" hidden>
-        <p class="consulta__mens">Mensalidade fixa: <b>R$ 59,90</b> para qualquer veículo</p>
+        <!-- 03/11/2026 (dono): cartão "Seu orçamento": mensalidade multiplica pela quantidade e a instalação calculada fica salva -->
+        <div class="oc" id="oc" aria-live="polite">
+          <div class="oc__top"><span class="oc__tag"><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></g></svg> SEU ORÇAMENTO</span><span class="oc__chip">Sem fidelidade</span></div>
+          <div class="oc__lin">
+            <div class="oc__rot">Mensalidade</div>
+            <div class="oc__val" id="ocMVal"><strong>R$ 59,90</strong><span>/mês</span></div>
+            <div class="oc__det" id="ocMDet">Mesmo valor para carro, moto ou caminhão</div>
+          </div>
+          <div class="oc__lin">
+            <div class="oc__rot">Instalação <span class="oc__salvo" id="ocSalvo" hidden>✓ salvo</span></div>
+            <div class="oc__val oc__val--vazio" id="ocIVal"><strong>Calcule abaixo ↓</strong></div>
+            <div class="oc__det" id="ocIDet">Depende do seu endereço</div>
+            <div class="oc__eco" id="ocEco" hidden></div>
+            <div class="oc__dica" id="ocDica"></div>
+            <div class="oc__acao" id="ocAcao" hidden><button type="button" class="oc__mini" id="ocTrocar">Trocar endereço</button></div>
+          </div>
+          <a class="oc__wa" id="ocWa" data-wa target="_blank" rel="noopener" href="#" hidden><svg class="ic" aria-hidden="true"><use href="#i-wa"/></svg> Agendar pelo WhatsApp</a>
+        </div>
         <form id="busca" autocomplete="off" novalidate>
           <p class="consulta__rot" id="qtd-rotulo">Quantos veículos?</p>
           <div class="consulta__qtd" role="group" aria-labelledby="qtd-rotulo">
@@ -480,6 +497,6 @@
   </div>
 </div>
 
-<script src="/rastreador/app.js?v=54" defer></script>
+<script src="/rastreador/app.js?v=55" defer></script>
 </body>
 </html>
