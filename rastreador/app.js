@@ -294,6 +294,7 @@ var CONFIG = {
     document.documentElement.classList.remove("orc-trava");
     if (mostraBarra !== false && barraInfo) mostrarBarra();
     if (typeof atualizaFixo === "function") atualizaFixo();
+    if (typeof ocPintar === "function" && ocSalvo) ocPintar(true); // 03/11/2026: o cartão "acende" quando a janela fecha
   }
   // Fechar pelo X, pelo fundo escuro ou pelo "voltar" do celular
   function pedirFechar(mostraBarra) {
@@ -440,8 +441,12 @@ var CONFIG = {
   function ocPintar(animar) {
     if (!ocEl("oc")) return;
     var q = qtdAtual, mv = ocEl("ocMVal"), iv = ocEl("ocIVal");
+    /* 03/11/2026 19h (dono): sem cálculo, o cartão é só o título (mensalidade sozinha confundia) */
+    var vazio = !ocSalvo && !ocConsultar;
+    ocEl("oc").classList.toggle("oc--vazio", vazio);
+    if (vazio) return;
     if (q >= 5) { mv.innerHTML = "<strong>" + brl(MENS) + "</strong><span>/mês por veículo</span>"; ocEl("ocMDet").textContent = "5 ou mais: orçamento especial de frota"; }
-    else { mv.innerHTML = "<strong>" + brl(Math.round(MENS * q * 100) / 100) + "</strong><span>/mês</span>"; ocEl("ocMDet").textContent = q === 1 ? "Mesmo valor para carro, moto ou caminhão" : q + " × " + brl(MENS) + " por veículo"; }
+    else { mv.innerHTML = "<em>por apenas</em><strong>" + brl(Math.round(MENS * q * 100) / 100) + "</strong><span>/mês</span>"; ocEl("ocMDet").textContent = q === 1 ? "Mesmo valor para carro, moto ou caminhão" : q + " × " + brl(MENS) + " por veículo"; }
     var tem = !!ocSalvo && q < 5, eco = 0;
     iv.classList.toggle("oc__val--vazio", !tem);
     if (q >= 5) { iv.innerHTML = "<strong>Sob consulta</strong>"; ocEl("ocIDet").textContent = "Fale com a gente para o valor da frota"; }
@@ -449,7 +454,7 @@ var CONFIG = {
       extrasAtuais = extrasDa(ocSalvo.faixa);
       var tot = totalInstalacao(ocSalvo.faixa.valor), cheio = Math.round(ocSalvo.faixa.valor * q * 100) / 100;
       eco = Math.round((cheio - tot) * 100) / 100;
-      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<strong>" + brl(tot) + "</strong><span>pagamento único</span>";
+      iv.innerHTML = (eco > 0 ? "<s>" + brl(cheio) + "</s>" : "") + "<em>por apenas</em><strong>" + brl(tot) + "</strong><span>pagamento único</span>";
       ocEl("ocIDet").textContent = (q > 1 ? q + " veículos · " : "") + ocSalvo.end;
     } else if (ocConsultar) { iv.innerHTML = "<strong>Verificar com o atendente</strong>"; ocEl("ocIDet").textContent = "Fale com a gente pelo WhatsApp para o seu endereço"; }
     else { iv.innerHTML = "<strong>Calcule abaixo ↓</strong>"; ocEl("ocIDet").textContent = "Depende do seu endereço"; }

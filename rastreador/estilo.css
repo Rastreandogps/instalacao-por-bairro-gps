@@ -751,3 +751,20 @@ html.tem-orc body{padding-bottom:90px}
 @keyframes ocPulso{35%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.oc .pulse{animation:none}}
 .oc [hidden]{display:none!important}
+/* 03/11/2026 19h (dono): antes de calcular, o cartão é só um título; depois vira o orçamento com preço menor e títulos em destaque */
+.oc__tit{position:relative;display:none;padding:12px 0 2px}
+.oc__tit b{display:block;font-size:clamp(20px,5.6vw,24px);line-height:1.2;letter-spacing:-.4px;font-weight:800;color:#fff;text-wrap:balance}
+.oc__tit span{display:block;margin-top:6px;font-size:13px;color:#b9c7de}
+.oc--vazio .oc__tit{display:block}
+.oc--vazio .oc__lin,.oc--vazio .oc__wa{display:none!important}
+.oc__rot{font-size:12.5px;color:#fff;font-weight:800;letter-spacing:.8px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.oc__rot:before{content:"";width:7px;height:7px;border-radius:50%;background:#52deed;box-shadow:0 0 8px #52deed}
+.oc__val{margin-top:2px}
+.oc__val strong{font-size:clamp(22px,6vw,26px);letter-spacing:-.5px}
+.oc__val em{font-style:normal;font-size:12.5px;color:#c9d6eb}
+.oc__val s{font-size:13.5px}
+.oc__val--vazio strong{font-size:16px}
+.oc__acao{grid-row:auto;grid-column:1/-1;justify-self:start;margin-top:2px}
+.oc__mini{padding:0;border:0;background:none;color:#8fd3ff;text-decoration:underline;font-size:12.5px;font-weight:600}
+.oc__mini:hover{background:none;color:#fff}
+.oc__salvo{text-transform:none;letter-spacing:0}
