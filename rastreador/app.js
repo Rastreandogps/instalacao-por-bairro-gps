@@ -79,7 +79,7 @@ var CONFIG = {
   var CHAVE = "rg_cookies";
   function ler() { try { return localStorage.getItem(CHAVE); } catch (e) { return null; } }
   function gravar(v) { try { localStorage.setItem(CHAVE, v); } catch (e) {} }
-  var aceitou = ler() === "sim";
+  var aceitou = ler() !== "nao"; // 06/11/2026 (dono): medição liberada desde o início; só para se a pessoa tocar em Recusar
   var googleLigado = !!(CONFIG.googleAdsId || CONFIG.ga4Id);
   if (googleLigado) {
     window.dataLayer = window.dataLayer || [];
@@ -904,8 +904,8 @@ var CONFIG = {
   if (googleLigado) {
     if (abrir) abrir.hidden = false;
     var esc0 = ler();
-    if (esc0 === "sim") aceitar();
-    else if (!esc0 && aviso) aviso.hidden = false;
+    if (esc0 !== "nao") aceitar(); // 06/11/2026: Clarity e Google desde a abertura, salvo quem recusou
+    if (!esc0 && aviso) aviso.hidden = false;
     if (aviso) aviso.addEventListener("click", function (ev) {
       var b = ev.target.closest("[data-cookies]"); if (!b) return;
       var v = b.getAttribute("data-cookies"); gravar(v); aviso.hidden = true;
